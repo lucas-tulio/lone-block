@@ -21,7 +21,7 @@ public class World {
 
 	public void render(ShapeRenderer sr) {
 		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.GREEN);
+		sr.setColor(Color.FOREST);
 		sr.rect(0f, 0f, size, size);
 		sr.end();
 	}
