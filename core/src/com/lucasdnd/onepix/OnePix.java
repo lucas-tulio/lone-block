@@ -40,19 +40,19 @@ public class OnePix extends ApplicationAdapter {
 	}
 	
 	private void handleInput() {
-		if (Gdx.input.isKeyJustPressed(Keys.W)) {
+		
+		if (Gdx.input.isKeyJustPressed(Keys.W) && player.canMoveUp(world)) {
 			player.moveUp();
-		} else if (Gdx.input.isKeyJustPressed(Keys.A)) {
+		} else if (Gdx.input.isKeyJustPressed(Keys.A) && player.canMoveLeft(world)) {
 			player.moveLeft();
-		} else if (Gdx.input.isKeyJustPressed(Keys.S)) {
+		} else if (Gdx.input.isKeyJustPressed(Keys.S) && player.canMoveDown(world)) {
 			player.moveDown();
-		} else if (Gdx.input.isKeyJustPressed(Keys.D)) {
+		} else if (Gdx.input.isKeyJustPressed(Keys.D) && player.canMoveRight(world)) {
 			player.moveRight();
 		}
 	}
 	
 	private void update() {
-		
 		handleInput();
 		
 		camera.position.set(player.getX() + (sideBar.getWidth() * 0.5f * 1f/scale), player.getY(), 0f);

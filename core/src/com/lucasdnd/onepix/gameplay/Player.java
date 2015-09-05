@@ -57,5 +57,21 @@ public class Player {
 	public void moveLeft() {
 		x--;
 	}
+
+	public boolean canMoveUp(World world) {
+		return world.getMap()[x][y+1] == 0;
+	}
+
+	public boolean canMoveLeft(World world) {
+		return world.getMap()[x-1][y] == 0;
+	}
+
+	public boolean canMoveDown(World world) {
+		return world.getMap()[x][y-1] == 0;
+	}
+
+	public boolean canMoveRight(World world) {
+		return world.getMap()[x+1][y] == 0;
+	}
 	
 }
