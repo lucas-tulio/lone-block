@@ -6,12 +6,15 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepix.gameplay.Player;
 import com.lucasdnd.onepix.gameplay.World;
 import com.lucasdnd.onepix.ui.SideBar;
 
 public class OnePix extends ApplicationAdapter {
+	
+	boolean debug = true;
 	
 	final float scale = 8f;
 	World world;
@@ -23,6 +26,8 @@ public class OnePix extends ApplicationAdapter {
 	ShapeRenderer shapeRenderer;
 	ShapeRenderer uiShapeRenderer;
 	
+	SpriteBatch fontBatch;
+	
 	@Override
 	public void create () {
 		
@@ -32,12 +37,14 @@ public class OnePix extends ApplicationAdapter {
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.zoom = 1f/scale;
 		
+		fontBatch = new SpriteBatch();
+		
 		// Input
 		input = new InputHandler();
 		Gdx.input.setInputProcessor(input);
 
 		// Game objects
-		int worldSize = 10;
+		int worldSize = 100;
 		world = new World(worldSize);
 		Random r = new Random();
 		player = new Player(r.nextInt(worldSize), r.nextInt(worldSize));
@@ -46,7 +53,44 @@ public class OnePix extends ApplicationAdapter {
 		sideBar = new SideBar(Gdx.graphics.getWidth() - sideBarWidth, 0, sideBarWidth);
 	}
 	
+	private void handleInput() {
+		
+		input.delay++;
+		if (input.delay < input.maxDelay) {
+			return;
+		} else {
+			input.delay = input.maxDelay;
+		}
+		
+		if (input.wPressed) {
+			if (player.canMoveUp(world)) {
+				player.moveUp();
+				input.delay = 0;
+			}
+		}
+		if (input.sPressed) {
+			if (player.canMoveDown(world)) {
+				player.moveDown();
+				input.delay = 0;
+			}
+		}
+		if (input.aPressed) {
+			if (player.canMoveLeft(world)) {
+				player.moveLeft();
+				input.delay = 0;
+			}
+		}
+		if (input.dPressed) {
+			if (player.canMoveRight(world)) {
+				player.moveRight();
+				input.delay = 0;
+			}
+		}
+	}
+	
 	private void update() {
+		
+		handleInput();
 		
 		camera.position.set(player.getX() + (sideBar.getWidth() * 0.5f * 1f/scale), player.getY(), 0f);
 		camera.update();
@@ -67,6 +111,16 @@ public class OnePix extends ApplicationAdapter {
 		player.render(shapeRenderer);
 		sideBar.render(uiShapeRenderer);
 		
+		// Debug
+		if (debug) {
+			fontBatch.begin();
+			Resources.get().whiteFont.draw(fontBatch, "w: " + input.wPressed, 0f, Gdx.graphics.getHeight());
+			Resources.get().whiteFont.draw(fontBatch, "a: " + input.aPressed, 0f, Gdx.graphics.getHeight() - 20f);
+			Resources.get().whiteFont.draw(fontBatch, "s: " + input.sPressed, 0f, Gdx.graphics.getHeight() - 40f);
+			Resources.get().whiteFont.draw(fontBatch, "d: " + input.dPressed, 0f, Gdx.graphics.getHeight() - 60f);
+			Resources.get().whiteFont.draw(fontBatch, "delay: " + input.delay, 0f, Gdx.graphics.getHeight() - 100f);
+			fontBatch.end();
+		}
 	}
 	
 	public Player getPlayer() {

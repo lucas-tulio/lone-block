@@ -1,45 +1,14 @@
 package com.lucasdnd.onepix;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
-import com.lucasdnd.onepix.gameplay.Player;
-import com.lucasdnd.onepix.gameplay.World;
 
 public class InputHandler implements InputProcessor {
 	
 	public boolean wPressed, aPressed, sPressed, dPressed; // :(
 	
-	private int keyDelay = 0;
-	private int maxKeyDelay = 10;
-	
-	private void handleInput() {
-		
-		Player player = ((OnePix)Gdx.app.getApplicationListener()).getPlayer();
-		World world = ((OnePix)Gdx.app.getApplicationListener()).getWorld();
-		
-		if (wPressed) {
-			if (player.canMoveUp(world)) {
-				player.moveUp();
-			}
-		}
-		if (sPressed) {
-			if (player.canMoveDown(world)) {
-				player.moveDown();
-			}
-		}
-		if (aPressed) {
-			if (player.canMoveLeft(world)) {
-				player.moveLeft();
-			}
-		}
-		if (dPressed) {
-			if (player.canMoveRight(world)) {
-				player.moveRight();
-			}
-		}
-	}
-	
+	public int delay = 0;
+	public int maxDelay = 10;
 	
 	@Override
 	public boolean keyDown(int keycode) {
@@ -53,9 +22,7 @@ public class InputHandler implements InputProcessor {
 		} else if (keycode == Keys.D) {
 			dPressed = true; // :(
 		}
-		
-		handleInput();
-		
+	
 		return false;
 	}
 
@@ -64,12 +31,16 @@ public class InputHandler implements InputProcessor {
 		
 		if (keycode == Keys.W) {
 			wPressed = false;
+			delay = maxDelay;
 		} else if (keycode == Keys.A) {
 			aPressed = false;
+			delay = maxDelay;
 		} else if (keycode == Keys.S) {
 			sPressed = false;
+			delay = maxDelay;
 		} else if (keycode == Keys.D) {
 			dPressed = false; // :(
+			delay = maxDelay;
 		}
 		return false;
 	}
