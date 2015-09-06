@@ -14,6 +14,8 @@ import com.lucasdnd.onepix.ui.SideBar;
 
 public class OnePix extends ApplicationAdapter {
 	
+	public final static String GAME_NAME = "One Pixel";
+	public final static String VERSION = "v0.1.0";
 	boolean debug = true;
 	
 	final float scale = 8f;

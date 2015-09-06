@@ -72,6 +72,10 @@ public class SideBar {
 			}
 		}
 		font.drawWhiteFont("Inventory", x + margin, height - margin * 23 - 3f, true);
+		
+		// Game name and version
+		font.drawWhiteFont(OnePix.GAME_NAME, x + margin,         margin * 1.5f, true);
+		font.drawWhiteFont(OnePix.VERSION,   x + width - margin * 4 - 6f, margin * 1.5f, true);
 	}
 	
 	private void drawRectFrame(ShapeRenderer sr, float x, float y, float width, float height) {
