@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.items.Inventory;
 import com.lucasdnd.onepixel.gameplay.items.Item;
-import com.lucasdnd.onepixel.gameplay.world.Exchanger;
 import com.lucasdnd.onepixel.gameplay.world.MapObject;
 import com.lucasdnd.onepixel.gameplay.world.World;
 
@@ -105,7 +104,7 @@ public class Player {
 		}
 		
 		Item item = inventory.getContent().get(inventory.getContent().size() - 1);
-		MapObject itemBlock = Exchanger.exchange(item, world, targetX, targetY, targetZ);
+		MapObject itemBlock = world.exchange(item, targetX, targetY, targetZ);
 		world.getMapObjects()[targetX][targetY][targetZ] = itemBlock;
 		stamina -= 10;
 	}

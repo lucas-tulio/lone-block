@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.gameplay.items.Item;
+import com.lucasdnd.onepixel.gameplay.items.Wood;
 
 
 public class World implements Disposer {
@@ -79,6 +81,22 @@ public class World implements Disposer {
 		}
 		
 		return mapObjects[targetX][targetY][targetZ];
+	}
+	
+	/**
+	 * Give it an inventory item, get a map block
+	 * @param item
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return
+	 */
+	public MapObject exchange(Item item, int x, int y, int z) {
+		if (item instanceof Wood) {
+			return new WoodBlock(this, x, y, z);
+		}
+		
+		return null;
 	}
 
 	@Override
