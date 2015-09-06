@@ -1,2 +1,3 @@
-# one-pix
-I'm still figuring out what this game is
+# one-pixel
+Minimalist building/survival game made using Libgdx.
+
