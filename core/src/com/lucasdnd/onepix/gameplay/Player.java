@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class Player {
 	
+	public static final int MAX_STAT_VALUE = 10000;
 	private int x, y;
 	private Color color;
 	
@@ -15,7 +16,10 @@ public class Player {
 		this.x = x;
 		this.y = y;
 		color = Color.BLACK;
-		health = stamina = food = drink = 1000;
+		health = MAX_STAT_VALUE;
+		stamina = MAX_STAT_VALUE;
+		food = MAX_STAT_VALUE;
+		drink = MAX_STAT_VALUE;
 	}
 
 	public void update() {
@@ -111,5 +115,6 @@ public class Player {
 
 	public void setDrink(int drink) {
 		this.drink = drink;
-	}	
+	}
+	
 }

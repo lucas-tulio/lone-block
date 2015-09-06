@@ -34,6 +34,7 @@ public class SideBar {
 		
 		// Status bars
 		Player p = ((OnePix)Gdx.app.getApplicationListener()).getPlayer();
+		
 		drawBarFill(sr, x + margin, height - margin,  width - margin * 2, p.getHealth());
 		drawBarFill(sr, x + margin, height - margin * 5,  width - margin * 2, p.getStamina());
 		drawBarFill(sr, x + margin, height - margin * 9, width - margin * 2, p.getFood());
@@ -77,7 +78,7 @@ public class SideBar {
 		final float lineWeight = 4f;
 		final float lineHeight = margin * 1.8f;
 		final float lineWidth = width + lineWeight;
-		float lineValue = lineWidth * (value / 1000) - lineWeight;
+		float lineValue = lineWidth * (value / (float)Player.MAX_STAT_VALUE) - lineWeight*2;
 		sr.begin(ShapeType.Filled);
 		sr.setColor(Color.LIGHT_GRAY);
 		sr.rect(x + lineWeight, y - lineHeight, lineValue, lineHeight);
