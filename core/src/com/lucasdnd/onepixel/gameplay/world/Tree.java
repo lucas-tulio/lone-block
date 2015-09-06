@@ -7,23 +7,22 @@ import com.lucasdnd.onepixel.gameplay.items.Wood;
 public class Tree extends MapObject {
 
 	int wood;
-	Disposer disposer;
 	
 	public Tree(Disposer disposer, int x, int y, int z) {
-		super(x, y, z);
-		this.disposer = disposer;
+		super(disposer, x, y, z);
 		wood = new Random().nextInt(8) + 4;
 	}
 	
 	@Override
 	public Object performAction() {
+		
 		if (wood > 0) {
 			wood--;
-			return actionCallback();
-		}
 		
-		if (wood == 0) {
-			disposer.dispose(this);
+			if (wood == 0) {
+				disposer.dispose(this);
+			}
+			return actionCallback();
 		}
 		
 		return null;
