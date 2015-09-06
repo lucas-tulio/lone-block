@@ -1,5 +1,7 @@
 package com.lucasdnd.onepix;
 
+import java.util.Random;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -35,9 +37,10 @@ public class OnePix extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(input);
 
 		// Game objects
-		int worldSize = 1000;
+		int worldSize = 1024;
 		world = new World(worldSize);
-		player = new Player(worldSize / 2, worldSize / 2);
+		Random r = new Random();
+		player = new Player(r.nextInt(worldSize), r.nextInt(worldSize));
 		sideBar = new SideBar(400);
 	}
 	
@@ -55,7 +58,7 @@ public class OnePix extends ApplicationAdapter {
 	public void render () {
 		this.update();
 		
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		world.render(shapeRenderer);
