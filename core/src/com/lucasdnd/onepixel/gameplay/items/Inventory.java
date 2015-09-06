@@ -12,6 +12,15 @@ public class Inventory {
 	}
 	
 	public boolean addItem(Item item) {
+		// If the item is there already, stack
+		for (Item i : content) {
+			if (i.getClass() == item.getClass()) {
+				i.increaseAmount();
+				return true;
+			}
+		}
+		
+		// If not, add
 		if (content.size() < size) {
 			content.add(item);
 			return true;

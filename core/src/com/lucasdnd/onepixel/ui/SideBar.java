@@ -82,14 +82,20 @@ public class SideBar {
 				}
 				
 				if (item != null) {
+					float itemX = x + inventoryBoxSize * i + margin;
+					float itemY = height - margin * 17 - inventoryBoxSize * j;
 					drawRectFill(
 							sr,
 							item.getColor(),
-							x + inventoryBoxSize * i + margin,
-							height - margin * 17 - inventoryBoxSize * j,
+							itemX,
+							itemY,
 							inventoryBoxSize,
 							inventoryBoxSize -4f,
 							1, 1);
+					if (item.getAmount() > 1) {
+						
+						font.drawWhiteFont("" + item.getAmount(), itemX + 38f, itemY - 18f, false, 0);
+					}
 				}
 				
 			}
