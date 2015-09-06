@@ -70,19 +70,19 @@ public class Player {
 	}
 
 	public boolean canMoveUp(World world) {
-		return world.getMap()[x][y+1] == 0;
+		return y + 1 < world.getSize() && world.getMap()[x][y+1] == 0;
 	}
 
 	public boolean canMoveLeft(World world) {
-		return world.getMap()[x-1][y] == 0;
+		return x - 1 >= 0 && world.getMap()[x-1][y] == 0;
 	}
 
 	public boolean canMoveDown(World world) {
-		return world.getMap()[x][y-1] == 0;
+		return y - 1 >= 0 && world.getMap()[x][y-1] == 0;
 	}
 
 	public boolean canMoveRight(World world) {
-		return world.getMap()[x+1][y] == 0;
+		return x + 1 < world.getSize() && world.getMap()[x+1][y] == 0;
 	}
 
 	public int getHealth() {

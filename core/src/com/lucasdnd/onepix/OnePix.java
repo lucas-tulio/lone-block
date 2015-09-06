@@ -37,7 +37,7 @@ public class OnePix extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(input);
 
 		// Game objects
-		int worldSize = 1024;
+		int worldSize = 10;
 		world = new World(worldSize);
 		Random r = new Random();
 		player = new Player(r.nextInt(worldSize), r.nextInt(worldSize));

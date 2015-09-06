@@ -16,7 +16,7 @@ public class World {
 	
 	private final int TREE = 1;
 	
-	private int numTrees = 10000;
+	private int numTrees = 2;
 	
 	public World(int size) {
 		this.size = size;
@@ -55,4 +55,7 @@ public class World {
 		return map;
 	}
 	
+	public int getSize() {
+		return size;
+	}
 }

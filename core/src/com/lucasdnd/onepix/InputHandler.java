@@ -8,26 +8,69 @@ import com.lucasdnd.onepix.gameplay.World;
 
 public class InputHandler implements InputProcessor {
 	
-	@Override
-	public boolean keyDown(int keycode) {
+	public boolean wPressed, aPressed, sPressed, dPressed; // :(
+	
+	private int keyDelay = 0;
+	private int maxKeyDelay = 10;
+	
+	private void handleInput() {
+		
 		Player player = ((OnePix)Gdx.app.getApplicationListener()).getPlayer();
 		World world = ((OnePix)Gdx.app.getApplicationListener()).getWorld();
 		
-		if (keycode == Keys.W && player.canMoveUp(world)) {
-			player.moveUp();
-		} else if (keycode == Keys.A && player.canMoveLeft(world)) {
-			player.moveLeft();
-		} else if (keycode == Keys.S && player.canMoveDown(world)) {
-			player.moveDown();
-		} else if (keycode == Keys.D && player.canMoveRight(world)) {
-			player.moveRight();
+		if (wPressed) {
+			if (player.canMoveUp(world)) {
+				player.moveUp();
+			}
 		}
+		if (sPressed) {
+			if (player.canMoveDown(world)) {
+				player.moveDown();
+			}
+		}
+		if (aPressed) {
+			if (player.canMoveLeft(world)) {
+				player.moveLeft();
+			}
+		}
+		if (dPressed) {
+			if (player.canMoveRight(world)) {
+				player.moveRight();
+			}
+		}
+	}
+	
+	
+	@Override
+	public boolean keyDown(int keycode) {
+				
+		if (keycode == Keys.W) {
+			wPressed = true;
+		} else if (keycode == Keys.A) {
+			aPressed = true;
+		} else if (keycode == Keys.S) {
+			sPressed = true;
+		} else if (keycode == Keys.D) {
+			dPressed = true; // :(
+		}
+		
+		handleInput();
+		
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
+		
+		if (keycode == Keys.W) {
+			wPressed = false;
+		} else if (keycode == Keys.A) {
+			aPressed = false;
+		} else if (keycode == Keys.S) {
+			sPressed = false;
+		} else if (keycode == Keys.D) {
+			dPressed = false; // :(
+		}
 		return false;
 	}
 
