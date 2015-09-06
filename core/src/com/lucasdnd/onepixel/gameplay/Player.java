@@ -4,11 +4,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.gameplay.items.Inventory;
+import com.lucasdnd.onepixel.gameplay.items.Item;
+import com.lucasdnd.onepixel.gameplay.world.MapObject;
+import com.lucasdnd.onepixel.gameplay.world.World;
 
 public class Player {
 	
 	public static final int MAX_STAT_VALUE = 10000;
-	private int x, y, direction;
+	private int x, y, z, direction;
 	public final int UP = 0;
 	public final int LEFT = 1;
 	public final int DOWN = 2;
@@ -67,23 +71,88 @@ public class Player {
 		}
 		sr.end();
 	}
-
-	public int getX() {
-		return x;
+	
+	public void performAction(World world) {
+		int[] target = getTargetBlock();
+		int targetX = target[0];
+		int targetY = target[1];
+		int targetZ = target[2];
+		
+		MapObject targetObject = world.getMapObjectAt(targetX, targetY, targetZ);
+		if (targetObject == null) {
+			return;
+		}
+		
+		Object result = targetObject.performAction();
+		if (result != null) {
+			
+		}
+	}
+	
+	public void placeBlock(World world) {
+		
+	}
+	
+	private int[] getTargetBlock() {
+		int[] result = new int[3];
+		final int X = 0;
+		final int Y = 1;
+		final int Z = 2;
+		result[X] = x;
+		result[Y] = y;
+		result[Z] = z;
+		if (direction == UP) {
+			result[Y]++;
+		} else if (direction == DOWN) {
+			result[Y]--;
+		} else if (direction == RIGHT) {
+			result[X]++;
+		} else if (direction == LEFT) {
+			result[X]--;
+		}
+		return result;
+	}
+	
+	/** Facing methods */
+	
+	public void faceUp() {
+		direction = UP;
+	}
+	
+	public void faceLeft() {
+		direction = LEFT;
+	}
+	
+	public void faceDown() {
+		direction = DOWN;
+	}
+	
+	public void faceRight() {
+		direction = RIGHT;
 	}
 
-	public void setX(int x) {
-		this.x = x;
+	/** Movement Methods */
+	
+	public boolean canMoveUp(World world) {
+		faceUp();
+		return y + 1 < world.getSize() && world.getMapObjects()[x][y+1][0] == null;
 	}
 
-	public int getY() {
-		return y;
+	public boolean canMoveLeft(World world) {
+		faceLeft();
+		return x - 1 >= 0 && world.getMapObjects()[x-1][y][0] == null;
 	}
 
-	public void setY(int y) {
-		this.y = y;
+	public boolean canMoveDown(World world) {
+		faceDown();
+		return y - 1 >= 0 && world.getMapObjects()[x][y-1][0] == null;
 	}
 
+	public boolean canMoveRight(World world) {
+		faceRight();
+		return x + 1 < world.getSize() && world.getMapObjects()[x+1][y][0] == null;
+	}
+	
 	public void moveUp() {
 		stamina--;
 		y++;
@@ -103,43 +172,9 @@ public class Player {
 		stamina--;
 		x--;
 	}
+
+	/** Getters and setters */
 	
-	public void faceUp() {
-		direction = UP;
-	}
-	
-	public void faceLeft() {
-		direction = LEFT;
-	}
-	
-	public void faceDown() {
-		direction = DOWN;
-	}
-	
-	public void faceRight() {
-		direction = RIGHT;
-	}
-
-	public boolean canMoveUp(World world) {
-		faceUp();
-		return y + 1 < world.getSize() && world.getMap()[x][y+1] == 0;
-	}
-
-	public boolean canMoveLeft(World world) {
-		faceLeft();
-		return x - 1 >= 0 && world.getMap()[x-1][y] == 0;
-	}
-
-	public boolean canMoveDown(World world) {
-		faceDown();
-		return y - 1 >= 0 && world.getMap()[x][y-1] == 0;
-	}
-
-	public boolean canMoveRight(World world) {
-		faceRight();
-		return x + 1 < world.getSize() && world.getMap()[x+1][y] == 0;
-	}
-
 	public int getHealth() {
 		return health;
 	}
@@ -186,5 +221,29 @@ public class Player {
 
 	public void setDirection(int direction) {
 		this.direction = direction;
+	}
+	
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	public int getZ() {
+		return z;
+	}
+	
+	public void setZ(int z) {
+		this.z = z;
 	}
 }

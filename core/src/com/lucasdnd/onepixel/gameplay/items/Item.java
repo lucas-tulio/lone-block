@@ -1,4 +1,4 @@
-package com.lucasdnd.onepixel.gameplay;
+package com.lucasdnd.onepixel.gameplay.items;
 
 import com.badlogic.gdx.graphics.Color;
 
@@ -6,9 +6,7 @@ public class Item {
 	private String name;
 	private Color color;
 	
-	public Item(String name, Color color) {
-		this.name = name;
-		this.color = color;
+	public Item() {
 	}
 
 	public String getName() {

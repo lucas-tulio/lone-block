@@ -5,13 +5,12 @@ import java.util.Random;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepixel.gameplay.Player;
-import com.lucasdnd.onepixel.gameplay.World;
+import com.lucasdnd.onepixel.gameplay.world.World;
 import com.lucasdnd.onepixel.ui.SideBar;
 
 public class OnePixel extends ApplicationAdapter {
@@ -19,7 +18,6 @@ public class OnePixel extends ApplicationAdapter {
 	public final static String GAME_NAME = "One Pixel";
 	public final static String VERSION = "v0.1.0";
 	boolean debug = true;
-	FPSLogger fpsLogger;
 	
 	public static float PIXEL_SIZE = 8f;
 	private final float MIN_PIXEL_SIZE = 2f;
@@ -43,7 +41,6 @@ public class OnePixel extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 		uiShapeRenderer = new ShapeRenderer();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		fpsLogger = new FPSLogger();
 		fontBatch = new SpriteBatch();
 		
 		// Input
@@ -118,9 +115,10 @@ public class OnePixel extends ApplicationAdapter {
 		
 		// Action
 		if (input.ePressed) {
-			
+			player.performAction(world);
+			input.delay = 0;
 		} else if (input.wPressed) {
-			
+			player.placeBlock(world);
 		}
 		
 		// Zoom control
