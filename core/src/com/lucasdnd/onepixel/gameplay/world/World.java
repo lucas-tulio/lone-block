@@ -47,8 +47,14 @@ public class World implements Disposer {
 		// World objects
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				if (mapObjects[i][j][0] instanceof Tree) {
-					sr.setColor(new Color(0f, 0.3f, 0f, 1f));
+				
+				MapObject mapObject = mapObjects[i][j][0]; 
+				
+				if (mapObject instanceof Tree) {
+					sr.setColor(mapObject.getColor());
+					sr.rect(i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+				} else if (mapObject instanceof WoodBlock) {
+					sr.setColor(mapObject.getColor());
 					sr.rect(i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
 				}
 			}

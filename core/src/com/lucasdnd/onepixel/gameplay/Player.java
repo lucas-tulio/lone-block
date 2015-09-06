@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.items.Inventory;
 import com.lucasdnd.onepixel.gameplay.items.Item;
+import com.lucasdnd.onepixel.gameplay.world.Exchanger;
 import com.lucasdnd.onepixel.gameplay.world.MapObject;
 import com.lucasdnd.onepixel.gameplay.world.World;
 
@@ -85,6 +86,7 @@ public class Player {
 		
 		Object result = targetObject.performAction();
 		if (result != null) {
+			stamina -= 10;
 			if (result instanceof Item) {
 				inventory.addItem((Item)result);
 			}
@@ -92,7 +94,20 @@ public class Player {
 	}
 	
 	public void placeBlock(World world) {
+		int[] target = getTargetBlock();
+		int targetX = target[0];
+		int targetY = target[1];
+		int targetZ = target[2];
 		
+		MapObject targetObject = world.getMapObjectAt(targetX, targetY, targetZ);
+		if (targetObject != null) {
+			return;
+		}
+		
+		Item item = inventory.getContent().get(inventory.getContent().size() - 1);
+		MapObject itemBlock = Exchanger.exchange(item, world, targetX, targetY, targetZ);
+		world.getMapObjects()[targetX][targetY][targetZ] = itemBlock;
+		stamina -= 10;
 	}
 	
 	private int[] getTargetBlock() {
