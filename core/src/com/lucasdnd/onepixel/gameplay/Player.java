@@ -108,11 +108,13 @@ public class Player {
 		int targetY = target[1];
 		int targetZ = target[2];
 		
+		// Target coordinates
 		MapObject targetObject = world.getMapObjectAt(targetX, targetY, targetZ);
 		if (targetObject != null) {
 			return;
 		}
 		
+		// Get item
 		Item item = null;
 		try {
 			item = inventory.getContent().get(inventory.getContent().size() - 1);
@@ -123,8 +125,14 @@ public class Player {
 			return;
 		}
 		
+		// Transform it into a block
 		MapObject itemBlock = world.exchange(item, targetX, targetY, targetZ);
 		world.getMapObjects()[targetX][targetY][targetZ] = itemBlock;
+		
+		// Consume it
+		item.decreaseAmount();
+		inventory.checkItems();
+		
 		stamina -= 10;
 	}
 	

@@ -14,6 +14,10 @@ public class Item {
 	public void increaseAmount() {
 		amount++;
 	}
+	
+	public void decreaseAmount() {
+		amount--;
+	}
 
 	public String getName() {
 		return name;

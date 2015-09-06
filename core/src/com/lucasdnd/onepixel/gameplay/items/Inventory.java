@@ -11,6 +11,19 @@ public class Inventory {
 		content = new ArrayList<Item>();
 	}
 	
+	/**
+	 * Check if any items need to be removed from the list
+	 */
+	public void checkItems() {
+		ArrayList<Item> itemsToRemove = new ArrayList<Item>();
+		for (Item i : content) {
+			if (i.getAmount() == 0) {
+				itemsToRemove.add(i);
+			}
+		}
+		content.removeAll(itemsToRemove);
+	}
+	
 	public boolean addItem(Item item) {
 		// If the item is there already, stack
 		for (Item i : content) {
