@@ -20,6 +20,8 @@ public class Player {
 	private Color color;
 	private Inventory inventory;
 	
+	private boolean freeMovementMode = true;
+	
 	private int health, stamina, food, drink;
 	
 	public Player(int x, int y) {
@@ -72,6 +74,10 @@ public class Player {
 		sr.end();
 	}
 	
+	/**
+	 * Perform an action on a block
+	 * @param world
+	 */
 	public void performAction(World world) {
 		int[] target = getTargetBlock();
 		int targetX = target[0];
@@ -92,6 +98,10 @@ public class Player {
 		}
 	}
 	
+	/**
+	 * Places the currently selected block
+	 * @param world
+	 */
 	public void placeBlock(World world) {
 		int[] target = getTargetBlock();
 		int targetX = target[0];
@@ -103,12 +113,25 @@ public class Player {
 			return;
 		}
 		
-		Item item = inventory.getContent().get(inventory.getContent().size() - 1);
+		Item item = null;
+		try {
+			item = inventory.getContent().get(inventory.getContent().size() - 1);
+		} catch (Exception e) {
+			return;
+		}
+		if (item == null) {
+			return;
+		}
+		
 		MapObject itemBlock = world.exchange(item, targetX, targetY, targetZ);
 		world.getMapObjects()[targetX][targetY][targetZ] = itemBlock;
 		stamina -= 10;
 	}
 	
+	/**
+	 * Get the coordinates of the block in front of the player
+	 * @return
+	 */
 	private int[] getTargetBlock() {
 		int[] result = new int[3];
 		final int X = 0;
@@ -150,22 +173,74 @@ public class Player {
 	/** Movement Methods */
 	
 	public boolean canMoveUp(World world) {
-		faceUp();
+		if (freeMovementMode) {
+			faceUp();
+			return moveUpCheck(world);
+		} else {
+			
+			if (direction != UP) {
+				faceUp();
+				return false;
+			} else {
+				return moveUpCheck(world);
+			}
+		}
+	}
+	private boolean moveUpCheck(World world) {
 		return y + 1 < world.getSize() && world.getMapObjects()[x][y+1][0] == null;
 	}
 
 	public boolean canMoveLeft(World world) {
-		faceLeft();
+		if (freeMovementMode) {
+			faceLeft();
+			return moveLeftCheck(world);
+		} else {
+			
+			if (direction != LEFT) {
+				faceLeft();
+				return false;
+			} else {
+				return moveLeftCheck(world);
+			}
+		}
+	}
+	private boolean moveLeftCheck(World world) {
 		return x - 1 >= 0 && world.getMapObjects()[x-1][y][0] == null;
 	}
 
 	public boolean canMoveDown(World world) {
-		faceDown();
+		if (freeMovementMode) {
+			faceDown();
+			return moveDownCheck(world);
+		} else {
+			
+			if (direction != DOWN) {
+				faceDown();
+				return false;
+			} else {
+				return moveDownCheck(world);
+			}
+		}
+	}
+	private boolean moveDownCheck(World world) {
 		return y - 1 >= 0 && world.getMapObjects()[x][y-1][0] == null;
 	}
 
 	public boolean canMoveRight(World world) {
-		faceRight();
+		if (freeMovementMode) {
+			faceRight();
+			return moveRightCheck(world);
+		} else {
+			
+			if (direction != RIGHT) {
+				faceRight();
+				return false;
+			} else {
+				return moveRightCheck(world);
+			}
+		}
+	}
+	private boolean moveRightCheck(World world) {
 		return x + 1 < world.getSize() && world.getMapObjects()[x+1][y][0] == null;
 	}
 	
@@ -261,5 +336,9 @@ public class Player {
 	
 	public void setZ(int z) {
 		this.z = z;
+	}
+
+	public boolean isFreeMovementMode() {
+		return freeMovementMode;
 	}
 }

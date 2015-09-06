@@ -65,15 +65,21 @@ public class SideBar {
 		// Inventory
 		for (int i = 0; i < player.getInventory().getSize() / inventoryRows; i++) {
 			for (int j = 0; j < inventoryRows; j++) {
+				
+				// Inventory frame
 				drawRectFrame(sr,
 						x + inventoryBoxSize * i + margin,
 						height - margin * 17 - inventoryBoxSize * j,
 						inventoryBoxSize,
 						inventoryBoxSize);
+				
+				// Inventory fill
 				Item item = null;
 				try {
 					item = player.getInventory().getContent().get(i * inventoryRows + j);
-				} catch (Exception e) {}
+				} catch (Exception e) {
+//					System.out.println("item is null");
+				}
 				
 				if (item != null) {
 					drawRectFill(

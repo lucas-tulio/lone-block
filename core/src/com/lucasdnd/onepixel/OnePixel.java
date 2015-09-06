@@ -76,6 +76,10 @@ public class OnePixel extends ApplicationAdapter {
 				if (player.canMoveUp(world)) {
 					player.moveUp();
 					input.delay = 0;
+				} else {
+					if (player.isFreeMovementMode() == false) {
+						input.delay = 0;
+					}
 				}
 			}
 		}
@@ -87,6 +91,10 @@ public class OnePixel extends ApplicationAdapter {
 				if (player.canMoveDown(world)) {
 					player.moveDown();
 					input.delay = 0;
+				} else {
+					if (player.isFreeMovementMode() == false) {
+						input.delay = 0;
+					}
 				}
 			}
 		}
@@ -98,6 +106,10 @@ public class OnePixel extends ApplicationAdapter {
 				if (player.canMoveLeft(world)) {
 					player.moveLeft();
 					input.delay = 0;
+				} else {
+					if (player.isFreeMovementMode() == false) {
+						input.delay = 0;
+					}
 				}
 			}
 		}
@@ -109,6 +121,10 @@ public class OnePixel extends ApplicationAdapter {
 				if (player.canMoveRight(world)) {
 					player.moveRight();
 					input.delay = 0;
+				} else {
+					if (player.isFreeMovementMode() == false) {
+						input.delay = 0;
+					}
 				}
 			}
 		}
