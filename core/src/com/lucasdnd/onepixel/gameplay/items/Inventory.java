@@ -1,20 +1,20 @@
 package com.lucasdnd.onepixel.gameplay.items;
 
+import java.util.ArrayList;
+
 public class Inventory {
 	private int size;
-	private Item[] content;
+	private ArrayList<Item> content;
 	
 	public Inventory(int size) {
 		this.size = size;
-		content = new Item[size];
+		content = new ArrayList<Item>();
 	}
 	
 	public boolean addItem(Item item) {
-		for (int i = 0; i < content.length; i++) {
-			if (content[i] == null) {
-				content[i] = item;
-				return true;
-			}
+		if (content.size() < size) {
+			content.add(item);
+			return true;
 		}
 		
 		return false;
@@ -28,11 +28,11 @@ public class Inventory {
 		this.size = size;
 	}
 
-	public Item[] getContent() {
+	public ArrayList<Item> getContent() {
 		return content;
 	}
 
-	public void setContent(Item[] content) {
+	public void setContent(ArrayList<Item> content) {
 		this.content = content;
 	}
 }

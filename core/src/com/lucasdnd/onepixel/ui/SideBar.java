@@ -70,7 +70,11 @@ public class SideBar {
 						height - margin * 17 - inventoryBoxSize * j,
 						inventoryBoxSize,
 						inventoryBoxSize);
-				Item item = player.getInventory().getContent()[i * inventoryRows + j];
+				Item item = null;
+				try {
+					item = player.getInventory().getContent().get(i * inventoryRows + j);
+				} catch (Exception e) {}
+				
 				if (item != null) {
 					drawRectFill(
 							sr,
