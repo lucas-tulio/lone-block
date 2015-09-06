@@ -9,10 +9,13 @@ public class Player {
 	private int x, y;
 	private Color color;
 	
+	private int health, stamina, food, drink;
+	
 	public Player(int x, int y) {
 		this.x = x;
 		this.y = y;
 		color = Color.BLACK;
+		health = stamina = food = drink = 1000;
 	}
 
 	public void update() {
@@ -43,18 +46,22 @@ public class Player {
 	}
 
 	public void moveUp() {
+		stamina--;
 		y++;
 	}
 	
 	public void moveDown() {
+		stamina--;
 		y--;
 	}
 	
 	public void moveRight() {
+		stamina--;
 		x++;
 	}
 	
 	public void moveLeft() {
+		stamina--;
 		x--;
 	}
 
@@ -73,5 +80,36 @@ public class Player {
 	public boolean canMoveRight(World world) {
 		return world.getMap()[x+1][y] == 0;
 	}
-	
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
+	public int getStamina() {
+		return stamina;
+	}
+
+	public void setStamina(int stamina) {
+		this.stamina = stamina;
+	}
+
+	public int getFood() {
+		return food;
+	}
+
+	public void setFood(int food) {
+		this.food = food;
+	}
+
+	public int getDrink() {
+		return drink;
+	}
+
+	public void setDrink(int drink) {
+		this.drink = drink;
+	}	
 }

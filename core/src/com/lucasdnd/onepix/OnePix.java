@@ -6,7 +6,6 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepix.gameplay.Player;
 import com.lucasdnd.onepix.gameplay.World;
@@ -23,16 +22,17 @@ public class OnePix extends ApplicationAdapter {
 	OrthographicCamera camera;
 	ShapeRenderer shapeRenderer;
 	ShapeRenderer uiShapeRenderer;
-	BitmapFont font;
 	
 	@Override
 	public void create () {
 		
-		// Game control stuff
+		// Render, camera
 		shapeRenderer = new ShapeRenderer();
 		uiShapeRenderer = new ShapeRenderer();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.zoom = 1f/scale;
+		
+		// Input
 		input = new InputHandler();
 		Gdx.input.setInputProcessor(input);
 
@@ -41,7 +41,9 @@ public class OnePix extends ApplicationAdapter {
 		world = new World(worldSize);
 		Random r = new Random();
 		player = new Player(r.nextInt(worldSize), r.nextInt(worldSize));
-		sideBar = new SideBar(400);
+		
+		int sideBarWidth = 400;
+		sideBar = new SideBar(Gdx.graphics.getWidth() - sideBarWidth, 0, sideBarWidth);
 	}
 	
 	private void update() {
