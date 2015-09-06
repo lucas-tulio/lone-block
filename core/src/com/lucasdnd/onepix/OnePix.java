@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,7 +19,10 @@ public class OnePix extends ApplicationAdapter {
 	public final static String VERSION = "v0.1.0";
 	boolean debug = true;
 	
-	public final static float PIXEL_SIZE = 8f;
+	public static float PIXEL_SIZE = 8f;
+	private final float MIN_PIXEL_SIZE = 2f;
+	private final float MAX_PIXEL_SIZE = 32f;
+	
 	World world;
 	Player player;
 	SideBar sideBar;
@@ -85,6 +89,18 @@ public class OnePix extends ApplicationAdapter {
 			if (player.canMoveRight(world)) {
 				player.moveRight();
 				input.delay = 0;
+			}
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.EQUALS)) {
+			PIXEL_SIZE *= 2f;
+			if (PIXEL_SIZE >= MAX_PIXEL_SIZE) {
+				PIXEL_SIZE = MAX_PIXEL_SIZE;
+			}
+		} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
+			PIXEL_SIZE /= 2f;
+			if (PIXEL_SIZE <= MIN_PIXEL_SIZE) {
+				PIXEL_SIZE = MIN_PIXEL_SIZE;
 			}
 		}
 	}
