@@ -71,42 +71,55 @@ public class OnePixel extends ApplicationAdapter {
 		}
 		
 		// Movement
-		if (input.wPressed) {
-			if (player.canMoveUp(world)) {
-				player.moveUp();
-				input.delay = 0;
+		if (input.upPressed) {
+			
+			if (input.shiftPressed) {
+				player.faceUp();
+			} else {
+				if (player.canMoveUp(world)) {
+					player.moveUp();
+					input.delay = 0;
+				}
 			}
 		}
-		if (input.sPressed) {
-			if (player.canMoveDown(world)) {
-				player.moveDown();
-				input.delay = 0;
+		if (input.downPressed) {
+			
+			if (input.shiftPressed) {
+				player.faceDown();
+			} else {
+				if (player.canMoveDown(world)) {
+					player.moveDown();
+					input.delay = 0;
+				}
 			}
 		}
-		if (input.aPressed) {
-			if (player.canMoveLeft(world)) {
-				player.moveLeft();
-				input.delay = 0;
+		if (input.leftPressed) {
+			
+			if (input.shiftPressed) {
+				player.faceLeft();
+			} else {
+				if (player.canMoveLeft(world)) {
+					player.moveLeft();
+					input.delay = 0;
+				}
 			}
 		}
-		if (input.dPressed) {
-			if (player.canMoveRight(world)) {
-				player.moveRight();
-				input.delay = 0;
+		if (input.rightPressed) {
+			
+			if (input.shiftPressed) {
+				player.faceRight();
+			} else {
+				if (player.canMoveRight(world)) {
+					player.moveRight();
+					input.delay = 0;
+				}
 			}
 		}
 		
 		// Action
-		if (input.iPressed) {
+		if (input.ePressed) {
 			
-		}
-		if (input.jPressed) {
-			
-		}
-		if (input.kPressed) {
-			
-		}
-		if (input.lPressed) {
+		} else if (input.wPressed) {
 			
 		}
 		
@@ -154,13 +167,15 @@ public class OnePixel extends ApplicationAdapter {
 		
 		// Debug
 		if (debug) {
-			fpsLogger.log();
 			fontBatch.begin();
-			Resources.get().whiteFont.draw(fontBatch, "w: " + input.wPressed, 0f, Gdx.graphics.getHeight());
-			Resources.get().whiteFont.draw(fontBatch, "a: " + input.aPressed, 0f, Gdx.graphics.getHeight() - 20f);
-			Resources.get().whiteFont.draw(fontBatch, "s: " + input.sPressed, 0f, Gdx.graphics.getHeight() - 40f);
-			Resources.get().whiteFont.draw(fontBatch, "d: " + input.dPressed, 0f, Gdx.graphics.getHeight() - 60f);
-			Resources.get().whiteFont.draw(fontBatch, "delay: " + input.delay, 0f, Gdx.graphics.getHeight() - 100f);
+			Resources.get().whiteFont.draw(fontBatch, "u: " + input.upPressed, 0f, Gdx.graphics.getHeight());
+			Resources.get().whiteFont.draw(fontBatch, "l: " + input.leftPressed, 0f, Gdx.graphics.getHeight() - 20f);
+			Resources.get().whiteFont.draw(fontBatch, "d: " + input.downPressed, 0f, Gdx.graphics.getHeight() - 40f);
+			Resources.get().whiteFont.draw(fontBatch, "r: " + input.rightPressed, 0f, Gdx.graphics.getHeight() - 60f);
+			Resources.get().whiteFont.draw(fontBatch, "e: " + input.ePressed, 0f, Gdx.graphics.getHeight() - 100f);
+			Resources.get().whiteFont.draw(fontBatch, "w: " + input.wPressed, 0f, Gdx.graphics.getHeight() - 120f);
+			Resources.get().whiteFont.draw(fontBatch, "shift: " + input.shiftPressed, 0f, Gdx.graphics.getHeight() - 140f);
+			Resources.get().whiteFont.draw(fontBatch, "delay: " + input.delay, 0f, Gdx.graphics.getHeight() - 180f);
 			fontBatch.end();
 		}
 	}

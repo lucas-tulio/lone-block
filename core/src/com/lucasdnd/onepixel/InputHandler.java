@@ -5,8 +5,9 @@ import com.badlogic.gdx.InputProcessor;
 
 public class InputHandler implements InputProcessor {
 	
-	public boolean wPressed, aPressed, sPressed, dPressed; // :(
-	public boolean iPressed, jPressed, kPressed, lPressed;
+	public boolean upPressed, leftPressed, downPressed, rightPressed; // :(
+	public boolean ePressed, wPressed;
+	public boolean shiftPressed;
 	
 	public int delay = 0;
 	public int maxDelay = 10;
@@ -14,24 +15,24 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 				
-		if (keycode == Keys.W) {
-			wPressed = true;
-		} else if (keycode == Keys.A) {
-			aPressed = true;
-		} else if (keycode == Keys.S) {
-			sPressed = true;
-		} else if (keycode == Keys.D) {
-			dPressed = true; // :(
+		if (keycode == Keys.UP) {
+			upPressed = true;
+		} else if (keycode == Keys.LEFT) {
+			leftPressed = true;
+		} else if (keycode == Keys.DOWN) {
+			downPressed = true;
+		} else if (keycode == Keys.RIGHT) {
+			rightPressed = true;
 		}
 		
-		if (keycode == Keys.I) {
-			iPressed = true;
-		} else if (keycode == Keys.J) {
-			jPressed = true;
-		} else if (keycode == Keys.K) {
-			kPressed = true;
-		} else if (keycode == Keys.L) {
-			lPressed = true; // :(
+		if (keycode == Keys.E) {
+			ePressed = true;
+		} else if (keycode == Keys.W) {
+			wPressed = true;
+		}
+		
+		if (keycode == Keys.SHIFT_LEFT || keycode == Keys.SHIFT_RIGHT) {
+			shiftPressed = true;
 		}
 	
 		return false;
@@ -40,32 +41,30 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean keyUp(int keycode) {
 		
-		if (keycode == Keys.W) {
-			wPressed = false;
+		if (keycode == Keys.UP) {
+			upPressed = false;
 			delay = maxDelay;
-		} else if (keycode == Keys.A) {
-			aPressed = false;
+		} else if (keycode == Keys.LEFT) {
+			leftPressed = false;
 			delay = maxDelay;
-		} else if (keycode == Keys.S) {
-			sPressed = false;
+		} else if (keycode == Keys.DOWN) {
+			downPressed = false;
 			delay = maxDelay;
-		} else if (keycode == Keys.D) {
-			dPressed = false; // :(
+		} else if (keycode == Keys.RIGHT) {
+			rightPressed = false;
 			delay = maxDelay;
 		}
 		
-		if (keycode == Keys.I) {
-			iPressed = false;
+		if (keycode == Keys.E) {
+			ePressed = false;
 			delay = maxDelay;
-		} else if (keycode == Keys.J) {
-			jPressed = false;
+		} else if (keycode == Keys.W) {
+			wPressed = false;
 			delay = maxDelay;
-		} else if (keycode == Keys.K) {
-			kPressed = false;
-			delay = maxDelay;
-		} else if (keycode == Keys.L) {
-			lPressed = false; // :(
-			delay = maxDelay;
+		}
+		
+		if (keycode == Keys.SHIFT_LEFT || keycode == Keys.SHIFT_RIGHT) {
+			shiftPressed = false;
 		}
 		
 		return false;
