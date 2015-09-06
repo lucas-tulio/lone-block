@@ -9,6 +9,7 @@ public class Player {
 	public static final int MAX_STAT_VALUE = 10000;
 	private int x, y;
 	private Color color;
+	private Inventory inventory;
 	
 	private int health, stamina, food, drink;
 	
@@ -20,6 +21,8 @@ public class Player {
 		stamina = MAX_STAT_VALUE;
 		food = MAX_STAT_VALUE;
 		drink = MAX_STAT_VALUE;
+		
+		inventory = new Inventory(27);
 	}
 
 	public void update() {
@@ -116,5 +119,12 @@ public class Player {
 	public void setDrink(int drink) {
 		this.drink = drink;
 	}
-	
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
+	}
 }
