@@ -13,7 +13,13 @@ public class SideBar {
 	int x, y, width;
 	float margin = 20f;
 	
+	// Status bar attributes
+	float barHeight;
+	float barWidth;
+	
+	// Inventory attributes
 	int inventoryRows = 3;
+	float inventoryBoxSize = margin * 2;
 	
 	FontUtils font;
 	
@@ -21,6 +27,8 @@ public class SideBar {
 		this.x = x;
 		this.y = y;
 		this.width = width;
+		barHeight = margin * 1.8f;
+		barWidth = width - margin * 2;
 		font = new FontUtils();
 	}
 	
@@ -37,15 +45,15 @@ public class SideBar {
 		// Status bars
 		Player player = ((OnePix)Gdx.app.getApplicationListener()).getPlayer();
 		
-		drawRectFill(sr, x + margin, height - margin,  width - margin * 2, margin * 1.8f, player.getHealth());
-		drawRectFill(sr, x + margin, height - margin * 5,  width - margin * 2, margin * 1.8f, player.getStamina());
-		drawRectFill(sr, x + margin, height - margin * 9, width - margin * 2, margin * 1.8f, player.getFood());
-		drawRectFill(sr, x + margin, height - margin * 13, width - margin * 2, margin * 1.8f, player.getDrink());
+		drawRectFill(sr, x + margin, height - margin,       barWidth, barHeight, player.getHealth());
+		drawRectFill(sr, x + margin, height - margin * 5,   barWidth, barHeight, player.getStamina());
+		drawRectFill(sr, x + margin, height - margin * 9,   barWidth, barHeight, player.getFood());
+		drawRectFill(sr, x + margin, height - margin * 13,  barWidth, barHeight, player.getDrink());
 		
-		drawRectFrame(sr, x + margin, height - margin, width - margin * 2, margin * 1.8f);
-		drawRectFrame(sr, x + margin, height - margin * 5, width - margin * 2, margin * 1.8f);
-		drawRectFrame(sr, x + margin, height - margin * 9, width - margin * 2, margin * 1.8f);
-		drawRectFrame(sr, x + margin, height - margin * 13, width - margin * 2, margin * 1.8f);
+		drawRectFrame(sr, x + margin, height - margin,      barWidth, barHeight);
+		drawRectFrame(sr, x + margin, height - margin * 5,  barWidth, barHeight);
+		drawRectFrame(sr, x + margin, height - margin * 9,  barWidth, barHeight);
+		drawRectFrame(sr, x + margin, height - margin * 13, barWidth, barHeight);
 		
 		// UI Text
 		font.drawWhiteFont("Health",  x + margin, height - margin * 3, true);
@@ -57,13 +65,13 @@ public class SideBar {
 		for (int i = 0; i < player.getInventory().getSize() / inventoryRows; i++) {
 			for (int j = 0; j < inventoryRows; j++) {
 				drawRectFrame(sr,
-						x + margin * 2 * i + margin,
-						height - margin * 17 - margin * 2 * j,
-						margin * 2,
-						margin * 2);
+						x + inventoryBoxSize * i + margin,
+						height - margin * 17 - inventoryBoxSize * j,
+						inventoryBoxSize,
+						inventoryBoxSize);
 			}
-			
 		}
+		font.drawWhiteFont("Inventory", x + margin, height - margin * 23 - 3f, true);
 	}
 	
 	private void drawRectFrame(ShapeRenderer sr, float x, float y, float width, float height) {
