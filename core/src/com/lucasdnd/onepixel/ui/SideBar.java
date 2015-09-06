@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.FontUtils;
 import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.Player;
+import com.lucasdnd.onepixel.gameplay.items.Item;
 
 public class SideBar {
 	
@@ -45,10 +46,10 @@ public class SideBar {
 		// Status bars
 		Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
 		
-		drawRectFill(sr, x + margin, height - margin,       barWidth, barHeight, player.getHealth());
-		drawRectFill(sr, x + margin, height - margin * 5,   barWidth, barHeight, player.getStamina());
-		drawRectFill(sr, x + margin, height - margin * 9,   barWidth, barHeight, player.getFood());
-		drawRectFill(sr, x + margin, height - margin * 13,  barWidth, barHeight, player.getDrink());
+		drawRectFill(sr, null, x + margin, height - margin,       barWidth, barHeight, player.getHealth(), Player.MAX_STAT_VALUE);
+		drawRectFill(sr, null, x + margin, height - margin * 5,   barWidth, barHeight, player.getStamina(), Player.MAX_STAT_VALUE);
+		drawRectFill(sr, null, x + margin, height - margin * 9,   barWidth, barHeight, player.getFood(), Player.MAX_STAT_VALUE);
+		drawRectFill(sr, null, x + margin, height - margin * 13,  barWidth, barHeight, player.getDrink(), Player.MAX_STAT_VALUE);
 		
 		drawRectFrame(sr, x + margin, height - margin,      barWidth, barHeight);
 		drawRectFrame(sr, x + margin, height - margin * 5,  barWidth, barHeight);
@@ -69,6 +70,18 @@ public class SideBar {
 						height - margin * 17 - inventoryBoxSize * j,
 						inventoryBoxSize,
 						inventoryBoxSize);
+				Item item = player.getInventory().getContent()[i * inventoryRows + j];
+				if (item != null) {
+					drawRectFill(
+							sr,
+							item.getColor(),
+							x + inventoryBoxSize * i + margin,
+							height - margin * 17 - inventoryBoxSize * j,
+							inventoryBoxSize,
+							inventoryBoxSize -4f,
+							1, 1);
+				}
+				
 			}
 		}
 		font.drawWhiteFont("Inventory", x + margin, height - margin * 23 - 3f, true);
@@ -100,13 +113,18 @@ public class SideBar {
 		sr.end();
 	}
 	
-	private void drawRectFill(ShapeRenderer sr, float x, float y, float width, float height, int value) {
+	private void drawRectFill(ShapeRenderer sr, Color c, float x, float y, float width, float height, int value, int maxValue) {
 		final float lineWeight = 4f;
 		final float lineHeight = height;
 		final float lineWidth = width + lineWeight;
-		float lineValue = lineWidth * (value / (float)Player.MAX_STAT_VALUE) - lineWeight*2;
+		float lineValue = lineWidth * ((float)value / (float)maxValue) - lineWeight*2f;
 		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.LIGHT_GRAY);
+		if (c == null) {
+			sr.setColor(Color.LIGHT_GRAY);
+		} else {
+			sr.setColor(c);
+		}
+		
 		sr.rect(x + lineWeight, y - lineHeight, lineValue, lineHeight);
 		sr.end();
 	}

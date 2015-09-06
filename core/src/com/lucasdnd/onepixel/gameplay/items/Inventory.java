@@ -8,6 +8,17 @@ public class Inventory {
 		this.size = size;
 		content = new Item[size];
 	}
+	
+	public boolean addItem(Item item) {
+		for (int i = 0; i < content.length; i++) {
+			if (content[i] == null) {
+				content[i] = item;
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 	public int getSize() {
 		return size;

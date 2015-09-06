@@ -85,7 +85,9 @@ public class Player {
 		
 		Object result = targetObject.performAction();
 		if (result != null) {
-			
+			if (result instanceof Item) {
+				inventory.addItem((Item)result);
+			}
 		}
 	}
 	
