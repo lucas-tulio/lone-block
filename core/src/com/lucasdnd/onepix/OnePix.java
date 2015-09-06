@@ -18,7 +18,7 @@ public class OnePix extends ApplicationAdapter {
 	public final static String VERSION = "v0.1.0";
 	boolean debug = true;
 	
-	final float scale = 8f;
+	public final static float PIXEL_SIZE = 8f;
 	World world;
 	Player player;
 	SideBar sideBar;
@@ -37,7 +37,6 @@ public class OnePix extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 		uiShapeRenderer = new ShapeRenderer();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.zoom = 1f/scale;
 		
 		fontBatch = new SpriteBatch();
 		
@@ -94,7 +93,7 @@ public class OnePix extends ApplicationAdapter {
 		
 		handleInput();
 		
-		camera.position.set(player.getX() + (sideBar.getWidth() * 0.5f * 1f/scale), player.getY(), 0f);
+		camera.position.set(player.getX() * OnePix.PIXEL_SIZE + (sideBar.getWidth() * 0.5f), player.getY() * OnePix.PIXEL_SIZE, 0f);
 		camera.update();
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		

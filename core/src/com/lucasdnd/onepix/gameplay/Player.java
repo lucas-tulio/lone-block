@@ -3,6 +3,7 @@ package com.lucasdnd.onepix.gameplay;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.lucasdnd.onepix.OnePix;
 
 public class Player {
 	
@@ -32,7 +33,7 @@ public class Player {
 	public void render(ShapeRenderer sr) {
 		sr.begin(ShapeType.Filled);
 		sr.setColor(color);
-		sr.rect(x, y, 1f, 1f);
+		sr.rect(x * OnePix.PIXEL_SIZE, y * OnePix.PIXEL_SIZE, OnePix.PIXEL_SIZE, OnePix.PIXEL_SIZE);
 		sr.end();
 	}
 
