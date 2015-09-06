@@ -1,23 +1,25 @@
-package com.lucasdnd.onepix;
+package com.lucasdnd.onepixel;
 
 import java.util.Random;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.lucasdnd.onepix.gameplay.Player;
-import com.lucasdnd.onepix.gameplay.World;
-import com.lucasdnd.onepix.ui.SideBar;
+import com.lucasdnd.onepixel.gameplay.Player;
+import com.lucasdnd.onepixel.gameplay.World;
+import com.lucasdnd.onepixel.ui.SideBar;
 
-public class OnePix extends ApplicationAdapter {
+public class OnePixel extends ApplicationAdapter {
 	
 	public final static String GAME_NAME = "One Pixel";
 	public final static String VERSION = "v0.1.0";
 	boolean debug = true;
+	FPSLogger fpsLogger;
 	
 	public static float PIXEL_SIZE = 8f;
 	private final float MIN_PIXEL_SIZE = 2f;
@@ -41,7 +43,7 @@ public class OnePix extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 		uiShapeRenderer = new ShapeRenderer();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		
+		fpsLogger = new FPSLogger();
 		fontBatch = new SpriteBatch();
 		
 		// Input
@@ -49,7 +51,7 @@ public class OnePix extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(input);
 
 		// Game objects
-		int worldSize = 100;
+		int worldSize = 1024;
 		world = new World(worldSize);
 		Random r = new Random();
 		player = new Player(r.nextInt(worldSize), r.nextInt(worldSize));
@@ -60,6 +62,7 @@ public class OnePix extends ApplicationAdapter {
 	
 	private void handleInput() {
 		
+		// Key hold delay
 		input.delay++;
 		if (input.delay < input.maxDelay) {
 			return;
@@ -67,6 +70,7 @@ public class OnePix extends ApplicationAdapter {
 			input.delay = input.maxDelay;
 		}
 		
+		// Movement
 		if (input.wPressed) {
 			if (player.canMoveUp(world)) {
 				player.moveUp();
@@ -92,6 +96,21 @@ public class OnePix extends ApplicationAdapter {
 			}
 		}
 		
+		// Action
+		if (input.iPressed) {
+			
+		}
+		if (input.jPressed) {
+			
+		}
+		if (input.kPressed) {
+			
+		}
+		if (input.lPressed) {
+			
+		}
+		
+		// Zoom control
 		if (Gdx.input.isKeyJustPressed(Keys.EQUALS)) {
 			PIXEL_SIZE *= 2f;
 			if (PIXEL_SIZE >= MAX_PIXEL_SIZE) {
@@ -103,13 +122,18 @@ public class OnePix extends ApplicationAdapter {
 				PIXEL_SIZE = MIN_PIXEL_SIZE;
 			}
 		}
+		
+		// Debug
+		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
+			debug = !debug;
+		}
 	}
 	
 	private void update() {
 		
 		handleInput();
 		
-		camera.position.set(player.getX() * OnePix.PIXEL_SIZE + (sideBar.getWidth() * 0.5f), player.getY() * OnePix.PIXEL_SIZE, 0f);
+		camera.position.set(player.getX() * OnePixel.PIXEL_SIZE + (sideBar.getWidth() * 0.5f), player.getY() * OnePixel.PIXEL_SIZE, 0f);
 		camera.update();
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		
@@ -130,6 +154,7 @@ public class OnePix extends ApplicationAdapter {
 		
 		// Debug
 		if (debug) {
+			fpsLogger.log();
 			fontBatch.begin();
 			Resources.get().whiteFont.draw(fontBatch, "w: " + input.wPressed, 0f, Gdx.graphics.getHeight());
 			Resources.get().whiteFont.draw(fontBatch, "a: " + input.aPressed, 0f, Gdx.graphics.getHeight() - 20f);

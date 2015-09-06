@@ -1,4 +1,4 @@
-package com.lucasdnd.onepix.gameplay;
+package com.lucasdnd.onepixel.gameplay;
 
 public class Inventory {
 	private int size;

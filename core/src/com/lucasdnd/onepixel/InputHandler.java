@@ -1,4 +1,4 @@
-package com.lucasdnd.onepix;
+package com.lucasdnd.onepixel;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 public class InputHandler implements InputProcessor {
 	
 	public boolean wPressed, aPressed, sPressed, dPressed; // :(
+	public boolean iPressed, jPressed, kPressed, lPressed;
 	
 	public int delay = 0;
 	public int maxDelay = 10;
@@ -21,6 +22,16 @@ public class InputHandler implements InputProcessor {
 			sPressed = true;
 		} else if (keycode == Keys.D) {
 			dPressed = true; // :(
+		}
+		
+		if (keycode == Keys.I) {
+			iPressed = true;
+		} else if (keycode == Keys.J) {
+			jPressed = true;
+		} else if (keycode == Keys.K) {
+			kPressed = true;
+		} else if (keycode == Keys.L) {
+			lPressed = true; // :(
 		}
 	
 		return false;
@@ -42,6 +53,21 @@ public class InputHandler implements InputProcessor {
 			dPressed = false; // :(
 			delay = maxDelay;
 		}
+		
+		if (keycode == Keys.I) {
+			iPressed = false;
+			delay = maxDelay;
+		} else if (keycode == Keys.J) {
+			jPressed = false;
+			delay = maxDelay;
+		} else if (keycode == Keys.K) {
+			kPressed = false;
+			delay = maxDelay;
+		} else if (keycode == Keys.L) {
+			lPressed = false; // :(
+			delay = maxDelay;
+		}
+		
 		return false;
 	}
 

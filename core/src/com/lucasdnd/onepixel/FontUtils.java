@@ -1,4 +1,4 @@
-package com.lucasdnd.onepix;
+package com.lucasdnd.onepixel;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

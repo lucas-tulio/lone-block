@@ -1,12 +1,12 @@
-package com.lucasdnd.onepix.ui;
+package com.lucasdnd.onepixel.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.lucasdnd.onepix.FontUtils;
-import com.lucasdnd.onepix.OnePix;
-import com.lucasdnd.onepix.gameplay.Player;
+import com.lucasdnd.onepixel.FontUtils;
+import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.gameplay.Player;
 
 public class SideBar {
 	
@@ -43,7 +43,7 @@ public class SideBar {
 		sr.end();
 		
 		// Status bars
-		Player player = ((OnePix)Gdx.app.getApplicationListener()).getPlayer();
+		Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
 		
 		drawRectFill(sr, x + margin, height - margin,       barWidth, barHeight, player.getHealth());
 		drawRectFill(sr, x + margin, height - margin * 5,   barWidth, barHeight, player.getStamina());
@@ -74,8 +74,8 @@ public class SideBar {
 		font.drawWhiteFont("Inventory", x + margin, height - margin * 23 - 3f, true);
 		
 		// Game name and version
-		font.drawWhiteFont(OnePix.GAME_NAME, x + margin,         margin * 1.5f, true);
-		font.drawWhiteFont(OnePix.VERSION,   x + width - margin * 4 - 6f, margin * 1.5f, true);
+		font.drawWhiteFont(OnePixel.GAME_NAME, x + margin,         margin * 1.5f, true);
+		font.drawWhiteFont(OnePixel.VERSION,   x + width - margin * 4 - 6f, margin * 1.5f, true);
 	}
 	
 	private void drawRectFrame(ShapeRenderer sr, float x, float y, float width, float height) {

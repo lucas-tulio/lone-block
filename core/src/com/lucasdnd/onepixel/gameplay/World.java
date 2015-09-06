@@ -1,11 +1,11 @@
-package com.lucasdnd.onepix.gameplay;
+package com.lucasdnd.onepixel.gameplay;
 
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.lucasdnd.onepix.OnePix;
+import com.lucasdnd.onepixel.OnePixel;
 
 
 public class World {
@@ -17,7 +17,7 @@ public class World {
 	
 	private final int TREE = 1;
 	
-	private int numTrees = 2;
+	private int numTrees = 10000;
 	
 	public World(int size) {
 		this.size = size;
@@ -37,14 +37,14 @@ public class World {
 	public void render(ShapeRenderer sr) {
 		sr.begin(ShapeType.Filled);
 		sr.setColor(Color.FOREST);
-		sr.rect(0f, 0f, size * OnePix.PIXEL_SIZE, size * OnePix.PIXEL_SIZE);
+		sr.rect(0f, 0f, size * OnePixel.PIXEL_SIZE, size * OnePixel.PIXEL_SIZE);
 		
 		// World objects
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (map[i][j] == TREE) {
 					sr.setColor(new Color(0f, 0.3f, 0f, 1f));
-					sr.rect(i * OnePix.PIXEL_SIZE, j * OnePix.PIXEL_SIZE, OnePix.PIXEL_SIZE, OnePix.PIXEL_SIZE);
+					sr.rect(i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
 				}
 			}
 		}

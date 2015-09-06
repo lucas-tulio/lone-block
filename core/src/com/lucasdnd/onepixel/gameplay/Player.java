@@ -1,9 +1,9 @@
-package com.lucasdnd.onepix.gameplay;
+package com.lucasdnd.onepixel.gameplay;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.lucasdnd.onepix.OnePix;
+import com.lucasdnd.onepixel.OnePixel;
 
 public class Player {
 	
@@ -33,7 +33,7 @@ public class Player {
 	public void render(ShapeRenderer sr) {
 		sr.begin(ShapeType.Filled);
 		sr.setColor(color);
-		sr.rect(x * OnePix.PIXEL_SIZE, y * OnePix.PIXEL_SIZE, OnePix.PIXEL_SIZE, OnePix.PIXEL_SIZE);
+		sr.rect(x * OnePixel.PIXEL_SIZE, y * OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
 		sr.end();
 	}
 
