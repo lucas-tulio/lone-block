@@ -100,6 +100,9 @@ public class SideBar {
 		final float lineHeight = height;
 		final float lineWidth = width + lineWeight;
 		float lineValue = lineWidth * ((float)value / (float)maxValue) - lineWeight * 2f;
+		if (lineValue <= 0) {
+			return;
+		}
 		sr.begin(ShapeType.Filled);
 		if (c == null) {
 			sr.setColor(Color.LIGHT_GRAY);

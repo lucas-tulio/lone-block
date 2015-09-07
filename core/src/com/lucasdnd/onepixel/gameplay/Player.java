@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.items.Inventory;
 import com.lucasdnd.onepixel.gameplay.items.Item;
+import com.lucasdnd.onepixel.gameplay.items.StatRecovery;
+import com.lucasdnd.onepixel.gameplay.items.Usable;
 import com.lucasdnd.onepixel.gameplay.world.MapObject;
 import com.lucasdnd.onepixel.gameplay.world.Water;
 import com.lucasdnd.onepixel.gameplay.world.World;
@@ -25,6 +27,7 @@ public class Player {
 	private Inventory inventory;
 	
 	private boolean freeMovementMode = true;
+	private boolean dead;
 	
 	private int health, stamina, food, drink;
 	private int statusDecrease;
@@ -72,6 +75,10 @@ public class Player {
 			food--;
 			drink -= 2;
 			statusDecrease = 0;
+		}
+		
+		if (food <= 0 || drink <= 0 || health <= 0) {
+			dead = true;
 		}
 	}
 
@@ -125,16 +132,19 @@ public class Player {
 		
 		Object result = targetObject.performAction();
 		if (result != null) {
-			stamina -= 10;
 			if (result instanceof Item) {
 				inventory.addItem((Item)result);
+				stamina -= 10;
+				food -= 3;
+				drink -= 5;
+			} else if (result instanceof Usable) {
+				StatRecovery statRecovery = (StatRecovery) result;
+				health += statRecovery.getHealth();
+				stamina += statRecovery.getStamina();
+				food += statRecovery.getFood();
+				drink += statRecovery.getDrink();
 			}
 		}
-		
-		// Stats update
-		stamina -= 10;
-		food -= 3;
-		drink -= 5;
 	}
 	
 	/**
@@ -390,5 +400,9 @@ public class Player {
 
 	public boolean isFreeMovementMode() {
 		return freeMovementMode;
+	}
+
+	public boolean isDead() {
+		return dead;
 	}
 }

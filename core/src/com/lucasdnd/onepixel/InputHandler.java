@@ -6,7 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 public class InputHandler implements InputProcessor {
 	
 	public boolean leftMouseDown, leftMouseJustClicked, rightMouseDown, rightMouseJustClicked;
-	public boolean upPressed, leftPressed, downPressed, rightPressed; // :(
+	public boolean upPressed, leftPressed, downPressed, rightPressed;
 	public boolean ePressed, wPressed;
 	public boolean shiftPressed;
 	

@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.gameplay.Player;
-import com.lucasdnd.onepixel.gameplay.items.InventoryBox;
 import com.lucasdnd.onepixel.gameplay.world.World;
 import com.lucasdnd.onepixel.ui.SideBar;
 import com.lucasdnd.onepixel.ui.Tooltip;
@@ -34,6 +34,7 @@ public class OnePixel extends ApplicationAdapter {
 	
 	SpriteBatch fontBatch;
 	Tooltip tooltip;
+	FontUtils font;
 	
 	@Override
 	public void create () {
@@ -43,6 +44,7 @@ public class OnePixel extends ApplicationAdapter {
 		uiShapeRenderer = new ShapeRenderer();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		fontBatch = new SpriteBatch();
+		font = new FontUtils();
 		
 		// Input
 		input = new InputHandler();
@@ -160,6 +162,11 @@ public class OnePixel extends ApplicationAdapter {
 	}
 	
 	private void update() {
+		
+		if (player.isDead()) {
+			return;
+		}
+		
 		handleInput();
 		
 		camera.position.set(player.getX() * OnePixel.PIXEL_SIZE + (sideBar.getWidth() * 0.5f), player.getY() * OnePixel.PIXEL_SIZE, 0f);
@@ -184,6 +191,10 @@ public class OnePixel extends ApplicationAdapter {
 		sideBar.render(uiShapeRenderer, player.getInventory());
 		
 		tooltip.render();
+		
+		if (player.isDead()) {
+			font.drawRedFont("You died", 0f, Gdx.graphics.getHeight() / 2f, false, Align.center, Gdx.graphics.getWidth() - sideBar.getWidth());
+		}
 		
 		// Debug
 		if (debug) {
