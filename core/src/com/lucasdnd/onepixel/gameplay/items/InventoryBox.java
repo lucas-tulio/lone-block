@@ -20,6 +20,10 @@ public class InventoryBox {
 	private Item item;
 	public static float SIZE = 40f;
 	private final float lineWeight = 4f;
+	private int mouseOffsetY = 34;
+	
+	private int tooltipOffsetX = 32;
+	private int tooltipOffsetY = 32;
 	
 	FontUtils font;
 	boolean drawingTooltip;
@@ -32,8 +36,8 @@ public class InventoryBox {
 	
 	public void update() {
 		int mouseX = Gdx.input.getX();
-		int mouseY = Gdx.input.getY();
-		mouseOver = ((mouseX >= x && mouseX <= x + SIZE) && (mouseY >= y && mouseY <= y + SIZE));
+		int mouseY = (Gdx.graphics.getHeight() - Gdx.input.getY()) + 34;
+		mouseOver = ((mouseX > x && mouseX < x + SIZE) && (mouseY > y && mouseY < y + SIZE));
 	}
 	
 	public void render(ShapeRenderer sr) {
@@ -58,7 +62,7 @@ public class InventoryBox {
 		if (mouseOver) {
 			sr.setColor(Color.RED);
 			if (item != null) {
-				((OnePixel)Gdx.app.getApplicationListener()).getTooltip().setTooltip(item.getName(), Gdx.input.getX(), Gdx.input.getY());
+				((OnePixel)Gdx.app.getApplicationListener()).getTooltip().setTooltip(item.getName(), x + tooltipOffsetX, y - tooltipOffsetY);
 				drawingTooltip = true;
 			} else {
 				drawingTooltip = false;

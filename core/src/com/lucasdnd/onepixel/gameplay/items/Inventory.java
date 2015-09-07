@@ -9,6 +9,7 @@ import com.lucasdnd.onepixel.OnePixel;
 public class Inventory {
 	
 	private int size;
+	private int selectedItem;
 	private ArrayList<Item> items;
 	private ArrayList<InventoryBox> inventoryBoxes;
 	private int inventoryRows = 3;
@@ -62,6 +63,7 @@ public class Inventory {
 		for (Item item : items) {
 			if (item.getAmount() == 0) {
 				itemsToRemove.add(item);
+				inventoryBoxes.get(selectedItem).setItem(null);
 			}
 		}
 		items.removeAll(itemsToRemove);
