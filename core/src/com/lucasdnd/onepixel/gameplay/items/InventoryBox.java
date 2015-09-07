@@ -1,6 +1,7 @@
 package com.lucasdnd.onepixel.gameplay.items;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -113,5 +114,9 @@ public class InventoryBox {
 	
 	public boolean isDrawingTooltip() {
 		return drawingTooltip;
+	}
+	
+	public boolean isMouseOver() {
+		return mouseOver;
 	}
 }

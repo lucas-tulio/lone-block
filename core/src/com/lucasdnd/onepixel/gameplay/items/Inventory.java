@@ -14,6 +14,9 @@ public class Inventory {
 	private ArrayList<InventoryBox> inventoryBoxes;
 	private int inventoryRows = 3;
 	
+	// Replacing items
+	private InventoryBox aux;
+	
 	public Inventory(int size) {
 		
 		this.size = size;
@@ -38,6 +41,8 @@ public class Inventory {
 	}
 	
 	public void update() {
+		
+		// Tooltip control
 		boolean isDrawingTooltip = false;
 		for (InventoryBox ib : inventoryBoxes) {
 			ib.update();
@@ -46,6 +51,20 @@ public class Inventory {
 		
 		if (isDrawingTooltip == false) {
 			((OnePixel)Gdx.app.getApplicationListener()).getTooltip().hide();
+		}
+		
+		// Clicks
+		InventoryBox inventoryBoxToChange = null;
+		for (InventoryBox ib : inventoryBoxes) {
+			if (ib.isMouseOver() && Gdx.input.isTouched()) {
+				inventoryBoxToChange = ib;
+			}
+		}
+		
+		if (inventoryBoxToChange != null) {
+			aux = inventoryBoxes.get(0);
+			inventoryBoxes.set(0, inventoryBoxToChange);
+			inventoryBoxToChange = aux;
 		}
 	}
 	
