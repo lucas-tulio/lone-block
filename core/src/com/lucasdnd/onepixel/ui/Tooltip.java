@@ -17,24 +17,26 @@ public class Tooltip {
 	final float lineWeight = 4f;
 	
 	FontUtils font;
+	ShapeRenderer sr;
 	
 	public Tooltip() {
 		font = new FontUtils();
+		sr = new ShapeRenderer();
 	}
 	
-	public void showTooltip(ShapeRenderer sr, String text, float x, float y) {
+	public void showTooltip(String text, float x, float y) {
 		
 		float charSize = Resources.get().blackFont.getSpaceWidth();
 		float textSize = charSize * text.length();
 		
 		textSize += tooltipPaddingX;
 		
-		drawTooltipFrame(sr, x, y, textSize, height);
-		drawTooltipBackground(sr, x, y, textSize, height);
+		drawTooltipFrame(x, y, textSize, height);
+		drawTooltipBackground(x, y, textSize, height);
 		font.drawWhiteFont(text, x + textMarginX, y - textMarginY, false, Align.center, (int)textSize);
 	}
 	
-	private void drawTooltipFrame(ShapeRenderer sr, float x, float y, float width, float height) {
+	private void drawTooltipFrame(float x, float y, float width, float height) {
 		final float lineHeight = height;
 		final float lineWidth = width + lineWeight;
 		sr.begin(ShapeType.Filled);
@@ -55,7 +57,7 @@ public class Tooltip {
 		sr.end();
 	}
 	
-	private void drawTooltipBackground(ShapeRenderer sr, float x, float y, float width, float height) {
+	private void drawTooltipBackground(float x, float y, float width, float height) {
 		sr.begin(ShapeType.Filled);
 		sr.setColor(Color.LIGHT_GRAY);
 		sr.rect(x + lineWeight, y - height + lineWeight, width - lineWeight, height - lineWeight);
