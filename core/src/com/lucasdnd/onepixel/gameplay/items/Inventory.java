@@ -24,7 +24,13 @@ public class Inventory {
 		content.removeAll(itemsToRemove);
 	}
 	
+	/**
+	 * Add an item to the inventory
+	 * @param item
+	 * @return
+	 */
 	public boolean addItem(Item item) {
+		
 		// If the item is there already, stack
 		for (Item i : content) {
 			if (i.getClass() == item.getClass()) {

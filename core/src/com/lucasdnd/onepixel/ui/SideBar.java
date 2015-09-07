@@ -35,6 +35,10 @@ public class SideBar {
 		font = new FontUtils();
 	}
 	
+	public void update(Tooltip tooltip, int mouseX, int mouseY) {
+		
+	}
+	
 	public void render(ShapeRenderer sr) {
 		
 		float height = Gdx.graphics.getHeight();
@@ -78,7 +82,7 @@ public class SideBar {
 				// Inventory items
 				Item item = null;
 				try {
-					item = player.getInventory().getContent().get(i * inventoryRows + j);
+					item = player.getInventory().getContent().get(j * inventoryRows + i);
 				} catch (Exception e) {
 //					System.out.println("item is null");
 				}
