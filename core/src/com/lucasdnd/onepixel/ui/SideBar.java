@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.FontUtils;
 import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.Player;
@@ -12,7 +13,8 @@ import com.lucasdnd.onepixel.gameplay.items.Item;
 public class SideBar {
 	
 	int x, y, width;
-	float margin = 20f;
+	final float margin = 20f;
+	final float lineWeight = 4f;
 	
 	// Status bar attributes
 	float barHeight;
@@ -94,7 +96,7 @@ public class SideBar {
 							1, 1);
 					if (item.getAmount() > 1) {
 						
-						font.drawWhiteFont("" + item.getAmount(), itemX + 38f, itemY - 18f, false, 0);
+						font.drawWhiteFont("" + item.getAmount(), itemX + 38f, itemY - 18f, false, Align.right);
 					}
 				}
 				
@@ -108,7 +110,6 @@ public class SideBar {
 	}
 	
 	private void drawRectFrame(ShapeRenderer sr, float x, float y, float width, float height) {
-		final float lineWeight = 4f;
 		final float lineHeight = height;
 		final float lineWidth = width + lineWeight;
 		sr.begin(ShapeType.Filled);
@@ -130,10 +131,9 @@ public class SideBar {
 	}
 	
 	private void drawRectFill(ShapeRenderer sr, Color c, float x, float y, float width, float height, int value, int maxValue) {
-		final float lineWeight = 4f;
 		final float lineHeight = height;
 		final float lineWidth = width + lineWeight;
-		float lineValue = lineWidth * ((float)value / (float)maxValue) - lineWeight*2f;
+		float lineValue = lineWidth * ((float)value / (float)maxValue) - lineWeight * 2f;
 		sr.begin(ShapeType.Filled);
 		if (c == null) {
 			sr.setColor(Color.LIGHT_GRAY);

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepixel.gameplay.Player;
 import com.lucasdnd.onepixel.gameplay.world.World;
 import com.lucasdnd.onepixel.ui.SideBar;
+import com.lucasdnd.onepixel.ui.Tooltip;
 
 public class OnePixel extends ApplicationAdapter {
 	
@@ -32,6 +33,8 @@ public class OnePixel extends ApplicationAdapter {
 	
 	SpriteBatch fontBatch;
 	
+	Tooltip tooltip;
+	
 	@Override
 	public void create () {
 		
@@ -40,6 +43,7 @@ public class OnePixel extends ApplicationAdapter {
 		uiShapeRenderer = new ShapeRenderer();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		fontBatch = new SpriteBatch();
+		tooltip = new Tooltip();
 		
 		// Input
 		input = new InputHandler();
@@ -174,6 +178,8 @@ public class OnePixel extends ApplicationAdapter {
 		world.render(shapeRenderer);
 		player.render(shapeRenderer);
 		sideBar.render(uiShapeRenderer);
+		
+		tooltip.showTooltip(uiShapeRenderer, "Tooltip!", 100f, 100f);
 		
 		// Debug
 		if (debug) {

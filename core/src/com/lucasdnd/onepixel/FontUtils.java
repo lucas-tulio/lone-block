@@ -27,4 +27,13 @@ public class FontUtils {
 		Resources.get().whiteFont.draw(fontBatch, text, x, y, 0f, align, false);
 		fontBatch.end();
 	}
+	
+	public void drawWhiteFont(String text, float x, float y, boolean withShadow, int align, int space) {
+		fontBatch.begin();
+		if (withShadow) {
+			Resources.get().grayFont.draw(fontBatch, text, x + 1f, y - 1f, space, align, false);
+		}
+		Resources.get().whiteFont.draw(fontBatch, text, x, y, space, align, false);
+		fontBatch.end();
+	}
 }
