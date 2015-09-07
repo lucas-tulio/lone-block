@@ -19,21 +19,31 @@ public class Tooltip {
 	FontUtils font;
 	ShapeRenderer sr;
 	
+	String text;
+	float charSize, textSize;
+	boolean shouldDraw;
+	
 	public Tooltip() {
 		font = new FontUtils();
 		sr = new ShapeRenderer();
 	}
 	
-	public void showTooltip(String text, float x, float y) {
-		
-		float charSize = Resources.get().blackFont.getSpaceWidth();
-		float textSize = charSize * text.length();
-		
+	public void render() {
+		if (shouldDraw) {
+			drawTooltipFrame(x, y, textSize, height);
+			drawTooltipBackground(x, y, textSize, height);
+			font.drawWhiteFont(text, x + textMarginX, y - textMarginY, false, Align.center, (int)textSize);
+		}
+	}
+	
+	public void setTooltip(String text, float x, float y) {
+		this.x = x;
+		this.y = y;
+		charSize = Resources.get().blackFont.getSpaceWidth();
+		textSize = charSize * text.length();
 		textSize += tooltipPaddingX;
-		
-		drawTooltipFrame(x, y, textSize, height);
-		drawTooltipBackground(x, y, textSize, height);
-		font.drawWhiteFont(text, x + textMarginX, y - textMarginY, false, Align.center, (int)textSize);
+		this.text = text;
+		shouldDraw = true;
 	}
 	
 	private void drawTooltipFrame(float x, float y, float width, float height) {
@@ -62,5 +72,9 @@ public class Tooltip {
 		sr.setColor(Color.LIGHT_GRAY);
 		sr.rect(x + lineWeight, y - height + lineWeight, width - lineWeight, height - lineWeight);
 		sr.end();
-	}	
+	}
+	
+	public void hide() {
+		shouldDraw = false;
+	}
 }

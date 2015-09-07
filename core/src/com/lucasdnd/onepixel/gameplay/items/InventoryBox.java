@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.FontUtils;
-import com.lucasdnd.onepixel.ui.Tooltip;
+import com.lucasdnd.onepixel.OnePixel;
 
 /**
  * The visual representation of the inventory "box" on the sidebar
@@ -22,13 +22,11 @@ public class InventoryBox {
 	private final float lineWeight = 4f;
 	
 	FontUtils font;
-	Tooltip tooltip;
 
 	public InventoryBox(float x, float y) {
 		this.x = x;
 		this.y = y;
 		font = new FontUtils();
-		tooltip = new Tooltip();
 	}
 	
 	public void update() {
@@ -55,10 +53,11 @@ public class InventoryBox {
 		final float lineHeight = SIZE;
 		final float lineWidth = SIZE + lineWeight;
 		sr.begin(ShapeType.Filled);
+		
 		if (mouseOver) {
 			sr.setColor(Color.RED);
 			if (item != null) {
-				tooltip.showTooltip(item.getName(), Gdx.input.getX(), Gdx.input.getY());
+				((OnePixel)Gdx.app.getApplicationListener()).getTooltip().setTooltip(item.getName(), Gdx.input.getX(), Gdx.input.getY());
 			}
 		} else {
 			sr.setColor(Color.WHITE);

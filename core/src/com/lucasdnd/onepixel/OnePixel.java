@@ -33,6 +33,7 @@ public class OnePixel extends ApplicationAdapter {
 	ShapeRenderer uiShapeRenderer;
 	
 	SpriteBatch fontBatch;
+	Tooltip tooltip;
 	
 	@Override
 	public void create () {
@@ -50,6 +51,7 @@ public class OnePixel extends ApplicationAdapter {
 		// UI
 		int sideBarWidth = 400;
 		sideBar = new SideBar(Gdx.graphics.getWidth() - sideBarWidth, 0, sideBarWidth);
+		tooltip = new Tooltip();
 		
 		// Game objects
 		world = new World();
@@ -178,6 +180,8 @@ public class OnePixel extends ApplicationAdapter {
 		player.render(shapeRenderer);
 		sideBar.render(uiShapeRenderer, player.getInventory());
 		
+		tooltip.render();
+		
 		// Debug
 		if (debug) {
 			fontBatch.begin();
@@ -203,5 +207,9 @@ public class OnePixel extends ApplicationAdapter {
 
 	public SideBar getSideBar() {
 		return sideBar;
+	}
+
+	public Tooltip getTooltip() {
+		return tooltip;
 	}
 }
