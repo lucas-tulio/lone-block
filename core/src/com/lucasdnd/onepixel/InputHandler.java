@@ -9,8 +9,9 @@ public class InputHandler implements InputProcessor {
 	public boolean ePressed, wPressed;
 	public boolean shiftPressed;
 	
+	// Controls hold down delay
 	public int delay = 0;
-	public int maxDelay = 10;
+	public int maxDelay = 8;
 	
 	@Override
 	public boolean keyDown(int keycode) {
