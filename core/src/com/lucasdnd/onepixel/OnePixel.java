@@ -17,7 +17,7 @@ public class OnePixel extends ApplicationAdapter {
 	
 	public final static String GAME_NAME = "One Pixel";
 	public final static String VERSION = "v0.1.0";
-	boolean debug = true;
+	boolean debug = false;
 	
 	public static float PIXEL_SIZE = 8f;
 	private final float MIN_PIXEL_SIZE = 2f;
@@ -47,7 +47,7 @@ public class OnePixel extends ApplicationAdapter {
 		font = new FontUtils();
 		
 		// Input
-		input = new InputHandler(debug);
+		input = new InputHandler();
 		Gdx.input.setInputProcessor(input);
 
 		// UI
@@ -62,82 +62,85 @@ public class OnePixel extends ApplicationAdapter {
 	
 	private void handleInput() {
 		
-		// Key hold delay
-		input.delay++;
-		if (input.delay < input.maxDelay) {
-			return;
-		} else {
-			input.delay = input.maxDelay;
-		}
+		// Movement delay
+		input.movementDelay--;
+		if (input.movementDelay <= 0) {
 		
-		// Movement
-		if (input.upPressed) {
-			
-			if (input.shiftPressed) {
-				player.faceUp();
-			} else {
-				if (player.canMoveUp(world)) {
-					player.moveUp();
-					input.delay = 0;
+			// Movement
+			if (input.upPressed) {
+				
+				if (input.shiftPressed) {
+					player.faceUp();
 				} else {
-					if (player.isFreeMovementMode() == false) {
-						input.delay = 0;
+					if (player.canMoveUp(world)) {
+						player.moveUp();
+						input.applyMovementDelay();
+					} else {
+						if (player.isFreeMovementMode() == false) {
+							input.applyMovementDelay();
+						}
 					}
 				}
 			}
-		}
-		if (input.downPressed) {
-			
-			if (input.shiftPressed) {
-				player.faceDown();
-			} else {
-				if (player.canMoveDown(world)) {
-					player.moveDown();
-					input.delay = 0;
+			if (input.downPressed) {
+				
+				if (input.shiftPressed) {
+					player.faceDown();
 				} else {
-					if (player.isFreeMovementMode() == false) {
-						input.delay = 0;
+					if (player.canMoveDown(world)) {
+						player.moveDown();
+						input.applyMovementDelay();
+					} else {
+						if (player.isFreeMovementMode() == false) {
+							input.applyMovementDelay();
+						}
 					}
 				}
 			}
-		}
-		if (input.leftPressed) {
-			
-			if (input.shiftPressed) {
-				player.faceLeft();
-			} else {
-				if (player.canMoveLeft(world)) {
-					player.moveLeft();
-					input.delay = 0;
+			if (input.leftPressed) {
+				
+				if (input.shiftPressed) {
+					player.faceLeft();
 				} else {
-					if (player.isFreeMovementMode() == false) {
-						input.delay = 0;
+					if (player.canMoveLeft(world)) {
+						player.moveLeft();
+						input.applyMovementDelay();
+					} else {
+						if (player.isFreeMovementMode() == false) {
+							input.applyMovementDelay();
+						}
 					}
 				}
 			}
-		}
-		if (input.rightPressed) {
-			
-			if (input.shiftPressed) {
-				player.faceRight();
-			} else {
-				if (player.canMoveRight(world)) {
-					player.moveRight();
-					input.delay = 0;
+			if (input.rightPressed) {
+				
+				if (input.shiftPressed) {
+					player.faceRight();
 				} else {
-					if (player.isFreeMovementMode() == false) {
-						input.delay = 0;
+					if (player.canMoveRight(world)) {
+						player.moveRight();
+						input.applyMovementDelay();
+					} else {
+						if (player.isFreeMovementMode() == false) {
+							input.applyMovementDelay();
+						}
 					}
 				}
 			}
 		}
 		
-		// Action
-		if (input.ePressed) {
-			player.performAction(world);
-			input.delay = 0;
-		} else if (input.wPressed) {
-			player.useItem(world);
+		// Action delay
+		input.actionDelay--;
+		if (input.actionDelay <= 0) {
+
+			// Action
+			if (input.ePressed) {
+				player.performAction(world);
+				input.applyActionDelay();
+			} else if (input.wPressed) {
+				player.useItem(world);
+				input.applyActionDelay();
+			}
 		}
 		
 		// Zoom control
@@ -206,7 +209,6 @@ public class OnePixel extends ApplicationAdapter {
 			Resources.get().whiteFont.draw(fontBatch, "shift: " + input.shiftPressed, 0f, Gdx.graphics.getHeight() - 140f);
 			Resources.get().whiteFont.draw(fontBatch, "left: " + input.leftMouseDown, 0f, Gdx.graphics.getHeight() - 180f);
 			Resources.get().whiteFont.draw(fontBatch, "right: " + input.rightMouseDown, 0f, Gdx.graphics.getHeight() - 200f);
-			Resources.get().whiteFont.draw(fontBatch, "delay: " + input.delay, 0f, Gdx.graphics.getHeight() - 240f);
 			fontBatch.end();
 		}
 	}

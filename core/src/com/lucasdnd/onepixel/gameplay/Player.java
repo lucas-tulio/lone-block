@@ -167,7 +167,7 @@ public class Player {
 			
 			// Play the appropriate sound effect
 			if (result instanceof Wood) {
-				Resources.get().woodcuttingSound.play(0.4f);
+				Resources.get().woodcuttingSound.play(0.3f);
 			} else if (result instanceof Stone) {
 				Resources.get().miningSound.play(0.4f);
 			} else if (result instanceof Fruit) {

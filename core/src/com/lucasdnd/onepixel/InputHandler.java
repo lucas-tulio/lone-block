@@ -10,16 +10,22 @@ public class InputHandler implements InputProcessor {
 	public boolean ePressed, wPressed;
 	public boolean shiftPressed;
 	
-	// Controls hold down delay
-	public int delay = 0;
-	public int maxDelay;
+	// Controls hold down delay. When it reaches 0, the player can perform another action
+	public int movementDelay = 0;
+	public int actionDelay = 0;
+	public final int maxMovementDelay = 6;
+	public final int maxActionDelay = 16;
 	
-	public InputHandler(boolean debug) {
-		if (debug) {
-			maxDelay = 8;
-		} else {
-			maxDelay = 8;
-		}
+	public InputHandler() {
+
+	}
+	
+	public void applyMovementDelay() {
+		movementDelay = maxMovementDelay;
+	}
+	
+	public void applyActionDelay() {
+		actionDelay = maxActionDelay;
 	}
 	
 	@Override
@@ -53,24 +59,24 @@ public class InputHandler implements InputProcessor {
 		
 		if (keycode == Keys.UP) {
 			upPressed = false;
-			delay = maxDelay;
+			movementDelay = maxMovementDelay;
 		} else if (keycode == Keys.LEFT) {
 			leftPressed = false;
-			delay = maxDelay;
+			movementDelay = maxMovementDelay;
 		} else if (keycode == Keys.DOWN) {
 			downPressed = false;
-			delay = maxDelay;
+			movementDelay = maxMovementDelay;
 		} else if (keycode == Keys.RIGHT) {
 			rightPressed = false;
-			delay = maxDelay;
+			movementDelay = maxMovementDelay;
 		}
 		
 		if (keycode == Keys.E) {
 			ePressed = false;
-			delay = maxDelay;
+			actionDelay = maxActionDelay;
 		} else if (keycode == Keys.W) {
 			wPressed = false;
-			delay = maxDelay;
+			actionDelay = maxActionDelay;
 		}
 		
 		if (keycode == Keys.SHIFT_LEFT || keycode == Keys.SHIFT_RIGHT) {

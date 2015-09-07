@@ -16,7 +16,7 @@ public class Tree extends MapObject {
 	public Tree(Disposer disposer, int x, int y, int z) {
 		super(disposer, x, y, z);
 		Random r = new Random();
-		wood = r.nextInt(8) + 4;
+		wood = r.nextInt(4) + 2;
 		color = new Color(0f, 0.3f, 0f, 1f);
 		
 		// 1/20 of the trees have fruits
