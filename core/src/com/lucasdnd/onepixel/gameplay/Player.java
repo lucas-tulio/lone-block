@@ -204,6 +204,11 @@ public class Player {
 			// Item
 			StatRecovery statRecovery = ((Usable)item).use();
 			recoverStats(statRecovery);
+			
+			// Play sound
+			if (item instanceof Fruit) {
+				Resources.get().randomEatingSound().play();
+			}
 		
 		} else {
 			

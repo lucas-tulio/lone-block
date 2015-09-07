@@ -18,5 +18,8 @@ public class DesktopLauncher {
 	 * Wood cutting sound - f4ngy (freesound.org) http://freesound.org/people/f4ngy/sounds/240788/
 	 * Stone mining sound (edited) - ryanconway (freesound.org) http://freesound.org/people/ryanconway/sounds/240801/
 	 * Leaves sound (edited) - ramagochi (freesound.org) http://freesound.org/people/ramagochi/sounds/119642/
+	 * Eating sound (edited) - niwki (freesound.org) http://freesound.org/people/niwki/sounds/169761/
+	 * Drinking sound (edited) - mshahen (freesound.org) http://freesound.org/people/mshahen/sounds/185456/
+	 * 
 	 */
 }

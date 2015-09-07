@@ -35,6 +35,13 @@ public class Resources {
 		leavesSound2 = Gdx.audio.newSound(Gdx.files.internal("sfx/leaves-2.wav"));
 		leavesSound3 = Gdx.audio.newSound(Gdx.files.internal("sfx/leaves-3.wav"));
 		leavesSound4 = Gdx.audio.newSound(Gdx.files.internal("sfx/leaves-4.wav"));
+		eatingSound1 = Gdx.audio.newSound(Gdx.files.internal("sfx/eating-1.wav"));
+		eatingSound2 = Gdx.audio.newSound(Gdx.files.internal("sfx/eating-2.wav"));
+		eatingSound3 = Gdx.audio.newSound(Gdx.files.internal("sfx/eating-3.wav"));
+		drinkingSound1 = Gdx.audio.newSound(Gdx.files.internal("sfx/drinking-1.wav"));
+		drinkingSound2 = Gdx.audio.newSound(Gdx.files.internal("sfx/drinking-2.wav"));
+		drinkingSound3 = Gdx.audio.newSound(Gdx.files.internal("sfx/drinking-3.wav"));
+		
 	}
 	
 	public Sound randomLeavesSound() {
@@ -47,6 +54,28 @@ public class Resources {
 			return leavesSound3;
 		default:
 			return leavesSound4;
+		}
+	}
+	
+	public Sound randomEatingSound() {
+		switch(new Random().nextInt(3)) {
+		case 0:
+			return eatingSound1;
+		case 1:
+			return eatingSound2;
+		default:
+			return eatingSound3;
+		}
+	}
+	
+	public Sound randomDrinkingSound() {
+		switch(new Random().nextInt(3)) {
+		case 0:
+			return drinkingSound1;
+		case 1:
+			return drinkingSound2;
+		default:
+			return drinkingSound3;
 		}
 	}
 	
@@ -66,4 +95,10 @@ public class Resources {
 	private Sound leavesSound2;
 	private Sound leavesSound3;
 	private Sound leavesSound4;
+	private Sound eatingSound1;
+	private Sound eatingSound2;
+	private Sound eatingSound3;
+	private Sound drinkingSound1;
+	private Sound drinkingSound2;
+	private Sound drinkingSound3;	
 }

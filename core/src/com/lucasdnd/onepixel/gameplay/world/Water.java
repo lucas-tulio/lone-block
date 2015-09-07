@@ -3,6 +3,7 @@ package com.lucasdnd.onepixel.gameplay.world;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.Resources;
 import com.lucasdnd.onepixel.gameplay.items.StatRecovery;
 
 public class Water extends MapObject {
@@ -26,6 +27,7 @@ public class Water extends MapObject {
 	
 	@Override
 	public Object performAction() {
+		Resources.get().randomDrinkingSound().play();
 		return new StatRecovery(0, 1, 0, 10);
 	}
 }
