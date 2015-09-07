@@ -68,7 +68,10 @@ public class Player {
 	}
 
 	public void update() {
+		
 		inventory.update();
+		
+		// Status
 		statusDecrease++;
 		if (statusDecrease % statusDecreaseLimit == 0) {
 			stamina--;
@@ -77,6 +80,21 @@ public class Player {
 			statusDecrease = 0;
 		}
 		
+		// Max stat check
+		if (health >= MAX_STAT_VALUE) {
+			health = MAX_STAT_VALUE;
+		}
+		if (stamina >= MAX_STAT_VALUE) {
+			stamina = MAX_STAT_VALUE;
+		}
+		if (food >= MAX_STAT_VALUE) {
+			food = MAX_STAT_VALUE;
+		}
+		if (drink >= MAX_STAT_VALUE) {
+			drink = MAX_STAT_VALUE;
+		}
+		
+		// Death check
 		if (food <= 0 || drink <= 0 || health <= 0) {
 			dead = true;
 		}
@@ -137,21 +155,15 @@ public class Player {
 				stamina -= 10;
 				food -= 3;
 				drink -= 5;
-			} else if (result instanceof Usable) {
-				StatRecovery statRecovery = (StatRecovery) result;
-				health += statRecovery.getHealth();
-				stamina += statRecovery.getStamina();
-				food += statRecovery.getFood();
-				drink += statRecovery.getDrink();
 			}
 		}
 	}
 	
 	/**
-	 * Places the currently selected block
+	 * Places the currently selected item
 	 * @param world
 	 */
-	public void placeBlock(World world) {
+	public void useItem(World world) {
 		int[] target = getTargetBlock();
 		int targetX = target[0];
 		int targetY = target[1];
@@ -174,18 +186,31 @@ public class Player {
 			return;
 		}
 		
-		// Transform it into a block
+		// A block or an item?
 		MapObject itemBlock = world.exchange(item, targetX, targetY, targetZ);
-		world.getMapObjects()[targetX][targetY][targetZ] = itemBlock;
+		if (itemBlock == null && item instanceof Usable) {
+
+			// Item
+			StatRecovery statRecovery = ((Usable)item).use();
+			health += statRecovery.getHealth();
+			stamina += statRecovery.getStamina();
+			food += statRecovery.getFood();
+			drink += statRecovery.getDrink();
+		
+		} else {
+			
+			// Block
+			world.getMapObjects()[targetX][targetY][targetZ] = itemBlock;
+			
+			// Stats update
+			stamina -= 10;
+			food -= 3;
+			drink -= 5;
+		}
 		
 		// Consume it
 		item.decreaseAmount();
 		inventory.checkItems();
-		
-		// Stats update
-		stamina -= 10;
-		food -= 3;
-		drink -= 5;
 	}
 	
 	/**

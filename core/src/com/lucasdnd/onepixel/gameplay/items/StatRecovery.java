@@ -15,31 +15,15 @@ public class StatRecovery {
 		return health;
 	}
 
-	public void setHealth(int health) {
-		this.health = health;
-	}
-
 	public int getStamina() {
 		return stamina;
-	}
-
-	public void setStamina(int stamina) {
-		this.stamina = stamina;
 	}
 
 	public int getFood() {
 		return food;
 	}
 
-	public void setFood(int food) {
-		this.food = food;
-	}
-
 	public int getDrink() {
 		return drink;
-	}
-
-	public void setDrink(int drink) {
-		this.drink = drink;
 	}
 }

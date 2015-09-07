@@ -139,7 +139,7 @@ public class OnePixel extends ApplicationAdapter {
 			player.performAction(world);
 			input.delay = 0;
 		} else if (input.wPressed) {
-			player.placeBlock(world);
+			player.useItem(world);
 		}
 		
 		// Zoom control

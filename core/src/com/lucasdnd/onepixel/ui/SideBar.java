@@ -102,6 +102,8 @@ public class SideBar {
 		float lineValue = lineWidth * ((float)value / (float)maxValue) - lineWeight * 2f;
 		if (lineValue <= 0) {
 			return;
+		} else if (lineValue >= lineWidth - lineWeight * 2f) {
+			lineValue = lineWidth - lineWeight * 2f;
 		}
 		sr.begin(ShapeType.Filled);
 		if (c == null) {
