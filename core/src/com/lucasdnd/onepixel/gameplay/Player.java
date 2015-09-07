@@ -129,6 +129,11 @@ public class Player {
 				inventory.addItem((Item)result);
 			}
 		}
+		
+		// Stats update
+		stamina -= 10;
+		food -= 3;
+		drink -= 5;
 	}
 	
 	/**
@@ -166,7 +171,10 @@ public class Player {
 		item.decreaseAmount();
 		inventory.checkItems();
 		
+		// Stats update
 		stamina -= 10;
+		food -= 3;
+		drink -= 5;
 	}
 	
 	/**
