@@ -10,6 +10,7 @@ import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.items.Inventory;
 import com.lucasdnd.onepixel.gameplay.items.Item;
 import com.lucasdnd.onepixel.gameplay.world.MapObject;
+import com.lucasdnd.onepixel.gameplay.world.Water;
 import com.lucasdnd.onepixel.gameplay.world.World;
 
 public class Player {
@@ -134,7 +135,7 @@ public class Player {
 		
 		// Target coordinates
 		MapObject targetObject = world.getMapObjectAt(targetX, targetY, targetZ);
-		if (targetObject != null) {
+		if (targetObject != null && !(targetObject instanceof Water)) {
 			return;
 		}
 		

@@ -11,7 +11,13 @@ public class Rock extends MapObject {
 
 	public Rock(Disposer disposer, int x, int y, int z) {
 		super(disposer, x, y, z);
-		stone = new Random().nextInt(16) + 8;
+		stone = new Random().nextInt(8) + 4;
+		color = new Color(0.31f, 0.31f, 0.31f, 1f);
+	}
+	
+	public Rock(Disposer disposer, int x, int y, int z, int amount) {
+		super(disposer, x, y, z);
+		stone = 1;
 		color = new Color(0.31f, 0.31f, 0.31f, 1f);
 	}
 

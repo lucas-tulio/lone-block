@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.items.Item;
+import com.lucasdnd.onepixel.gameplay.items.Stone;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
 
 public class World implements Disposer {
@@ -160,6 +161,8 @@ public class World implements Disposer {
 	public MapObject exchange(Item item, int x, int y, int z) {
 		if (item instanceof Wood) {
 			return new WoodBlock(this, x, y, z);
+		} else if (item instanceof Stone) {
+			return new Rock(this, x, y, z, 1);
 		}
 
 		return null;

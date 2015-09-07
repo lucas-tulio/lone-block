@@ -1,7 +1,5 @@
 package com.lucasdnd.onepixel;
 
-import java.util.Random;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
