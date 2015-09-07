@@ -37,8 +37,14 @@ public class Inventory {
 	}
 	
 	public void update() {
+		boolean isDrawingTooltip = false;
 		for (InventoryBox ib : inventoryBoxes) {
 			ib.update();
+			isDrawingTooltip = ib.isDrawingTooltip();
+		}
+		
+		if (isDrawingTooltip == false) {
+			((OnePixel)Gdx.app.getApplicationListener()).getTooltip().hide();
 		}
 	}
 	

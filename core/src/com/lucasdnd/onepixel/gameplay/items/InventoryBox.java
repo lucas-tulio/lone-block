@@ -22,6 +22,7 @@ public class InventoryBox {
 	private final float lineWeight = 4f;
 	
 	FontUtils font;
+	boolean drawingTooltip;
 
 	public InventoryBox(float x, float y) {
 		this.x = x;
@@ -58,8 +59,12 @@ public class InventoryBox {
 			sr.setColor(Color.RED);
 			if (item != null) {
 				((OnePixel)Gdx.app.getApplicationListener()).getTooltip().setTooltip(item.getName(), Gdx.input.getX(), Gdx.input.getY());
+				drawingTooltip = true;
+			} else {
+				drawingTooltip = false;
 			}
 		} else {
+			drawingTooltip = false;
 			sr.setColor(Color.WHITE);
 		}
 		
@@ -100,5 +105,9 @@ public class InventoryBox {
 
 	public void setItem(Item item) {
 		this.item = item;
+	}
+	
+	public boolean isDrawingTooltip() {
+		return drawingTooltip;
 	}
 }
