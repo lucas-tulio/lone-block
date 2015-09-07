@@ -21,8 +21,8 @@ public class Stone extends Item {
 		sr.setColor(this.getColor());
 		sr.rect(x + SideBar.lineWeight,
 				y - SideBar.lineWeight + offsetY,
-				SideBar.INVENTORY_BOX_SIZE - SideBar.lineWeight,
-				SideBar.INVENTORY_BOX_SIZE - SideBar.lineWeight);
+				InventoryBox.SIZE - SideBar.lineWeight,
+				InventoryBox.SIZE - SideBar.lineWeight);
 		sr.end();
 	}
 

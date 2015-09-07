@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepixel.gameplay.Player;
+import com.lucasdnd.onepixel.gameplay.items.InventoryBox;
 import com.lucasdnd.onepixel.gameplay.world.World;
 import com.lucasdnd.onepixel.ui.SideBar;
 import com.lucasdnd.onepixel.ui.Tooltip;
@@ -49,12 +50,13 @@ public class OnePixel extends ApplicationAdapter {
 		input = new InputHandler();
 		Gdx.input.setInputProcessor(input);
 
+		// UI
+		int sideBarWidth = 400;
+		sideBar = new SideBar(Gdx.graphics.getWidth() - sideBarWidth, 0, sideBarWidth);
+		
 		// Game objects
 		world = new World();
 		player = new Player(world);
-		
-		int sideBarWidth = 400;
-		sideBar = new SideBar(Gdx.graphics.getWidth() - sideBarWidth, 0, sideBarWidth);
 	}
 	
 	private void handleInput() {
@@ -177,7 +179,7 @@ public class OnePixel extends ApplicationAdapter {
 		
 		world.render(shapeRenderer);
 		player.render(shapeRenderer);
-		sideBar.render(uiShapeRenderer);
+		sideBar.render(uiShapeRenderer, player.getInventory());
 		
 		tooltip.showTooltip(uiShapeRenderer, "Tooltip!", 100f, 100f);
 		
@@ -202,5 +204,9 @@ public class OnePixel extends ApplicationAdapter {
 	
 	public World getWorld() {
 		return world;
+	}
+
+	public SideBar getSideBar() {
+		return sideBar;
 	}
 }

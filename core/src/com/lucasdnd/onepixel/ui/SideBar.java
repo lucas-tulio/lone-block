@@ -4,11 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.FontUtils;
 import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.Player;
-import com.lucasdnd.onepixel.gameplay.items.Item;
+import com.lucasdnd.onepixel.gameplay.items.Inventory;
 
 public class SideBar {
 	
@@ -22,7 +21,6 @@ public class SideBar {
 	
 	// Inventory attributes
 	int inventoryRows = 3;
-	public static float INVENTORY_BOX_SIZE = 40f;
 	
 	FontUtils font;
 	
@@ -39,7 +37,7 @@ public class SideBar {
 		
 	}
 	
-	public void render(ShapeRenderer sr) {
+	public void render(ShapeRenderer sr, Inventory inventory) {
 		
 		float height = Gdx.graphics.getHeight();
 		
@@ -69,37 +67,7 @@ public class SideBar {
 		font.drawWhiteFont("Thirst",  x + margin, height - margin * 15, true);
 		
 		// Inventory
-		for (int i = 0; i < player.getInventory().getSize() / inventoryRows; i++) {
-			for (int j = 0; j < inventoryRows; j++) {
-				
-				// Inventory frame
-				drawRectFrame(sr,
-						x + INVENTORY_BOX_SIZE * i + margin,
-						height - margin * 17 - INVENTORY_BOX_SIZE * j,
-						INVENTORY_BOX_SIZE,
-						INVENTORY_BOX_SIZE);
-				
-				// Inventory items
-				Item item = null;
-				try {
-					item = player.getInventory().getContent().get(j * inventoryRows + i);
-				} catch (Exception e) {
-//					System.out.println("item is null");
-				}
-				
-				if (item != null) {
-					
-					float itemX = x + INVENTORY_BOX_SIZE * i + margin;
-					float itemY = height - margin * 17 - INVENTORY_BOX_SIZE * j;
-					item.render(sr, itemX, itemY);
-
-					if (item.getAmount() > 1) {
-						font.drawWhiteFont("" + item.getAmount(), itemX + 38f, itemY - 18f, false, Align.right);
-					}
-				}
-				
-			}
-		}
+		inventory.render(sr);
 		font.drawWhiteFont("Inventory", x + margin, height - margin * 23 - 3f, true);
 		
 		// Game name and version
@@ -145,5 +113,9 @@ public class SideBar {
 	
 	public int getWidth() {
 		return width;
+	}
+	
+	public int getX() {
+		return x;
 	}
 }

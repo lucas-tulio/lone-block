@@ -65,6 +65,7 @@ public class Player {
 	}
 
 	public void update() {
+		inventory.update();
 		statusDecrease++;
 		if (statusDecrease % statusDecreaseLimit == 0) {
 			stamina--;
@@ -155,7 +156,7 @@ public class Player {
 		// Get item
 		Item item = null;
 		try {
-			item = inventory.getContent().get(inventory.getContent().size() - 1);
+			item = inventory.getItems().get(inventory.getItems().size() - 1);
 		} catch (Exception e) {
 			return;
 		}

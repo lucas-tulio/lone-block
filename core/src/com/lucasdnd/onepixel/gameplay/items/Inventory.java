@@ -2,13 +2,50 @@ package com.lucasdnd.onepixel.gameplay.items;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.lucasdnd.onepixel.OnePixel;
+
 public class Inventory {
+	
 	private int size;
-	private ArrayList<Item> content;
+	private ArrayList<Item> items;
+	private ArrayList<InventoryBox> inventoryBoxes;
+	private int inventoryRows = 3;
 	
 	public Inventory(int size) {
+		
 		this.size = size;
-		content = new ArrayList<Item>();
+		items = new ArrayList<Item>();
+		inventoryBoxes = new ArrayList<InventoryBox>();
+		
+		final float margin = 20f;
+		final float x = ((OnePixel)Gdx.app.getApplicationListener()).getSideBar().getX();
+		float height = Gdx.graphics.getHeight();
+		
+		// Create the inventory boxes (that show on the sidebar)
+		for (int i = 0; i < size / inventoryRows; i++) {
+			for (int j = 0; j < inventoryRows; j++) {
+				
+				InventoryBox ib = new InventoryBox(
+						x + InventoryBox.SIZE * i + margin,
+						height - margin * 17 - InventoryBox.SIZE * j);
+				
+				inventoryBoxes.add(ib);
+			}
+		}
+	}
+	
+	public void update() {
+		for (InventoryBox ib : inventoryBoxes) {
+			ib.update();
+		}
+	}
+	
+	public void render(ShapeRenderer sr) {
+		for (InventoryBox ib : inventoryBoxes) {
+			ib.render(sr);
+		}
 	}
 	
 	/**
@@ -16,12 +53,12 @@ public class Inventory {
 	 */
 	public void checkItems() {
 		ArrayList<Item> itemsToRemove = new ArrayList<Item>();
-		for (Item i : content) {
-			if (i.getAmount() == 0) {
-				itemsToRemove.add(i);
+		for (Item item : items) {
+			if (item.getAmount() == 0) {
+				itemsToRemove.add(item);
 			}
 		}
-		content.removeAll(itemsToRemove);
+		items.removeAll(itemsToRemove);
 	}
 	
 	/**
@@ -32,7 +69,7 @@ public class Inventory {
 	public boolean addItem(Item item) {
 		
 		// If the item is there already, stack
-		for (Item i : content) {
+		for (Item i : items) {
 			if (i.getClass() == item.getClass()) {
 				i.increaseAmount();
 				return true;
@@ -40,12 +77,27 @@ public class Inventory {
 		}
 		
 		// If not, add
-		if (content.size() < size) {
-			content.add(item);
+		if (items.size() < size) {
+			items.add(item);
+			InventoryBox ib = findNextEmptyInventoryBox();
+			ib.setItem(item);
 			return true;
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Loop through the Inventory Boxes and return the next one without any items
+	 * @return
+	 */
+	private InventoryBox findNextEmptyInventoryBox() {
+		for (InventoryBox ib : inventoryBoxes) {
+			if (ib.getItem() == null) {
+				return ib;
+			}
+		}
+		return null;
 	}
 
 	public int getSize() {
@@ -55,12 +107,8 @@ public class Inventory {
 	public void setSize(int size) {
 		this.size = size;
 	}
-
-	public ArrayList<Item> getContent() {
-		return content;
-	}
-
-	public void setContent(ArrayList<Item> content) {
-		this.content = content;
+	
+	public ArrayList<Item> getItems() {
+		return items;
 	}
 }
