@@ -1,6 +1,7 @@
 package com.lucasdnd.onepixel;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 /**
@@ -24,12 +25,18 @@ public class Resources {
 		grayFont = new BitmapFont(Gdx.files.internal("font/proggyGray.fnt"));
 		redFont = new BitmapFont(Gdx.files.internal("font/proggyRed.fnt"));
 		greenFont = new BitmapFont(Gdx.files.internal("font/proggyGreen.fnt"));
+		
+		placementSound = Gdx.audio.newSound(Gdx.files.internal("sfx/placement.wav"));
 	}
 	
+	// Fonts
 	public BitmapFont whiteFont;
 	public BitmapFont blackFont;
 	public BitmapFont lightGrayFont;
 	public BitmapFont grayFont;
 	public BitmapFont redFont;
 	public BitmapFont greenFont;
+	
+	// Sound effects
+	public Sound placementSound;
 }

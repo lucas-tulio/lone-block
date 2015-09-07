@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.Resources;
 import com.lucasdnd.onepixel.gameplay.items.Inventory;
 import com.lucasdnd.onepixel.gameplay.items.Item;
 import com.lucasdnd.onepixel.gameplay.items.StatRecovery;
@@ -201,6 +202,7 @@ public class Player {
 			}
 			
 			world.getMapObjects()[targetX][targetY][targetZ] = itemBlock;
+			Resources.get().placementSound.play(0.2f);
 			
 			// Stats update
 			stamina -= 10;
