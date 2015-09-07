@@ -1,7 +1,6 @@
 package com.lucasdnd.onepixel.gameplay.items;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -21,7 +20,6 @@ public class InventoryBox {
 	private Item item;
 	public static float SIZE = 40f;
 	private final float lineWeight = 4f;
-	private int mouseOffsetY = 34;
 	
 	private int tooltipOffsetX = 32;
 	private int tooltipOffsetY = 32;
@@ -59,9 +57,8 @@ public class InventoryBox {
 		final float lineHeight = SIZE;
 		final float lineWidth = SIZE + lineWeight;
 		sr.begin(ShapeType.Filled);
-		
+		sr.setColor(Color.WHITE);
 		if (mouseOver) {
-			sr.setColor(Color.RED);
 			if (item != null) {
 				((OnePixel)Gdx.app.getApplicationListener()).getTooltip().setTooltip(item.getName(), x + tooltipOffsetX, y - tooltipOffsetY);
 				drawingTooltip = true;
@@ -70,7 +67,6 @@ public class InventoryBox {
 			}
 		} else {
 			drawingTooltip = false;
-			sr.setColor(Color.WHITE);
 		}
 		
 		// Left

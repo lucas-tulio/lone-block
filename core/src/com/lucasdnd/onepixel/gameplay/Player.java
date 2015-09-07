@@ -156,7 +156,7 @@ public class Player {
 		// Get item
 		Item item = null;
 		try {
-			item = inventory.getItems().get(inventory.getItems().size() - 1);
+			item = inventory.getSelectedInventoryBox().getItem();
 		} catch (Exception e) {
 			return;
 		}

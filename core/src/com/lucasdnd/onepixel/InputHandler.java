@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 
 public class InputHandler implements InputProcessor {
 	
+	public boolean leftMouseDown, leftMouseJustClicked, rightMouseDown, rightMouseJustClicked;
 	public boolean upPressed, leftPressed, downPressed, rightPressed; // :(
 	public boolean ePressed, wPressed;
 	public boolean shiftPressed;
@@ -79,13 +80,23 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		if (button == 0) {
+			leftMouseDown = true;
+			leftMouseJustClicked = true;
+		} else if (button == 1) {
+			rightMouseDown = true;
+			rightMouseJustClicked = true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		if (button == 0) {
+			leftMouseDown = false;
+		} else if (button == 1) {
+			rightMouseDown = false;
+		}
 		return false;
 	}
 

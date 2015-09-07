@@ -60,6 +60,8 @@ public class OnePixel extends ApplicationAdapter {
 	
 	private void handleInput() {
 		
+		
+		
 		// Key hold delay
 		input.delay++;
 		if (input.delay < input.maxDelay) {
@@ -158,7 +160,6 @@ public class OnePixel extends ApplicationAdapter {
 	}
 	
 	private void update() {
-		
 		handleInput();
 		
 		camera.position.set(player.getX() * OnePixel.PIXEL_SIZE + (sideBar.getWidth() * 0.5f), player.getY() * OnePixel.PIXEL_SIZE, 0f);
@@ -167,6 +168,8 @@ public class OnePixel extends ApplicationAdapter {
 		
 		world.update();
 		player.update();
+		
+		handleInputEnd();
 	}
 
 	@Override
@@ -192,9 +195,17 @@ public class OnePixel extends ApplicationAdapter {
 			Resources.get().whiteFont.draw(fontBatch, "e: " + input.ePressed, 0f, Gdx.graphics.getHeight() - 100f);
 			Resources.get().whiteFont.draw(fontBatch, "w: " + input.wPressed, 0f, Gdx.graphics.getHeight() - 120f);
 			Resources.get().whiteFont.draw(fontBatch, "shift: " + input.shiftPressed, 0f, Gdx.graphics.getHeight() - 140f);
-			Resources.get().whiteFont.draw(fontBatch, "delay: " + input.delay, 0f, Gdx.graphics.getHeight() - 180f);
+			Resources.get().whiteFont.draw(fontBatch, "left: " + input.leftMouseDown, 0f, Gdx.graphics.getHeight() - 180f);
+			Resources.get().whiteFont.draw(fontBatch, "right: " + input.rightMouseDown, 0f, Gdx.graphics.getHeight() - 200f);
+			Resources.get().whiteFont.draw(fontBatch, "delay: " + input.delay, 0f, Gdx.graphics.getHeight() - 240f);
 			fontBatch.end();
 		}
+	}
+	
+	public void handleInputEnd() {
+		// Mouse just clicked reset
+		input.leftMouseJustClicked = false;
+		input.rightMouseJustClicked = false;
 	}
 	
 	public Player getPlayer() {
@@ -211,5 +222,9 @@ public class OnePixel extends ApplicationAdapter {
 
 	public Tooltip getTooltip() {
 		return tooltip;
+	}
+	
+	public InputHandler getInputHandler() {
+		return input;
 	}
 }

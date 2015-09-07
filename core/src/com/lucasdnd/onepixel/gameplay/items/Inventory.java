@@ -10,17 +10,15 @@ public class Inventory {
 	
 	private int size;
 	private int selectedItem;
-	private ArrayList<Item> items;
 	private ArrayList<InventoryBox> inventoryBoxes;
 	private int inventoryRows = 3;
 	
 	// Replacing items
-	private InventoryBox aux;
+	private Item aux;
 	
 	public Inventory(int size) {
 		
 		this.size = size;
-		items = new ArrayList<Item>();
 		inventoryBoxes = new ArrayList<InventoryBox>();
 		
 		final float margin = 20f;
@@ -54,17 +52,18 @@ public class Inventory {
 		}
 		
 		// Clicks
-		InventoryBox inventoryBoxToChange = null;
+		InventoryBox clickedInventoryBox = null;
 		for (InventoryBox ib : inventoryBoxes) {
-			if (ib.isMouseOver() && Gdx.input.isTouched()) {
-				inventoryBoxToChange = ib;
+			if (ib.isMouseOver() && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
+				clickedInventoryBox = ib;
+				break;
 			}
 		}
 		
-		if (inventoryBoxToChange != null) {
-			aux = inventoryBoxes.get(0);
-			inventoryBoxes.set(0, inventoryBoxToChange);
-			inventoryBoxToChange = aux;
+		if (clickedInventoryBox != null) {
+			aux = inventoryBoxes.get(0).getItem();
+			inventoryBoxes.get(0).setItem(clickedInventoryBox.getItem());
+			clickedInventoryBox.setItem(aux);
 		}
 	}
 	
@@ -79,10 +78,13 @@ public class Inventory {
 	 */
 	public void checkItems() {
 		ArrayList<Item> itemsToRemove = new ArrayList<Item>();
+		ArrayList<Item> items = getItems();
 		for (Item item : items) {
-			if (item.getAmount() == 0) {
-				itemsToRemove.add(item);
-				inventoryBoxes.get(selectedItem).setItem(null);
+			if (item != null) {
+				if (item.getAmount() == 0) {
+					itemsToRemove.add(item);
+					inventoryBoxes.get(selectedItem).setItem(null);
+				}
 			}
 		}
 		items.removeAll(itemsToRemove);
@@ -96,22 +98,38 @@ public class Inventory {
 	public boolean addItem(Item item) {
 		
 		// If the item is there already, stack
+		ArrayList<Item> items = getItems();
+		int numItems = 0;
 		for (Item i : items) {
-			if (i.getClass() == item.getClass()) {
-				i.increaseAmount();
-				return true;
+			if (i != null) {
+				numItems++;
+				if (i.getClass() == item.getClass()) {
+					i.increaseAmount();
+					return true;
+				}
 			}
 		}
 		
 		// If not, add
-		if (items.size() < size) {
-			items.add(item);
+		if (numItems < size) {
 			InventoryBox ib = findNextEmptyInventoryBox();
 			ib.setItem(item);
 			return true;
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Get all the items inside the Inventory Boxes
+	 * @return
+	 */
+	private ArrayList<Item> getItems() {
+		ArrayList<Item> items = new ArrayList<Item>();
+		for (InventoryBox ib : inventoryBoxes) {
+			items.add(ib.getItem());
+		}
+		return items;
 	}
 	
 	/**
@@ -135,7 +153,7 @@ public class Inventory {
 		this.size = size;
 	}
 	
-	public ArrayList<Item> getItems() {
-		return items;
+	public InventoryBox getSelectedInventoryBox() {
+		return inventoryBoxes.get(selectedItem);
 	}
 }
