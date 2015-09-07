@@ -13,8 +13,10 @@ public class InputHandler implements InputProcessor {
 	// Controls hold down delay. When it reaches 0, the player can perform another action
 	public int movementDelay = 0;
 	public int actionDelay = 0;
+	public int useDelay = 0;
 	public final int maxMovementDelay = 6;
 	public final int maxActionDelay = 16;
+	public final int maxUseDelay = 16;
 	
 	public InputHandler() {
 
@@ -26,6 +28,10 @@ public class InputHandler implements InputProcessor {
 	
 	public void applyActionDelay() {
 		actionDelay = maxActionDelay;
+	}
+	
+	public void applyUseDelay() {
+		useDelay = maxUseDelay;
 	}
 	
 	@Override
@@ -57,26 +63,27 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean keyUp(int keycode) {
 		
+		// When releasing the movement keys, reset the key delay so it can be pressed again immediately
 		if (keycode == Keys.UP) {
 			upPressed = false;
-			movementDelay = maxMovementDelay;
+			movementDelay = 0;
 		} else if (keycode == Keys.LEFT) {
 			leftPressed = false;
-			movementDelay = maxMovementDelay;
+			movementDelay = 0;
 		} else if (keycode == Keys.DOWN) {
 			downPressed = false;
-			movementDelay = maxMovementDelay;
+			movementDelay = 0;
 		} else if (keycode == Keys.RIGHT) {
 			rightPressed = false;
-			movementDelay = maxMovementDelay;
+			movementDelay = 0;
 		}
 		
 		if (keycode == Keys.E) {
 			ePressed = false;
-			actionDelay = maxActionDelay;
+			actionDelay = 0;
 		} else if (keycode == Keys.W) {
 			wPressed = false;
-			actionDelay = maxActionDelay;
+			useDelay = 0;
 		}
 		
 		if (keycode == Keys.SHIFT_LEFT || keycode == Keys.SHIFT_RIGHT) {
