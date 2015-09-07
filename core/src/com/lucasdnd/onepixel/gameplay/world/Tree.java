@@ -43,7 +43,7 @@ public class Tree extends MapObject {
 		
 		if (fruit > 0) {
 			fruit--;
-			return actionCallback(new Fruit());
+			return new Fruit();
 		}
 		
 		if (wood > 0) {
@@ -52,15 +52,10 @@ public class Tree extends MapObject {
 			if (wood == 0) {
 				disposer.dispose(this);
 			}
-			return actionCallback(new Wood());
+			return new Wood();
 		}
 		
 		return null;
-	}
-	
-	@Override
-	public Object actionCallback(Object result) {
-		return result;
 	}
 
 }

@@ -37,15 +37,9 @@ public class Rock extends MapObject {
 			if (stone == 0) {
 				disposer.dispose(this);
 			}
-			return actionCallback(new Stone());
+			return new Stone();
 		}
 		
 		return null;
 	}
-
-	@Override
-	public Object actionCallback(Object result) {
-		return result;
-	}
-
 }

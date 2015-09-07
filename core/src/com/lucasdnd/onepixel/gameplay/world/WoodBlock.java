@@ -20,12 +20,7 @@ public class WoodBlock extends MapObject {
 	@Override
 	public Object performAction() {
 		disposer.dispose(this);
-		return actionCallback(new Wood());
-	}
-
-	@Override
-	public Object actionCallback(Object result) {
-		return result;
+		return new Wood();
 	}
 
 }

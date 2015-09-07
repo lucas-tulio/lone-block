@@ -47,7 +47,7 @@ public class OnePixel extends ApplicationAdapter {
 		font = new FontUtils();
 		
 		// Input
-		input = new InputHandler();
+		input = new InputHandler(debug);
 		Gdx.input.setInputProcessor(input);
 
 		// UI
@@ -61,8 +61,6 @@ public class OnePixel extends ApplicationAdapter {
 	}
 	
 	private void handleInput() {
-		
-		
 		
 		// Key hold delay
 		input.delay++;

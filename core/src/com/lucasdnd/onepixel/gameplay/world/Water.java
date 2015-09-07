@@ -3,6 +3,7 @@ package com.lucasdnd.onepixel.gameplay.world;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.gameplay.items.StatRecovery;
 
 public class Water extends MapObject {
 	
@@ -25,12 +26,6 @@ public class Water extends MapObject {
 	
 	@Override
 	public Object performAction() {
-		return null;
+		return new StatRecovery(0, 1, 0, 10);
 	}
-
-	@Override
-	public Object actionCallback(Object result) {
-		return result;
-	}
-	
 }

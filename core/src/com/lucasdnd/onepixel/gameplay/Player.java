@@ -134,7 +134,7 @@ public class Player {
 	}
 	
 	/**
-	 * Perform an action on a block
+	 * Perform an action on a block (press E)
 	 * @param world
 	 */
 	public void performAction(World world) {
@@ -155,12 +155,14 @@ public class Player {
 				stamina -= 10;
 				food -= 3;
 				drink -= 5;
+			} else if (result instanceof StatRecovery) {
+				recoverStats((StatRecovery)result);
 			}
 		}
 	}
 	
 	/**
-	 * Places the currently selected item
+	 * Uses the currently selected item (press W)
 	 * @param world
 	 */
 	public void useItem(World world) {
@@ -169,13 +171,7 @@ public class Player {
 		int targetY = target[1];
 		int targetZ = target[2];
 		
-		// Target coordinates
-		MapObject targetObject = world.getMapObjectAt(targetX, targetY, targetZ);
-		if (targetObject != null && !(targetObject instanceof Water)) {
-			return;
-		}
-		
-		// Get item
+		// Get item from the inventory
 		Item item = null;
 		try {
 			item = inventory.getSelectedInventoryBox().getItem();
@@ -186,20 +182,24 @@ public class Player {
 			return;
 		}
 		
-		// A block or an item?
+		// A block or an usable item?
 		MapObject itemBlock = world.exchange(item, targetX, targetY, targetZ);
 		if (itemBlock == null && item instanceof Usable) {
 
 			// Item
 			StatRecovery statRecovery = ((Usable)item).use();
-			health += statRecovery.getHealth();
-			stamina += statRecovery.getStamina();
-			food += statRecovery.getFood();
-			drink += statRecovery.getDrink();
+			recoverStats(statRecovery);
 		
 		} else {
 			
 			// Block
+			
+			// Check what's in the target coordinates
+			MapObject targetObject = world.getMapObjectAt(targetX, targetY, targetZ);
+			if (targetObject != null && !(targetObject instanceof Water)) {
+				return;
+			}
+			
 			world.getMapObjects()[targetX][targetY][targetZ] = itemBlock;
 			
 			// Stats update
@@ -211,6 +211,13 @@ public class Player {
 		// Consume it
 		item.decreaseAmount();
 		inventory.checkItems();
+	}
+	
+	private void recoverStats(StatRecovery statRecovery) {
+		health += statRecovery.getHealth();
+		stamina += statRecovery.getStamina();
+		food += statRecovery.getFood();
+		drink += statRecovery.getDrink();
 	}
 	
 	/**
