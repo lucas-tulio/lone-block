@@ -12,4 +12,9 @@ public class DesktopLauncher {
 		config.resizable = false;
 		new LwjglApplication(new OnePixel(), config);
 	}
+	
+	/**
+	 * Placement sound - DasDeer (freesound.org) http://freesound.org/people/DasDeer/sounds/161544/
+	 * Wood cutting sound - f4ngy (freesound.org) http://freesound.org/people/f4ngy/sounds/240788/
+	 */
 }

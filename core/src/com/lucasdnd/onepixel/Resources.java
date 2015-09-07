@@ -27,6 +27,7 @@ public class Resources {
 		greenFont = new BitmapFont(Gdx.files.internal("font/proggyGreen.fnt"));
 		
 		placementSound = Gdx.audio.newSound(Gdx.files.internal("sfx/placement.wav"));
+		woodcuttingSound = Gdx.audio.newSound(Gdx.files.internal("sfx/woodcutting.wav"));
 	}
 	
 	// Fonts
@@ -39,4 +40,5 @@ public class Resources {
 	
 	// Sound effects
 	public Sound placementSound;
+	public Sound woodcuttingSound;
 }

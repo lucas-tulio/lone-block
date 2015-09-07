@@ -12,6 +12,7 @@ import com.lucasdnd.onepixel.gameplay.items.Inventory;
 import com.lucasdnd.onepixel.gameplay.items.Item;
 import com.lucasdnd.onepixel.gameplay.items.StatRecovery;
 import com.lucasdnd.onepixel.gameplay.items.Usable;
+import com.lucasdnd.onepixel.gameplay.items.Wood;
 import com.lucasdnd.onepixel.gameplay.world.MapObject;
 import com.lucasdnd.onepixel.gameplay.world.Water;
 import com.lucasdnd.onepixel.gameplay.world.World;
@@ -156,6 +157,12 @@ public class Player {
 				stamina -= 10;
 				food -= 3;
 				drink -= 5;
+				
+				// Play the appropriate sound effect
+				if (result instanceof Wood) {
+					Resources.get().woodcuttingSound.play(0.4f);
+				}
+				
 			} else if (result instanceof StatRecovery) {
 				recoverStats((StatRecovery)result);
 			}

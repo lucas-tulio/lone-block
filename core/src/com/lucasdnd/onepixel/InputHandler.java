@@ -16,7 +16,7 @@ public class InputHandler implements InputProcessor {
 	
 	public InputHandler(boolean debug) {
 		if (debug) {
-			maxDelay = 2;
+			maxDelay = 8;
 		} else {
 			maxDelay = 8;
 		}
