@@ -1,5 +1,7 @@
 package com.lucasdnd.onepixel;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -28,6 +30,24 @@ public class Resources {
 		
 		placementSound = Gdx.audio.newSound(Gdx.files.internal("sfx/placement.wav"));
 		woodcuttingSound = Gdx.audio.newSound(Gdx.files.internal("sfx/woodcutting.wav"));
+		miningSound = Gdx.audio.newSound(Gdx.files.internal("sfx/mining.wav"));
+		leavesSound1 = Gdx.audio.newSound(Gdx.files.internal("sfx/leaves-1.wav"));
+		leavesSound2 = Gdx.audio.newSound(Gdx.files.internal("sfx/leaves-2.wav"));
+		leavesSound3 = Gdx.audio.newSound(Gdx.files.internal("sfx/leaves-3.wav"));
+		leavesSound4 = Gdx.audio.newSound(Gdx.files.internal("sfx/leaves-4.wav"));
+	}
+	
+	public Sound randomLeavesSound() {
+		switch(new Random().nextInt(4)) {
+		case 0:
+			return leavesSound1;
+		case 1:
+			return leavesSound2;
+		case 2:
+			return leavesSound3;
+		default:
+			return leavesSound4;
+		}
 	}
 	
 	// Fonts
@@ -41,4 +61,9 @@ public class Resources {
 	// Sound effects
 	public Sound placementSound;
 	public Sound woodcuttingSound;
+	public Sound miningSound;
+	private Sound leavesSound1;
+	private Sound leavesSound2;
+	private Sound leavesSound3;
+	private Sound leavesSound4;
 }

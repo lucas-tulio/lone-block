@@ -16,5 +16,7 @@ public class DesktopLauncher {
 	/**
 	 * Placement sound - DasDeer (freesound.org) http://freesound.org/people/DasDeer/sounds/161544/
 	 * Wood cutting sound - f4ngy (freesound.org) http://freesound.org/people/f4ngy/sounds/240788/
+	 * Stone mining sound (edited) - ryanconway (freesound.org) http://freesound.org/people/ryanconway/sounds/240801/
+	 * Leaves sound (edited) - ramagochi (freesound.org) http://freesound.org/people/ramagochi/sounds/119642/
 	 */
 }
