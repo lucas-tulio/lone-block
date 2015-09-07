@@ -9,66 +9,131 @@ import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.items.Item;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
 
-
 public class World implements Disposer {
-	
+
 	private Random r;
-	
+
 	private int size;
-	private final int depth = 10;
-	private MapObject [][][] mapObjects;
-	
-	public static final int TREE = 1;
-	
+	private final int depth = 1;
+	private MapObject[][][] mapObjects;
+
+	// World settings
 	private int numTrees = 10000;
-	
-	public World(int size) {
-		this.size = size;
+
+	// Variation
+	float increment = 0.01f;
+
+	// Amount of Land
+	int archipelago = 100;
+	int islands = 120;
+	int continents = 140;
+	int greatLakes = 180;
+	int plains = 200;
+
+	int seaLevel = islands;
+
+	// Mountain and water levels
+	int mountainLevel = seaLevel + 20; // 50 to max (less is more)
+	int waterLevel = seaLevel - 20;
+
+	public World() {
+
+		size = 512;
 		mapObjects = new MapObject[size][size][depth];
+
 		r = new Random();
+		PerlinNoise perlin = new PerlinNoise(r.nextInt());
+
+		int[][] map = new int[size][size];
+		int minK = 255;
+		int maxK = 0;
 		
-		// Generate trees
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				
+				// Generate a noise value for the coordinate (x,y)
+				float noiseValue = 0;
+				noiseValue += perlin.scale256(perlin.interpolatedNoise(i * 0.01f, j * 0.01f));
+				noiseValue += perlin.scale256(perlin.interpolatedNoise(i * 0.02f, j * 0.02f));
+				noiseValue += perlin.scale256(perlin.interpolatedNoise(i * 0.04f, j * 0.04f));
+				noiseValue += perlin.scale256(perlin.interpolatedNoise(i * 0.08f, j * 0.08f));
+				int roundedValue = Math.round(noiseValue / 4f);
+				
+				map[i][j] = roundedValue;
+				int k = map[i][j];
+				
+				if (k > maxK) {
+					maxK = k;
+				} else if (k < minK) {
+					minK = k;
+				}
+				
+				if (k > mountainLevel) {
+					mapObjects[i][j][0] = new Rock(this, i, j, 0);
+				} else if (k <= mountainLevel && k > seaLevel) {
+
+				} else if (k <= seaLevel && k > waterLevel) {
+					mapObjects[i][j][0] = new Water(this, i, j, 0, 15);
+				} else {
+					mapObjects[i][j][0] = new Water(this, i, j, 0, 5);
+				}
+			}
+		}
+		
+		// Add Trees
 		for (int i = 0; i < numTrees; i++) {
 			int x = r.nextInt(size);
 			int y = r.nextInt(size);
 			int z = 0;
-			Tree tree = new Tree(this, x, y, z);
-			mapObjects[x][y][z] = tree;
+			if (mapObjects[x][y][z] == null) {
+				Tree tree = new Tree(this, x, y, z);
+				mapObjects[x][y][z] = tree;
+			}
 		}
 	}
-
+	
 	public void update() {
-		
+
 	}
 
 	public void render(ShapeRenderer sr) {
 		sr.begin(ShapeType.Filled);
 		sr.setColor(Color.FOREST);
 		sr.rect(0f, 0f, size * OnePixel.PIXEL_SIZE, size * OnePixel.PIXEL_SIZE);
-		
+
 		// World objects
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				
-				MapObject mapObject = mapObjects[i][j][0]; 
-				
+
+				MapObject mapObject = mapObjects[i][j][0];
+
 				if (mapObject instanceof Tree) {
 					sr.setColor(mapObject.getColor());
-					sr.rect(i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+					sr.rect(i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE,
+							OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
 				} else if (mapObject instanceof WoodBlock) {
 					sr.setColor(mapObject.getColor());
-					sr.rect(i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+					sr.rect(i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE,
+							OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+				} else if (mapObject instanceof Rock) {
+					sr.setColor(mapObject.getColor());
+					sr.rect(i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE,
+							OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+				} else if (mapObject instanceof Water) {
+					sr.setColor(mapObject.getColor());
+					sr.rect(i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE,
+							OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
 				}
 			}
 		}
-		
+
 		sr.end();
 	}
 
 	public MapObject[][][] getMapObjects() {
 		return mapObjects;
 	}
-	
+
 	public int getSize() {
 		return size;
 	}
@@ -79,12 +144,13 @@ public class World implements Disposer {
 		} else if (targetX >= size || targetY >= size || targetZ >= size) {
 			return null;
 		}
-		
+
 		return mapObjects[targetX][targetY][targetZ];
 	}
-	
+
 	/**
 	 * Give it an inventory item, get a map block
+	 * 
 	 * @param item
 	 * @param x
 	 * @param y
@@ -95,7 +161,7 @@ public class World implements Disposer {
 		if (item instanceof Wood) {
 			return new WoodBlock(this, x, y, z);
 		}
-		
+
 		return null;
 	}
 

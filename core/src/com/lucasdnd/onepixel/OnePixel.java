@@ -1,5 +1,6 @@
 package com.lucasdnd.onepixel;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -48,10 +49,9 @@ public class OnePixel extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(input);
 
 		// Game objects
-		int worldSize = 1024;
-		world = new World(worldSize);
+		world = new World();
 		Random r = new Random();
-		player = new Player(r.nextInt(worldSize), r.nextInt(worldSize));
+		player = new Player(world);
 		
 		int sideBarWidth = 400;
 		sideBar = new SideBar(Gdx.graphics.getWidth() - sideBarWidth, 0, sideBarWidth);

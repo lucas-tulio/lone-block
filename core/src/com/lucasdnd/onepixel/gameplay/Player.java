@@ -1,5 +1,8 @@
 package com.lucasdnd.onepixel.gameplay;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -24,9 +27,16 @@ public class Player {
 	
 	private int health, stamina, food, drink;
 	
-	public Player(int x, int y) {
-		this.x = x;
-		this.y = y;
+	private class Point {
+		public int x, y;
+		public Point(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+	}
+	
+	public Player(World world) {
+		
 		color = Color.BLACK;
 		health = MAX_STAT_VALUE;
 		stamina = MAX_STAT_VALUE;
@@ -35,6 +45,20 @@ public class Player {
 		
 		faceUp();
 		inventory = new Inventory(27);
+		
+		// Spawn point
+		ArrayList<Point> spawnPoints = new ArrayList<Point>();
+		for (int i = 0; i < world.getSize(); i++) {
+			for (int j = 0; j < world.getSize(); j++) {
+				if (world.getMapObjectAt(i, j, 0) == null) {
+					spawnPoints.add(new Point(i, j));
+				}
+			}
+		}
+		
+		int randomPoint = new Random().nextInt(spawnPoints.size());
+		this.x = spawnPoints.get(randomPoint).x;
+		this.y = spawnPoints.get(randomPoint).y;
 	}
 
 	public void update() {
