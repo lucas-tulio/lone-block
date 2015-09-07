@@ -27,6 +27,8 @@ public class Player {
 	private boolean freeMovementMode = true;
 	
 	private int health, stamina, food, drink;
+	private int statusDecrease;
+	private int statusDecreaseLimit = 10;
 	
 	private class Point {
 		public int x, y;
@@ -63,7 +65,13 @@ public class Player {
 	}
 
 	public void update() {
-		
+		statusDecrease++;
+		if (statusDecrease % statusDecreaseLimit == 0) {
+			stamina--;
+			food--;
+			drink -= 2;
+			statusDecrease = 0;
+		}
 	}
 
 	public void render(ShapeRenderer sr) {
