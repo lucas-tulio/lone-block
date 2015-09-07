@@ -2,7 +2,7 @@ package com.lucasdnd.onepixel.gameplay.world;
 
 import com.badlogic.gdx.graphics.Color;
 
-public abstract class MapObject implements Usable {
+public abstract class MapObject implements Harvestable {
 	
 	Disposer disposer;
 	int x, y, z;

@@ -3,6 +3,8 @@ package com.lucasdnd.onepixel.gameplay.world;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.items.Stone;
 
 public class Rock extends MapObject {
@@ -20,6 +22,11 @@ public class Rock extends MapObject {
 		stone = 1;
 		color = new Color(0.31f, 0.31f, 0.31f, 1f);
 	}
+	
+	public void render(ShapeRenderer sr, float x, float y) {
+		sr.setColor(color);
+		sr.rect(x, y, OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+	}
 
 	@Override
 	public Object performAction() {
@@ -30,15 +37,15 @@ public class Rock extends MapObject {
 			if (stone == 0) {
 				disposer.dispose(this);
 			}
-			return actionCallback();
+			return actionCallback(new Stone());
 		}
 		
 		return null;
 	}
 
 	@Override
-	public Object actionCallback() {
-		return new Stone();
+	public Object actionCallback(Object result) {
+		return result;
 	}
 
 }

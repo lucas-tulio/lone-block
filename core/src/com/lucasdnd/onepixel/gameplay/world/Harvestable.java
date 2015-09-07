@@ -1,6 +1,6 @@
 package com.lucasdnd.onepixel.gameplay.world;
 
-public interface Usable {
+public interface Harvestable {
 	public Object performAction();
-	public Object actionCallback();
+	public Object actionCallback(Object result);
 }

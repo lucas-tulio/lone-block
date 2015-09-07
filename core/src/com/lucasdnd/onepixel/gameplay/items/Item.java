@@ -1,8 +1,9 @@
 package com.lucasdnd.onepixel.gameplay.items;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class Item {
+public abstract class Item {
 	private String name;
 	private Color color;
 	private int amount;
@@ -18,6 +19,8 @@ public class Item {
 	public void decreaseAmount() {
 		amount--;
 	}
+	
+	public abstract void render(ShapeRenderer sr, float x, float y);
 
 	public String getName() {
 		return name;

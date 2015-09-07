@@ -109,21 +109,13 @@ public class World implements Disposer {
 				MapObject mapObject = mapObjects[i][j][0];
 
 				if (mapObject instanceof Tree) {
-					sr.setColor(mapObject.getColor());
-					sr.rect(i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE,
-							OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+					((Tree) mapObject).render(sr, i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE);
 				} else if (mapObject instanceof WoodBlock) {
-					sr.setColor(mapObject.getColor());
-					sr.rect(i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE,
-							OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+					((WoodBlock) mapObject).render(sr, i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE);
 				} else if (mapObject instanceof Rock) {
-					sr.setColor(mapObject.getColor());
-					sr.rect(i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE,
-							OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+					((Rock) mapObject).render(sr, i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE);
 				} else if (mapObject instanceof Water) {
-					sr.setColor(mapObject.getColor());
-					sr.rect(i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE,
-							OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+					((Water) mapObject).render(sr, i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE);
 				}
 			}
 		}

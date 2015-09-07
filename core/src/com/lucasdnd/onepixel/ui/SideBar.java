@@ -14,7 +14,7 @@ public class SideBar {
 	
 	int x, y, width;
 	final float margin = 20f;
-	final float lineWeight = 4f;
+	public static final float lineWeight = 4f;
 	
 	// Status bar attributes
 	float barHeight;
@@ -22,7 +22,7 @@ public class SideBar {
 	
 	// Inventory attributes
 	int inventoryRows = 3;
-	float inventoryBoxSize = margin * 2;
+	public static float INVENTORY_BOX_SIZE = 40f;
 	
 	FontUtils font;
 	
@@ -48,10 +48,10 @@ public class SideBar {
 		// Status bars
 		Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
 		
-		drawRectFill(sr, null, x + margin, height - margin,       barWidth, barHeight, player.getHealth(), Player.MAX_STAT_VALUE);
+		drawRectFill(sr, null, x + margin, height - margin,       barWidth, barHeight, player.getHealth(),  Player.MAX_STAT_VALUE);
 		drawRectFill(sr, null, x + margin, height - margin * 5,   barWidth, barHeight, player.getStamina(), Player.MAX_STAT_VALUE);
-		drawRectFill(sr, null, x + margin, height - margin * 9,   barWidth, barHeight, player.getFood(), Player.MAX_STAT_VALUE);
-		drawRectFill(sr, null, x + margin, height - margin * 13,  barWidth, barHeight, player.getDrink(), Player.MAX_STAT_VALUE);
+		drawRectFill(sr, null, x + margin, height - margin * 9,   barWidth, barHeight, player.getFood(),    Player.MAX_STAT_VALUE);
+		drawRectFill(sr, null, x + margin, height - margin * 13,  barWidth, barHeight, player.getDrink(),   Player.MAX_STAT_VALUE);
 		
 		drawRectFrame(sr, x + margin, height - margin,      barWidth, barHeight);
 		drawRectFrame(sr, x + margin, height - margin * 5,  barWidth, barHeight);
@@ -70,12 +70,12 @@ public class SideBar {
 				
 				// Inventory frame
 				drawRectFrame(sr,
-						x + inventoryBoxSize * i + margin,
-						height - margin * 17 - inventoryBoxSize * j,
-						inventoryBoxSize,
-						inventoryBoxSize);
+						x + INVENTORY_BOX_SIZE * i + margin,
+						height - margin * 17 - INVENTORY_BOX_SIZE * j,
+						INVENTORY_BOX_SIZE,
+						INVENTORY_BOX_SIZE);
 				
-				// Inventory fill
+				// Inventory items
 				Item item = null;
 				try {
 					item = player.getInventory().getContent().get(i * inventoryRows + j);
@@ -84,18 +84,12 @@ public class SideBar {
 				}
 				
 				if (item != null) {
-					float itemX = x + inventoryBoxSize * i + margin;
-					float itemY = height - margin * 17 - inventoryBoxSize * j;
-					drawRectFill(
-							sr,
-							item.getColor(),
-							itemX,
-							itemY,
-							inventoryBoxSize,
-							inventoryBoxSize -4f,
-							1, 1);
+					
+					float itemX = x + INVENTORY_BOX_SIZE * i + margin;
+					float itemY = height - margin * 17 - INVENTORY_BOX_SIZE * j;
+					item.render(sr, itemX, itemY);
+
 					if (item.getAmount() > 1) {
-						
 						font.drawWhiteFont("" + item.getAmount(), itemX + 38f, itemY - 18f, false, Align.right);
 					}
 				}
