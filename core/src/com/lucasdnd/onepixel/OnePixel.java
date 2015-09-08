@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.gameplay.Player;
 import com.lucasdnd.onepixel.gameplay.world.World;
+import com.lucasdnd.onepixel.ui.Button;
 import com.lucasdnd.onepixel.ui.SideBar;
 import com.lucasdnd.onepixel.ui.Tooltip;
 
@@ -65,6 +66,7 @@ public class OnePixel extends ApplicationAdapter {
 		// Movement delay
 		input.movementDelay--;
 		if (input.movementDelay <= 0) {
+			input.movementDelay = 0;
 		
 			// Movement
 			if (input.upPressed) {
@@ -132,6 +134,7 @@ public class OnePixel extends ApplicationAdapter {
 		// Action delay
 		input.actionDelay--;
 		if (input.actionDelay <= 0) {
+			input.actionDelay = 0;
 
 			// Action
 			if (input.ePressed) {
@@ -143,6 +146,7 @@ public class OnePixel extends ApplicationAdapter {
 		// Use delay
 		input.useDelay --;
 		if (input.useDelay <= 0) {
+			input.useDelay = 0;
 			
 			// Use
 			if (input.wPressed) {
@@ -184,6 +188,7 @@ public class OnePixel extends ApplicationAdapter {
 		
 		world.update();
 		player.update();
+		sideBar.update();
 		
 		handleInputEnd();
 	}
