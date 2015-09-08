@@ -220,7 +220,7 @@ public class Player {
 				return;
 			}
 			
-			world.getMapObjects()[targetX][targetY][targetZ] = itemBlock;
+			world.getMapObjects()[targetX][targetY] = itemBlock;
 			Resources.get().placementSound.play(0.2f);
 			
 			// Stats update
@@ -300,7 +300,7 @@ public class Player {
 		}
 	}
 	private boolean moveUpCheck(World world) {
-		return y + 1 < world.getSize() && world.getMapObjects()[x][y+1][0] == null;
+		return y + 1 < world.getSize() && world.getMapObjects()[x][y+1] == null;
 	}
 
 	public boolean canMoveLeft(World world) {
@@ -318,7 +318,7 @@ public class Player {
 		}
 	}
 	private boolean moveLeftCheck(World world) {
-		return x - 1 >= 0 && world.getMapObjects()[x-1][y][0] == null;
+		return x - 1 >= 0 && world.getMapObjects()[x-1][y] == null;
 	}
 
 	public boolean canMoveDown(World world) {
@@ -336,7 +336,7 @@ public class Player {
 		}
 	}
 	private boolean moveDownCheck(World world) {
-		return y - 1 >= 0 && world.getMapObjects()[x][y-1][0] == null;
+		return y - 1 >= 0 && world.getMapObjects()[x][y-1] == null;
 	}
 
 	public boolean canMoveRight(World world) {
@@ -354,7 +354,7 @@ public class Player {
 		}
 	}
 	private boolean moveRightCheck(World world) {
-		return x + 1 < world.getSize() && world.getMapObjects()[x+1][y][0] == null;
+		return x + 1 < world.getSize() && world.getMapObjects()[x+1][y] == null;
 	}
 	
 	public void moveUp() {

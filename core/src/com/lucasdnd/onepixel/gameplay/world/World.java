@@ -15,8 +15,7 @@ public class World implements Disposer {
 	private Random r;
 
 	private int size;
-	private final int depth = 1;
-	private MapObject[][][] mapObjects;
+	private MapObject[][] mapObjects;
 
 	// World settings
 	private int numTrees = 10000;
@@ -40,7 +39,7 @@ public class World implements Disposer {
 	public World() {
 
 		size = 512;
-		mapObjects = new MapObject[size][size][depth];
+		mapObjects = new MapObject[size][size];
 
 		r = new Random();
 		PerlinNoise perlin = new PerlinNoise(r.nextInt());
@@ -70,13 +69,13 @@ public class World implements Disposer {
 				}
 				
 				if (k > mountainLevel) {
-					mapObjects[i][j][0] = new Rock(this, i, j, 0);
+					mapObjects[i][j] = new Rock(this, i, j, 0);
 				} else if (k <= mountainLevel && k > seaLevel) {
 
 				} else if (k <= seaLevel && k > waterLevel) {
-					mapObjects[i][j][0] = new Water(this, i, j, 0, 15);
+					mapObjects[i][j] = new Water(this, i, j, 0, 15);
 				} else {
-					mapObjects[i][j][0] = new Water(this, i, j, 0, 5);
+					mapObjects[i][j] = new Water(this, i, j, 0, 5);
 				}
 			}
 		}
@@ -86,9 +85,9 @@ public class World implements Disposer {
 			int x = r.nextInt(size);
 			int y = r.nextInt(size);
 			int z = 0;
-			if (mapObjects[x][y][z] == null) {
+			if (mapObjects[x][y] == null) {
 				Tree tree = new Tree(this, x, y, z);
-				mapObjects[x][y][z] = tree;
+				mapObjects[x][y] = tree;
 			}
 		}
 	}
@@ -106,7 +105,7 @@ public class World implements Disposer {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 
-				MapObject mapObject = mapObjects[i][j][0];
+				MapObject mapObject = mapObjects[i][j];
 
 				if (mapObject instanceof Tree) {
 					((Tree) mapObject).render(sr, i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE);
@@ -123,7 +122,7 @@ public class World implements Disposer {
 		sr.end();
 	}
 
-	public MapObject[][][] getMapObjects() {
+	public MapObject[][] getMapObjects() {
 		return mapObjects;
 	}
 
@@ -138,7 +137,7 @@ public class World implements Disposer {
 			return null;
 		}
 
-		return mapObjects[targetX][targetY][targetZ];
+		return mapObjects[targetX][targetY];
 	}
 
 	/**
@@ -162,6 +161,6 @@ public class World implements Disposer {
 
 	@Override
 	public void dispose(MapObject mapObject) {
-		mapObjects[mapObject.x][mapObject.y][mapObject.z] = null;
+		mapObjects[mapObject.x][mapObject.y] = null;
 	}
 }
