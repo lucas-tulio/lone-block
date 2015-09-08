@@ -69,6 +69,20 @@ public class SideBar {
 		// Inventory
 		inventory.render(sr);
 		font.drawWhiteFont("Inventory", x + margin, height - margin * 23 - 3f, true);
+		font.drawWhiteFont("Crafting", x + margin*13, height - margin * 19 - 3f, true);
+		font.drawWhiteFont("Result", x + margin*13, height - margin * 23 - 3f, true);
+		
+		// Instructions
+		font.drawWhiteFont("E: harvest/collect", x + margin, height - margin * 25 - 3f, true);
+		font.drawWhiteFont("W: use selected item", x + margin, height - margin * 26 - 3f, true);
+		font.drawWhiteFont("+/-: zoom", x + margin, height - margin * 27 - 3f, true);
+		font.drawWhiteFont("Hold shift and press the arrow", x + margin, height - margin * 28 - 3f, true);
+		font.drawWhiteFont("keys to look around", x + margin, height - margin * 29 - 3f, true);
+		
+		// New/save, load, quit
+		font.drawWhiteFont("Save", x + margin, height - margin * 31 - 3f, true);
+		font.drawWhiteFont("Load", x + margin*9, height - margin * 31 - 3f, true);
+		font.drawWhiteFont("Quit", x + margin*17-4f, height - margin * 31 - 3f, true);
 		
 		// Game name and version
 		font.drawWhiteFont(OnePixel.GAME_NAME, x + margin,         margin * 1.5f, true);

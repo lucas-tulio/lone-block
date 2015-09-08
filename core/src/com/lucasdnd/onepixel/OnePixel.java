@@ -16,7 +16,7 @@ import com.lucasdnd.onepixel.ui.Tooltip;
 public class OnePixel extends ApplicationAdapter {
 	
 	public final static String GAME_NAME = "One Pixel";
-	public final static String VERSION = "v0.1.1";
+	public final static String VERSION = "v0.2.0";
 	boolean debug = false;
 	
 	public static float PIXEL_SIZE = 8f;
@@ -216,7 +216,7 @@ public class OnePixel extends ApplicationAdapter {
 			Resources.get().whiteFont.draw(fontBatch, "w: " + input.wPressed, 0f, Gdx.graphics.getHeight() - 120f);
 			Resources.get().whiteFont.draw(fontBatch, "shift: " + input.shiftPressed, 0f, Gdx.graphics.getHeight() - 140f);
 			Resources.get().whiteFont.draw(fontBatch, "left: " + input.leftMouseDown, 0f, Gdx.graphics.getHeight() - 180f);
-			Resources.get().whiteFont.draw(fontBatch, "right: " + input.rightMouseDown, 0f, Gdx.graphics.getHeight() - 200f);
+			Resources.get().whiteFont.draw(fontBatch, "right: " + input.rightMouseDown, 0f, Gdx.graphics.getHeight() - 200f);			
 			Resources.get().whiteFont.draw(fontBatch, "movement: " + input.movementDelay, 0f, Gdx.graphics.getHeight() - 240f);
 			Resources.get().whiteFont.draw(fontBatch, "action: " + input.actionDelay, 0f, Gdx.graphics.getHeight() - 260f);
 			Resources.get().whiteFont.draw(fontBatch, "use: " + input.useDelay, 0f, Gdx.graphics.getHeight() - 280f);

@@ -54,7 +54,7 @@ public class Player {
 		drink = MAX_STAT_VALUE;
 		
 		faceUp();
-		inventory = new Inventory(27);
+		inventory = new Inventory(15);
 		
 		// Spawn point
 		ArrayList<Point> spawnPoints = new ArrayList<Point>();
