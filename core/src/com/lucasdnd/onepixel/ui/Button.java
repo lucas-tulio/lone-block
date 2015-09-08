@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.FontUtils;
+import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.Resources;
 
 public class Button {
@@ -24,6 +25,7 @@ public class Button {
 	
 	FontUtils font;
 	ShapeRenderer sr;
+	ButtonClickListener clickListener;
 	
 	public Button(String text, float x, float y) {
 		this.x = x;
@@ -36,9 +38,14 @@ public class Button {
 	
 	public void update() {
 		int mouseX = Gdx.input.getX();
-		int mouseY = (Gdx.graphics.getHeight() - Gdx.input.getY());
+		int mouseY = (int)(Gdx.graphics.getHeight() - Gdx.input.getY() + height);
 		mouseOver = ((mouseX > x && mouseX < x + width) && (mouseY > y && mouseY < y + height));
-		calcButtonSize();
+		
+		if (mouseOver && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
+			if (clickListener != null) {
+				clickListener.onClick();
+			}
+		}
 	}
 	
 	public void render() {
@@ -57,7 +64,12 @@ public class Button {
 		final float lineHeight = height;
 		final float lineWidth = width + lineWeight;
 		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.WHITE);
+		
+		if (mouseOver) {
+			sr.setColor(Color.GRAY);
+		} else {
+			sr.setColor(Color.WHITE);
+		}
 		
 		// Left
 		sr.rect(x, y, lineWeight, lineWeight - lineHeight);
@@ -100,5 +112,18 @@ public class Button {
 
 	public float getHeight() {
 		return height;
+	}
+
+	public ButtonClickListener getClickListener() {
+		return clickListener;
+	}
+
+	public void setClickListener(ButtonClickListener clickListener) {
+		this.clickListener = clickListener;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+		calcButtonSize();
 	}
 }

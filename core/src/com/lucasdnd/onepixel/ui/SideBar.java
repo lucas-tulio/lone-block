@@ -35,12 +35,50 @@ public class SideBar {
 		barWidth = width - margin * 2;
 		font = new FontUtils();
 		
+		// Buttons
 		newGameButton = new Button("Save", this.x + margin, margin * 4);
+		newGameButton.setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
+				if (player.isDead()) {
+					((OnePixel)Gdx.app.getApplicationListener()).create();
+				} else {
+					System.out.println("Save game not yet implemented");
+				}
+			}
+			
+		});
+		
 		loadGameButton = new Button("Load", this.x + margin * 8, margin * 4);
+		loadGameButton.setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				System.out.println("Load game not yet implemented");
+			}
+			
+		});
+		
 		quitButton = new Button("Quit", this.x + margin * 15, margin * 4);
+		quitButton.setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				Gdx.app.exit();
+			}
+			
+		});
 	}
 	
 	public void update() {
+		Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
+		if (player.isDead()) {
+			newGameButton.setText("New");
+		} else {
+			newGameButton.setText("Save");
+		}
 		newGameButton.update();
 		loadGameButton.update();
 		quitButton.update();
