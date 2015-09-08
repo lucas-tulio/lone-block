@@ -48,6 +48,7 @@ public class SideBar {
 		});
 		
 		saveGameButton = new Button("Save", this.x + margin * 5 + 6f, margin * 4);
+		saveGameButton.setEnabled(false);
 		saveGameButton.setClickListener(new ButtonClickListener() {
 
 			@Override
@@ -58,6 +59,7 @@ public class SideBar {
 		});
 		
 		loadGameButton = new Button("Load", this.x + margin * 10 + 4f, margin * 4);
+		loadGameButton.setEnabled(false);
 		loadGameButton.setClickListener(new ButtonClickListener() {
 
 			@Override

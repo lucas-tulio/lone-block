@@ -21,11 +21,15 @@ public class Button {
 	final float paddingX = 32f;
 	final float lineWeight = 4f;
 	
-	boolean mouseOver;
+	boolean mouseOver, enabled;
 	
 	FontUtils font;
 	ShapeRenderer sr;
 	ButtonClickListener clickListener;
+	
+	final Color disabledColor = Color.GRAY;
+	final Color normalColor = Color.WHITE;
+	final Color hoverColor = Color.YELLOW;
 	
 	public Button(String text, float x, float y) {
 		this.x = x;
@@ -34,23 +38,30 @@ public class Button {
 		sr = new ShapeRenderer();
 		font = new FontUtils();
 		calcButtonSize();
+		enabled = true;
 	}
 	
 	public void update() {
-		int mouseX = Gdx.input.getX();
-		int mouseY = (int)(Gdx.graphics.getHeight() - Gdx.input.getY() + height);
-		mouseOver = ((mouseX > x && mouseX < x + width) && (mouseY > y && mouseY < y + height));
-		
-		if (mouseOver && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
-			if (clickListener != null) {
-				clickListener.onClick();
+		if (enabled) {
+			int mouseX = Gdx.input.getX();
+			int mouseY = (int)(Gdx.graphics.getHeight() - Gdx.input.getY() + height);
+			mouseOver = ((mouseX > x && mouseX < x + width) && (mouseY > y && mouseY < y + height));
+			
+			if (mouseOver && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
+				if (clickListener != null) {
+					clickListener.onClick();
+				}
 			}
 		}
 	}
 	
 	public void render() {
 		drawButtonFrame();
-		font.drawWhiteFont(text, x + textPaddingX, y - textPaddingY, false, Align.center, (int)textSize);
+		if (enabled) {
+			font.drawWhiteFont(text, x + textPaddingX, y - textPaddingY, false, Align.center, (int)textSize);
+		} else {
+			font.drawGrayFont(text, x + textPaddingX, y - textPaddingY, false, Align.center, (int)textSize);
+		}
 	}
 	
 	private void calcButtonSize() {
@@ -65,10 +76,14 @@ public class Button {
 		final float lineWidth = width + lineWeight;
 		sr.begin(ShapeType.Filled);
 		
-		if (mouseOver) {
-			sr.setColor(Color.GRAY);
+		if (enabled) {
+			if (mouseOver) {
+				sr.setColor(hoverColor);
+			} else {
+				sr.setColor(normalColor);
+			}
 		} else {
-			sr.setColor(Color.WHITE);
+			sr.setColor(disabledColor);
 		}
 		
 		// Left
@@ -126,4 +141,13 @@ public class Button {
 		this.text = text;
 		calcButtonSize();
 	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
 }
