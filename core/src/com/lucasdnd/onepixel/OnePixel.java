@@ -56,6 +56,7 @@ public class OnePixel extends ApplicationAdapter {
 		tooltip = new Tooltip();
 		
 		// Game objects
+		
 		world = new World();
 		player = new Player(world);
 	}

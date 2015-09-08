@@ -2,6 +2,7 @@ package com.lucasdnd.onepixel.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.FontUtils;
@@ -23,7 +24,7 @@ public class SideBar {
 	int inventoryRows = 3;
 	
 	// Main Buttons
-	Button newGameButton, loadGameButton, quitButton;
+	Button newGameButton, saveGameButton, loadGameButton, quitButton;
 	
 	FontUtils font;
 	
@@ -36,22 +37,27 @@ public class SideBar {
 		font = new FontUtils();
 		
 		// Buttons
-		newGameButton = new Button("Save", this.x + margin, margin * 4);
+		newGameButton = new Button("New", this.x + margin, margin * 4);
 		newGameButton.setClickListener(new ButtonClickListener() {
 
 			@Override
 			public void onClick() {
-				Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
-				if (player.isDead()) {
-					((OnePixel)Gdx.app.getApplicationListener()).create();
-				} else {
-					System.out.println("Save game not yet implemented");
-				}
+				((OnePixel)Gdx.app.getApplicationListener()).create();
 			}
 			
 		});
 		
-		loadGameButton = new Button("Load", this.x + margin * 8, margin * 4);
+		saveGameButton = new Button("Save", this.x + margin * 5 + 6f, margin * 4);
+		saveGameButton.setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				System.out.println("Save game not yet implemented");
+			}
+			
+		});
+		
+		loadGameButton = new Button("Load", this.x + margin * 10 + 4f, margin * 4);
 		loadGameButton.setClickListener(new ButtonClickListener() {
 
 			@Override
@@ -73,13 +79,8 @@ public class SideBar {
 	}
 	
 	public void update() {
-		Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
-		if (player.isDead()) {
-			newGameButton.setText("New");
-		} else {
-			newGameButton.setText("Save");
-		}
 		newGameButton.update();
+		saveGameButton.update();
 		loadGameButton.update();
 		quitButton.update();
 	}
@@ -126,8 +127,9 @@ public class SideBar {
 		font.drawWhiteFont("Hold shift and press the arrow", x + margin, height - margin * 28 - 3f, true);
 		font.drawWhiteFont("keys to look around",            x + margin, height - margin * 29 - 3f, true);
 		
-		// New/save, load, quit
+		// New, save, load, quit
 		newGameButton.render();
+		saveGameButton.render();
 		loadGameButton.render();
 		quitButton.render();
 		
