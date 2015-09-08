@@ -32,7 +32,7 @@ public class Tooltip {
 		if (shouldDraw) {
 			drawTooltipFrame(x, y, textSize, height);
 			drawTooltipBackground(x, y, textSize, height);
-			font.drawWhiteFont(text, x + textMarginX, y - textMarginY, false, Align.center, (int)textSize);
+			font.drawWhiteFont(text, x + textMarginX, y - textMarginY, false, Align.center, font.getTextWidth(text));
 		}
 	}
 	

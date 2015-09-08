@@ -48,7 +48,7 @@ public class InventoryBox {
 		if (item != null) {
 			item.render(sr, x, y);
 			if (item.getAmount() > 1) {
-				font.drawWhiteFont("" + item.getAmount(), x + 38f, y - 18f, false, Align.right);
+				font.drawWhiteFont("" + item.getAmount(), x + 38f, y - 18f, false, Align.right, 0);
 			}
 		}
 	}

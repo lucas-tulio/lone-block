@@ -29,7 +29,7 @@ public class Button {
 	
 	final Color disabledColor = Color.GRAY;
 	final Color normalColor = Color.WHITE;
-	final Color hoverColor = Color.YELLOW;
+	final Color hoverColor = Color.WHITE;
 	
 	public Button(String text, float x, float y) {
 		this.x = x;
@@ -58,9 +58,9 @@ public class Button {
 	public void render() {
 		drawButtonFrame();
 		if (enabled) {
-			font.drawWhiteFont(text, x + textPaddingX, y - textPaddingY, false, Align.center, (int)textSize);
+			font.drawWhiteFont(text, x + textPaddingX, y - textPaddingY, false, Align.center, (int)width);
 		} else {
-			font.drawGrayFont(text, x + textPaddingX, y - textPaddingY, false, Align.center, (int)textSize);
+			font.drawGrayFont(text, x + textPaddingX, y - textPaddingY, false, Align.center, (int)width);
 		}
 	}
 	

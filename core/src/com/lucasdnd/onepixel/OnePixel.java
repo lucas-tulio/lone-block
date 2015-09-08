@@ -15,26 +15,31 @@ import com.lucasdnd.onepixel.ui.Tooltip;
 
 public class OnePixel extends ApplicationAdapter {
 	
+	// General stuff
 	public final static String GAME_NAME = "One Pixel";
 	public final static String VERSION = "v0.2.0";
 	boolean debug = false;
 	
+	// Rendering, font
+	SpriteBatch fontBatch;
+	Tooltip tooltip;
+	FontUtils font;
 	public static float PIXEL_SIZE = 8f;
 	private final float MIN_PIXEL_SIZE = 2f;
 	private final float MAX_PIXEL_SIZE = 32f;
 	
+	// Game objects
 	World world;
 	Player player;
 	SideBar sideBar;
 	
+	// Input, camera
 	InputHandler input;
 	OrthographicCamera camera;
 	ShapeRenderer shapeRenderer;
 	ShapeRenderer uiShapeRenderer;
 	
-	SpriteBatch fontBatch;
-	Tooltip tooltip;
-	FontUtils font;
+	boolean creatingWorld = false;
 	
 	@Override
 	public void create () {
@@ -55,10 +60,11 @@ public class OnePixel extends ApplicationAdapter {
 		sideBar = new SideBar(Gdx.graphics.getWidth() - sideBarWidth, 0, sideBarWidth);
 		tooltip = new Tooltip();
 		
-		// Game objects
-		
-		world = new World();
-		player = new Player(world);
+		startNewGame();
+	}
+	
+	public void startNewGame() {
+		creatingWorld = true;
 	}
 	
 	private void handleInput() {
@@ -176,6 +182,14 @@ public class OnePixel extends ApplicationAdapter {
 	
 	private void update() {
 		
+		// Loading new game
+		if (creatingWorld) {
+			world = new World();
+			player = new Player(world);
+			creatingWorld = false;
+		}
+		
+		// Normal game loop
 		if (player.isDead()) {
 			return;
 		}
@@ -199,6 +213,15 @@ public class OnePixel extends ApplicationAdapter {
 		
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		
+		if (creatingWorld) {
+			sideBar.render(uiShapeRenderer, player.getInventory());
+			String text = "Creating new world...";
+			float space = Gdx.graphics.getWidth() / 2f - sideBar.getWidth() / 2f;
+			font.drawWhiteFont(text, space, Gdx.graphics.getHeight() / 2f - 12f, true, Align.center, 0);
+			return;
+		}
 		
 		world.render(shapeRenderer);
 		player.render(shapeRenderer);
