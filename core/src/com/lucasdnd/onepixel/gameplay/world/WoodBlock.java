@@ -6,10 +6,11 @@ import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
 
 public class WoodBlock extends MapObject {
+	
+	final static Color color = Color.BROWN;
 
-	public WoodBlock(Disposer disposer, int x, int y, int z) {
-		super(disposer, x, y, z);
-		color = Color.BROWN;
+	public WoodBlock(Disposer disposer, int x, int y) {
+		super(disposer, x, y);
 	}
 	
 	public void render(ShapeRenderer sr, float x, float y) {

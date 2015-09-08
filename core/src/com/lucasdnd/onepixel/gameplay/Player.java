@@ -22,7 +22,7 @@ import com.lucasdnd.onepixel.gameplay.world.World;
 public class Player {
 	
 	public static final int MAX_STAT_VALUE = 10000;
-	private int x, y, z, direction;
+	private int x, y, direction;
 	public final int UP = 0;
 	public final int LEFT = 1;
 	public final int DOWN = 2;
@@ -60,7 +60,7 @@ public class Player {
 		ArrayList<Point> spawnPoints = new ArrayList<Point>();
 		for (int i = 0; i < world.getSize(); i++) {
 			for (int j = 0; j < world.getSize(); j++) {
-				if (world.getMapObjectAt(i, j, 0) == null) {
+				if (world.getMapObjectAt(i, j) == null) {
 					spawnPoints.add(new Point(i, j));
 				}
 			}
@@ -145,9 +145,8 @@ public class Player {
 		int[] target = getTargetBlock();
 		int targetX = target[0];
 		int targetY = target[1];
-		int targetZ = target[2];
 		
-		MapObject targetObject = world.getMapObjectAt(targetX, targetY, targetZ);
+		MapObject targetObject = world.getMapObjectAt(targetX, targetY);
 		if (targetObject == null) {
 			return;
 		}
@@ -184,7 +183,6 @@ public class Player {
 		int[] target = getTargetBlock();
 		int targetX = target[0];
 		int targetY = target[1];
-		int targetZ = target[2];
 		
 		// Get item from the inventory
 		Item item = null;
@@ -198,7 +196,7 @@ public class Player {
 		}
 		
 		// A block or an usable item?
-		MapObject itemBlock = world.exchange(item, targetX, targetY, targetZ);
+		MapObject itemBlock = world.exchange(item, targetX, targetY);
 		if (itemBlock == null && item instanceof Usable) {
 
 			// Item
@@ -215,7 +213,7 @@ public class Player {
 			// Block
 			
 			// Check what's in the target coordinates
-			MapObject targetObject = world.getMapObjectAt(targetX, targetY, targetZ);
+			MapObject targetObject = world.getMapObjectAt(targetX, targetY);
 			if (targetObject != null && !(targetObject instanceof Water)) {
 				return;
 			}
@@ -246,13 +244,11 @@ public class Player {
 	 * @return
 	 */
 	private int[] getTargetBlock() {
-		int[] result = new int[3];
+		int[] result = new int[2];
 		final int X = 0;
 		final int Y = 1;
-		final int Z = 2;
 		result[X] = x;
 		result[Y] = y;
-		result[Z] = z;
 		if (direction == UP) {
 			result[Y]++;
 		} else if (direction == DOWN) {
@@ -441,14 +437,6 @@ public class Player {
 
 	public void setY(int y) {
 		this.y = y;
-	}
-	
-	public int getZ() {
-		return z;
-	}
-	
-	public void setZ(int z) {
-		this.z = z;
 	}
 
 	public boolean isFreeMovementMode() {
