@@ -15,8 +15,8 @@ public class Inventory {
 	protected ArrayList<InventoryBox> inventoryBoxes;
 	int inventoryRows = 3;
 	
-	// Replacing items
-	Item aux;
+	// Swapping items
+	Item itemOnMouse;
 	FontUtils font;
 	
 	public Inventory(int size) {
@@ -54,12 +54,12 @@ public class Inventory {
 			((OnePixel)Gdx.app.getApplicationListener()).getTooltip().hide();
 		}
 		
-		if (aux == null) {
+		if (itemOnMouse == null) {
 			
 			// Click to swap item
 			for (InventoryBox ib : inventoryBoxes) {
 				if (ib.isMouseOver() && ib.getItem() != null && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
-					aux = ib.getItem();
+					itemOnMouse = ib.getItem();
 					ib.setItem(null);
 					break;
 				}
@@ -68,27 +68,39 @@ public class Inventory {
 			
 			// Click to place item
 			for (InventoryBox ib : inventoryBoxes) {
-				if (ib.isMouseOver() && ib.getItem() == null && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
-					ib.setItem(aux);
-					aux = null;
-					break;
+				if (ib.isMouseOver() && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
+					
+					if (ib.getItem() == null) {
+						// Place it in an empty spot
+						ib.setItem(itemOnMouse);
+						itemOnMouse = null;
+						break;
+					} else {
+						// Swap it with an already existing item
+						Item aux = ib.getItem();
+						ib.setItem(itemOnMouse);
+						itemOnMouse = aux;
+						isDrawingTooltip = false;
+						break;
+					}
 				}
 			}
 		}
 	}
 	
 	public void render(ShapeRenderer sr) {
+		
 		for (InventoryBox ib : inventoryBoxes) {
 			ib.render(sr);
 		}
 		
 		// Render the item on the mouse
-		if (aux != null) {
+		if (itemOnMouse != null) {
 			int x = Gdx.input.getX();
 			int y = Gdx.graphics.getHeight() - Gdx.input.getY();
-			aux.render(sr, x, y);
-			if (aux.getAmount() > 1) {
-				font.drawWhiteFont("" + aux.getAmount(), x + 38f, y - 18f, false, Align.right, 0);
+			itemOnMouse.render(sr, x, y);
+			if (itemOnMouse.getAmount() > 1) {
+				font.drawWhiteFont("" + itemOnMouse.getAmount(), x + 38f, y - 18f, false, Align.right, 0);
 			}
 		}
 	}
