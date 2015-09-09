@@ -186,21 +186,23 @@ public class OnePixel extends ApplicationAdapter {
 		}
 		
 		// Normal game loop
-		if (player.isDead()) {
-			return;
+		if (player.isDead() == false) {
+			handleInput();
+			
+			camera.position.set(player.getX() * OnePixel.PIXEL_SIZE + (sideBar.getWidth() * 0.5f), player.getY() * OnePixel.PIXEL_SIZE, 0f);
+			camera.update();
+			shapeRenderer.setProjectionMatrix(camera.combined);
+			
+			world.update();
+			player.update();
+			sideBar.update();
+			
+			handleInputEnd();
+		} else {
+			
+			// Dead
+			sideBar.update();
 		}
-		
-		handleInput();
-		
-		camera.position.set(player.getX() * OnePixel.PIXEL_SIZE + (sideBar.getWidth() * 0.5f), player.getY() * OnePixel.PIXEL_SIZE, 0f);
-		camera.update();
-		shapeRenderer.setProjectionMatrix(camera.combined);
-		
-		world.update();
-		player.update();
-		sideBar.update();
-		
-		handleInputEnd();
 	}
 
 	@Override

@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.Resources;
-import com.lucasdnd.onepixel.gameplay.items.Crafting;
-import com.lucasdnd.onepixel.gameplay.items.CraftingResult;
 import com.lucasdnd.onepixel.gameplay.items.Fruit;
 import com.lucasdnd.onepixel.gameplay.items.Inventory;
 import com.lucasdnd.onepixel.gameplay.items.Item;
@@ -40,8 +38,6 @@ public class Player {
 	
 	// Inventory, crafting
 	private Inventory inventory;
-	private Crafting crafting;
-	private CraftingResult craftingResult;
 	
 	private class Point {
 		public int x, y;
@@ -61,8 +57,6 @@ public class Player {
 		
 		faceUp();
 		inventory = new Inventory(15);
-		crafting = new Crafting(3);
-		craftingResult = new CraftingResult(3);
 		
 		// Random spawn point
 		ArrayList<Point> spawnPoints = new ArrayList<Point>();
@@ -411,11 +405,4 @@ public class Player {
 		return dead;
 	}
 
-	public Crafting getCrafting() {
-		return crafting;
-	}
-	
-	public CraftingResult getCraftingResult() {
-		return craftingResult;
-	}
 }

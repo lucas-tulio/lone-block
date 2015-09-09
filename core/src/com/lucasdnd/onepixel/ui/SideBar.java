@@ -114,9 +114,7 @@ public class SideBar {
 		// Inventory, crafting and result
 		player.getInventory().render(sr);
 		font.drawWhiteFont("Inventory", x + margin,      height - margin * 23 - 3f, true);
-		player.getCrafting().render(sr);
 		font.drawWhiteFont("Crafting",  x + margin * 13, height - margin * 19 - 3f, true);
-		player.getCraftingResult().render(sr);
 		font.drawWhiteFont("Result",    x + margin * 13, height - margin * 23 - 3f, true);
 		
 		// Instructions

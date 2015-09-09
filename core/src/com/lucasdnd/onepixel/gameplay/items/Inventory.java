@@ -13,6 +13,8 @@ public class Inventory {
 	protected int size;
 	int selectedItem;
 	protected ArrayList<InventoryBox> inventoryBoxes;
+	protected ArrayList<InventoryBox> craftingBoxes;
+	protected ArrayList<InventoryBox> craftingResultBoxes;
 	int inventoryRows = 3;
 	
 	// Swapping items
@@ -35,7 +37,6 @@ public class Inventory {
 				InventoryBox ib = new InventoryBox(
 						x + InventoryBox.SIZE * i + margin,
 						height - margin * 17 - InventoryBox.SIZE * j);
-				
 				inventoryBoxes.add(ib);
 			}
 		}
