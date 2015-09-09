@@ -146,13 +146,16 @@ public class Inventory {
 			ib.setItem(null);
 		}
 		
-		// Check what the player created
+		// Check what the player is trying to create
 		int currentResultBox = 0;
 		for (InventoryBox ib : craftingBoxes) {
 			if (ib.getItem() != null && ib.getItem() instanceof Wood && ib.getItem().getAmount() >= 3) {
 				Stone stone = new Stone();
-				stone.setAmount(ib.getItem().getAmount() / 3);
+				int reagentAmount = ib.getItem().getAmount();
+				int amountGenerated = reagentAmount / 3;
+				stone.setAmount(amountGenerated);
 				craftingResultBoxes.get(currentResultBox).setItem(stone);
+				currentResultBox++;
 			}
 		}
 	}
@@ -163,7 +166,16 @@ public class Inventory {
 	private void consumeCraftingMaterials() {
 		for (InventoryBox ib : craftingBoxes) {
 			if (ib.getItem() != null && ib.getItem() instanceof Wood && ib.getItem().getAmount() >= 3) {
-				ib.getItem().decreaseAmountBy(ib.getItem().getAmount() * 3);
+				int consumedAmount = ib.getItem().getAmount() - ib.getItem().getAmount() % 3;
+				ib.getItem().decreaseAmountBy(consumedAmount);
+				break;
+			}
+		}
+		
+		// Clear the boxes of the consumed items
+		for (InventoryBox consumedIb : craftingBoxes) {
+			if (consumedIb.getItem() != null && consumedIb.getItem().getAmount() == 0) {
+				consumedIb.setItem(null);
 			}
 		}
 	}
@@ -196,17 +208,14 @@ public class Inventory {
 	 * Check if any boxes became empty, then clear it
 	 */
 	public void clearEmptyBoxes() {
-		ArrayList<Item> itemsToRemove = new ArrayList<Item>();
 		ArrayList<Item> items = getItems();
 		for (Item item : items) {
 			if (item != null) {
 				if (item.getAmount() == 0) {
-					itemsToRemove.add(item);
 					inventoryBoxes.get(selectedItem).setItem(null);
 				}
 			}
 		}
-		items.removeAll(itemsToRemove);
 	}
 	
 	/**
@@ -224,6 +233,7 @@ public class Inventory {
 				numItems++;
 				if (i.getClass() == item.getClass()) {
 					i.increaseAmount();
+					checkCraftingRecipes();					
 					return true;
 				}
 			}
@@ -246,6 +256,12 @@ public class Inventory {
 	private ArrayList<Item> getItems() {
 		ArrayList<Item> items = new ArrayList<Item>();
 		for (InventoryBox ib : inventoryBoxes) {
+			items.add(ib.getItem());
+		}
+		for (InventoryBox ib : craftingBoxes) {
+			items.add(ib.getItem());
+		}
+		for (InventoryBox ib : craftingResultBoxes) {
 			items.add(ib.getItem());
 		}
 		return items;
