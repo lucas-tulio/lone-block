@@ -83,6 +83,7 @@ public class Inventory {
 			((OnePixel)Gdx.app.getApplicationListener()).getTooltip().hide();
 		}
 		
+		// Moving items update
 		if (itemOnMouse == null) {
 			
 			// Click to pick item
@@ -106,12 +107,23 @@ public class Inventory {
 						itemOnMouse = null;
 						break;
 					} else {
-						// Swap it with an already existing item
-						Item aux = ib.getItem();
-						ib.setItem(itemOnMouse);
-						itemOnMouse = aux;
-						isDrawingTooltip = false;
-						break;
+						
+						if (ib.getItem().getClass() == itemOnMouse.getClass()) {
+							
+							// Stack
+							ib.getItem().increaseAmountBy(itemOnMouse.getAmount());
+							itemOnMouse = null;
+							break;
+							
+						} else {
+							
+							//  Swap
+							Item aux = ib.getItem();
+							ib.setItem(itemOnMouse);
+							itemOnMouse = aux;
+							isDrawingTooltip = false;
+							break;
+						}
 					}
 				}
 			}
@@ -121,6 +133,9 @@ public class Inventory {
 		}
 	}
 	
+	/**
+	 * Check if the player made any items in the Crafting boxes
+	 */
 	private void checkCraftingRecipes() {
 		
 		// Empty the crafting result list
