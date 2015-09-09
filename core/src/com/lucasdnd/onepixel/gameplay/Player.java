@@ -210,7 +210,7 @@ public class Player {
 		
 		} else {
 			
-			// Block
+			// Place block
 			
 			// Check if the target coordinates are outside the map
 			if (targetX < 0 || targetY < 0 || targetX >= world.getSize() || targetY >= world.getSize()) {

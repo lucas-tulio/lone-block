@@ -22,6 +22,6 @@ public class Water extends MapObject {
 	@Override
 	public Object performAction() {
 		Resources.get().randomDrinkingSound().play(0.7f);
-		return new StatRecovery(0, 1, 0, 80);
+		return new StatRecovery(0, 1, 0, 150);
 	}
 }
