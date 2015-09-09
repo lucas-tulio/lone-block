@@ -235,7 +235,7 @@ public class Player {
 		
 		// Consume it
 		item.decreaseAmount();
-		inventory.checkItems();
+		inventory.clearEmptyBoxes();
 	}
 	
 	private void recoverStats(StatRecovery statRecovery) {

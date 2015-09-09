@@ -15,7 +15,8 @@ public class Inventory {
 	protected ArrayList<InventoryBox> inventoryBoxes;
 	protected ArrayList<InventoryBox> craftingBoxes;
 	protected ArrayList<InventoryBox> craftingResultBoxes;
-	int inventoryRows = 3;
+	final int inventoryRows = 3;
+	final int numCraftingBoxes = 3;
 	
 	// Swapping items
 	Item itemOnMouse;
@@ -25,13 +26,15 @@ public class Inventory {
 		
 		this.size = size;
 		inventoryBoxes = new ArrayList<InventoryBox>();
+		craftingBoxes = new ArrayList<InventoryBox>();
+		craftingResultBoxes = new ArrayList<InventoryBox>();
 		font = new FontUtils();
 		
 		final float margin = 20f;
 		final float x = ((OnePixel)Gdx.app.getApplicationListener()).getSideBar().getX();
 		float height = Gdx.graphics.getHeight();
 		
-		// Create the inventory boxes (that show on the sidebar)
+		// Create the inventory boxes
 		for (int j = 0; j < inventoryRows; j++) {
 			for (int i = 0; i < size / inventoryRows; i++) {
 				InventoryBox ib = new InventoryBox(
@@ -40,13 +43,38 @@ public class Inventory {
 				inventoryBoxes.add(ib);
 			}
 		}
+		
+		// Create the Crafting boxes
+		for (int i = 0; i < numCraftingBoxes; i++) {
+			InventoryBox ib = new InventoryBox(x + InventoryBox.SIZE * (i + 6) + margin,
+						height - margin * 15 - InventoryBox.SIZE);
+			craftingBoxes.add(ib);
+		}
+		
+		// Create the Crafting Result boxes
+		for (int i = 0; i < numCraftingBoxes; i++) {
+			InventoryBox ib = new InventoryBox(x + InventoryBox.SIZE * (i + 6) + margin,
+					height - margin * 19 - InventoryBox.SIZE);
+			craftingResultBoxes.add(ib);
+		}
 	}
 	
 	public void update() {
 		
-		// Tooltip control
+		// TODO: THIS SUCKS, we should create an int in InventoryBox to indicate which type of box it is 
+		// All Inventory Boxes together
+		ArrayList<InventoryBox> allBoxes = new ArrayList<InventoryBox>();
+		allBoxes.addAll(inventoryBoxes);
+		allBoxes.addAll(craftingBoxes);
+		allBoxes.addAll(craftingResultBoxes);
+		// All Inventory Boxes together, except the crafting result ones
+		ArrayList<InventoryBox> allBoxesExceptCraftingResult = new ArrayList<InventoryBox>();
+		allBoxesExceptCraftingResult.addAll(inventoryBoxes);
+		allBoxesExceptCraftingResult.addAll(craftingBoxes);
+		
+		// Box update
 		boolean isDrawingTooltip = false;
-		for (InventoryBox ib : inventoryBoxes) {
+		for (InventoryBox ib : allBoxes) {
 			ib.update();
 			isDrawingTooltip = ib.isDrawingTooltip();
 		}
@@ -57,18 +85,19 @@ public class Inventory {
 		
 		if (itemOnMouse == null) {
 			
-			// Click to swap item
-			for (InventoryBox ib : inventoryBoxes) {
+			// Click to pick item
+			for (InventoryBox ib : allBoxes) {
 				if (ib.isMouseOver() && ib.getItem() != null && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
 					itemOnMouse = ib.getItem();
 					ib.setItem(null);
 					break;
 				}
 			}
+			
 		} else {
 			
 			// Click to place item
-			for (InventoryBox ib : inventoryBoxes) {
+			for (InventoryBox ib : allBoxesExceptCraftingResult) {
 				if (ib.isMouseOver() && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
 					
 					if (ib.getItem() == null) {
@@ -86,12 +115,39 @@ public class Inventory {
 					}
 				}
 			}
+			
+			// Crafting
+			checkCraftingRecipes();
+		}
+	}
+	
+	private void checkCraftingRecipes() {
+		
+		// Empty the crafting result list
+		for (InventoryBox ib : craftingResultBoxes) {
+			ib.setItem(null);
+		}
+		
+		// Check what the player created
+		int currentResultBox = 0;
+		for (InventoryBox ib : craftingBoxes) {
+			if (ib.getItem() != null && ib.getItem() instanceof Wood && ib.getItem().getAmount() >= 3) {
+				Stone stone = new Stone();
+				craftingResultBoxes.get(currentResultBox).setItem(stone);
+			}
 		}
 	}
 	
 	public void render(ShapeRenderer sr) {
 		
+		// Render all boxes
 		for (InventoryBox ib : inventoryBoxes) {
+			ib.render(sr);
+		}
+		for (InventoryBox ib : craftingBoxes) {
+			ib.render(sr);
+		}
+		for (InventoryBox ib : craftingResultBoxes) {
 			ib.render(sr);
 		}
 		
@@ -107,9 +163,9 @@ public class Inventory {
 	}
 	
 	/**
-	 * Check if any items need to be removed from the list
+	 * Check if any boxes became empty, then clear it
 	 */
-	public void checkItems() {
+	public void clearEmptyBoxes() {
 		ArrayList<Item> itemsToRemove = new ArrayList<Item>();
 		ArrayList<Item> items = getItems();
 		for (Item item : items) {
