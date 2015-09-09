@@ -8,9 +8,9 @@ import com.lucasdnd.onepixel.OnePixel;
 
 public class Inventory {
 	
-	private int size;
+	protected int size;
 	private int selectedItem;
-	private ArrayList<InventoryBox> inventoryBoxes;
+	protected ArrayList<InventoryBox> inventoryBoxes;
 	private int inventoryRows = 3;
 	
 	// Replacing items

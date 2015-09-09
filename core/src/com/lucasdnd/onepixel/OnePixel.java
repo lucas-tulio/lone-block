@@ -211,7 +211,7 @@ public class OnePixel extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		if (creatingWorld) {
-			sideBar.render(uiShapeRenderer, player.getInventory());
+			sideBar.render(uiShapeRenderer);
 			String text = "Creating new world...";
 			float space = Gdx.graphics.getWidth() / 2f - sideBar.getWidth() / 2f;
 			font.drawWhiteFont(text, space, Gdx.graphics.getHeight() / 2f - 12f, true, Align.center, 0);
@@ -220,7 +220,7 @@ public class OnePixel extends ApplicationAdapter {
 		
 		world.render(shapeRenderer);
 		player.render(shapeRenderer);
-		sideBar.render(uiShapeRenderer, player.getInventory());
+		sideBar.render(uiShapeRenderer);
 		
 		tooltip.render();
 		

@@ -33,7 +33,8 @@ public class World implements Disposer {
 	int seaLevel = islands;
 
 	// Mountain and water levels
-	int mountainLevel = seaLevel + 20; // 50 to max (less is more)
+	int mountainLevel = seaLevel + 20;	// This is basically how much land there will be between water and mountains.
+										// Lowering this value will generate much larger mountains at the expanse of land.
 	int waterLevel = seaLevel - 20;
 
 	public World() {

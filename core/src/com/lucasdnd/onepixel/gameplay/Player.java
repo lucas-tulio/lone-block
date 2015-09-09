@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.Resources;
+import com.lucasdnd.onepixel.gameplay.items.Crafting;
+import com.lucasdnd.onepixel.gameplay.items.CraftingResult;
 import com.lucasdnd.onepixel.gameplay.items.Fruit;
 import com.lucasdnd.onepixel.gameplay.items.Inventory;
 import com.lucasdnd.onepixel.gameplay.items.Item;
@@ -21,6 +23,7 @@ import com.lucasdnd.onepixel.gameplay.world.World;
 
 public class Player {
 	
+	// Basic stuff
 	public static final int MAX_STAT_VALUE = 10000;
 	private int x, y, direction;
 	public final int UP = 0;
@@ -28,13 +31,17 @@ public class Player {
 	public final int DOWN = 2;
 	public final int RIGHT = 3;
 	private Color color;
-	private Inventory inventory;
 	
-	private boolean dead;
-	
+	// Status
 	private int health, stamina, food, drink;
 	private int statusDecrease;
 	private int statusDecreaseLimit = 10;
+	private boolean dead;
+	
+	// Inventory, crafting
+	private Inventory inventory;
+	private Crafting crafting;
+	private CraftingResult craftingResult;
 	
 	private class Point {
 		public int x, y;
@@ -54,8 +61,10 @@ public class Player {
 		
 		faceUp();
 		inventory = new Inventory(15);
+		crafting = new Crafting(3);
+		craftingResult = new CraftingResult(3);
 		
-		// Spawn point
+		// Random spawn point
 		ArrayList<Point> spawnPoints = new ArrayList<Point>();
 		for (int i = 0; i < world.getSize(); i++) {
 			for (int j = 0; j < world.getSize(); j++) {
@@ -64,7 +73,6 @@ public class Player {
 				}
 			}
 		}
-		
 		int randomPoint = new Random().nextInt(spawnPoints.size());
 		this.x = spawnPoints.get(randomPoint).x;
 		this.y = spawnPoints.get(randomPoint).y;
@@ -401,5 +409,13 @@ public class Player {
 
 	public boolean isDead() {
 		return dead;
+	}
+
+	public Crafting getCrafting() {
+		return crafting;
+	}
+	
+	public CraftingResult getCraftingResult() {
+		return craftingResult;
 	}
 }

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.FontUtils;
 import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.Player;
-import com.lucasdnd.onepixel.gameplay.items.Inventory;
 
 public class SideBar {
 	
@@ -86,7 +85,7 @@ public class SideBar {
 		quitButton.update();
 	}
 	
-	public void render(ShapeRenderer sr, Inventory inventory) {
+	public void render(ShapeRenderer sr) {
 		
 		float height = Gdx.graphics.getHeight();
 		
@@ -116,9 +115,11 @@ public class SideBar {
 		font.drawWhiteFont("Thirst",  x + margin, height - margin * 15, true);
 		
 		// Inventory, crafting and result
-		inventory.render(sr);
+		player.getInventory().render(sr);
 		font.drawWhiteFont("Inventory", x + margin,      height - margin * 23 - 3f, true);
+		player.getCrafting().render(sr);
 		font.drawWhiteFont("Crafting",  x + margin * 13, height - margin * 19 - 3f, true);
+		player.getCraftingResult().render(sr);
 		font.drawWhiteFont("Result",    x + margin * 13, height - margin * 23 - 3f, true);
 		
 		// Instructions
