@@ -30,7 +30,6 @@ public class Player {
 	private Color color;
 	private Inventory inventory;
 	
-	private boolean freeMovementMode = true;
 	private boolean dead;
 	
 	private int health, stamina, food, drink;
@@ -287,72 +286,28 @@ public class Player {
 	/** Movement Methods */
 	
 	public boolean canMoveUp(World world) {
-		if (freeMovementMode) {
-			faceUp();
-			return moveUpCheck(world);
-		} else {
-			
-			if (direction != UP) {
-				faceUp();
-				return false;
-			} else {
-				return moveUpCheck(world);
-			}
-		}
+		return moveUpCheck(world);
 	}
 	private boolean moveUpCheck(World world) {
 		return y + 1 < world.getSize() && world.getMapObjects()[x][y+1] == null;
 	}
 
 	public boolean canMoveLeft(World world) {
-		if (freeMovementMode) {
-			faceLeft();
-			return moveLeftCheck(world);
-		} else {
-			
-			if (direction != LEFT) {
-				faceLeft();
-				return false;
-			} else {
-				return moveLeftCheck(world);
-			}
-		}
+		return moveLeftCheck(world);
 	}
 	private boolean moveLeftCheck(World world) {
 		return x - 1 >= 0 && world.getMapObjects()[x-1][y] == null;
 	}
 
 	public boolean canMoveDown(World world) {
-		if (freeMovementMode) {
-			faceDown();
-			return moveDownCheck(world);
-		} else {
-			
-			if (direction != DOWN) {
-				faceDown();
-				return false;
-			} else {
-				return moveDownCheck(world);
-			}
-		}
+		return moveDownCheck(world);
 	}
 	private boolean moveDownCheck(World world) {
 		return y - 1 >= 0 && world.getMapObjects()[x][y-1] == null;
 	}
 
 	public boolean canMoveRight(World world) {
-		if (freeMovementMode) {
-			faceRight();
-			return moveRightCheck(world);
-		} else {
-			
-			if (direction != RIGHT) {
-				faceRight();
-				return false;
-			} else {
-				return moveRightCheck(world);
-			}
-		}
+		return moveRightCheck(world);
 	}
 	private boolean moveRightCheck(World world) {
 		return x + 1 < world.getSize() && world.getMapObjects()[x+1][y] == null;
@@ -442,10 +397,6 @@ public class Player {
 
 	public void setY(int y) {
 		this.y = y;
-	}
-
-	public boolean isFreeMovementMode() {
-		return freeMovementMode;
 	}
 
 	public boolean isDead() {

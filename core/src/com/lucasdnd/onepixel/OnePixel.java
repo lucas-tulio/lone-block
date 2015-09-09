@@ -83,10 +83,9 @@ public class OnePixel extends ApplicationAdapter {
 					if (player.canMoveUp(world)) {
 						player.moveUp();
 						input.applyMovementDelay();
-					} else {
-						if (player.isFreeMovementMode() == false) {
-							input.applyMovementDelay();
-						}
+					}
+					if (input.ctrlPressed == false) {
+						player.faceUp();
 					}
 				}
 			}
@@ -98,10 +97,9 @@ public class OnePixel extends ApplicationAdapter {
 					if (player.canMoveDown(world)) {
 						player.moveDown();
 						input.applyMovementDelay();
-					} else {
-						if (player.isFreeMovementMode() == false) {
-							input.applyMovementDelay();
-						}
+					}
+					if (input.ctrlPressed == false) {
+						player.faceDown();
 					}
 				}
 			}
@@ -113,10 +111,9 @@ public class OnePixel extends ApplicationAdapter {
 					if (player.canMoveLeft(world)) {
 						player.moveLeft();
 						input.applyMovementDelay();
-					} else {
-						if (player.isFreeMovementMode() == false) {
-							input.applyMovementDelay();
-						}
+					}
+					if (input.ctrlPressed == false) {
+						player.faceLeft();
 					}
 				}
 			}
@@ -128,10 +125,9 @@ public class OnePixel extends ApplicationAdapter {
 					if (player.canMoveRight(world)) {
 						player.moveRight();
 						input.applyMovementDelay();
-					} else {
-						if (player.isFreeMovementMode() == false) {
-							input.applyMovementDelay();
-						}
+					}
+					if (input.ctrlPressed == false) {
+						player.faceRight();
 					}
 				}
 			}

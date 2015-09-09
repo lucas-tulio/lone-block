@@ -122,11 +122,11 @@ public class SideBar {
 		font.drawWhiteFont("Result",    x + margin * 13, height - margin * 23 - 3f, true);
 		
 		// Instructions
-		font.drawWhiteFont("E: harvest/collect",             x + margin, height - margin * 25 - 3f, true);
-		font.drawWhiteFont("W: use selected item",           x + margin, height - margin * 26 - 3f, true);
-		font.drawWhiteFont("+/-: zoom",                      x + margin, height - margin * 27 - 3f, true);
-		font.drawWhiteFont("Hold shift and press the arrow", x + margin, height - margin * 28 - 3f, true);
-		font.drawWhiteFont("keys to look around",            x + margin, height - margin * 29 - 3f, true);
+		font.drawWhiteFont("E: harvest/collect",        x + margin, height - margin * 25 - 3f, true);
+		font.drawWhiteFont("W: use selected item",      x + margin, height - margin * 26 - 3f, true);
+		font.drawWhiteFont("+/-: zoom",                 x + margin, height - margin * 27 - 3f, true);
+		font.drawWhiteFont("Hold shift to look around", x + margin, height - margin * 28 - 3f, true);
+		font.drawWhiteFont("Hold ctrl to strafe",       x + margin, height - margin * 29 - 3f, true);
 		
 		// New, save, load, quit
 		newGameButton.render();

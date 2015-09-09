@@ -8,7 +8,7 @@ public class InputHandler implements InputProcessor {
 	public boolean leftMouseDown, leftMouseJustClicked, rightMouseDown, rightMouseJustClicked;
 	public boolean upPressed, leftPressed, downPressed, rightPressed;
 	public boolean ePressed, wPressed;
-	public boolean shiftPressed;
+	public boolean shiftPressed, ctrlPressed;
 	
 	// Controls hold down delay. When it reaches 0, the player can perform another action
 	public int movementDelay = 0;
@@ -56,6 +56,10 @@ public class InputHandler implements InputProcessor {
 		if (keycode == Keys.SHIFT_LEFT || keycode == Keys.SHIFT_RIGHT) {
 			shiftPressed = true;
 		}
+		
+		if (keycode == Keys.CONTROL_LEFT || keycode == Keys.CONTROL_RIGHT) {
+			ctrlPressed = true;
+		}
 	
 		return false;
 	}
@@ -63,7 +67,8 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean keyUp(int keycode) {
 		
-		// When releasing the movement keys, reset the key delay so it can be pressed again immediately
+		// When releasing keys, reset the key delay so they can be pressed again immediately
+		
 		if (keycode == Keys.UP) {
 			upPressed = false;
 			movementDelay = 0;
@@ -88,6 +93,10 @@ public class InputHandler implements InputProcessor {
 		
 		if (keycode == Keys.SHIFT_LEFT || keycode == Keys.SHIFT_RIGHT) {
 			shiftPressed = false;
+		}
+		
+		if (keycode == Keys.CONTROL_LEFT || keycode == Keys.CONTROL_RIGHT) {
+			ctrlPressed = false;
 		}
 		
 		return false;
