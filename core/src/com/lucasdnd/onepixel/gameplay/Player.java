@@ -212,6 +212,11 @@ public class Player {
 			
 			// Block
 			
+			// Check if the target coordinates are outside the map
+			if (targetX < 0 || targetY < 0 || targetX >= world.getSize() || targetY >= world.getSize()) {
+				return;
+			}
+			
 			// Check what's in the target coordinates
 			MapObject targetObject = world.getMapObjectAt(targetX, targetY);
 			if (targetObject != null && !(targetObject instanceof Water)) {
