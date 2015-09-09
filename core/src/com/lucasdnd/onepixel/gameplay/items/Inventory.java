@@ -86,15 +86,18 @@ public class Inventory {
 		// Moving items update
 		if (itemOnMouse == null) {
 			
-			// Click to pick item
+			// Click to pick item from Inventory or Crafting
 			for (InventoryBox ib : allBoxes) {
 				if (ib.isMouseOver() && ib.getItem() != null && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
+					if (craftingResultBoxes.contains(ib)) {
+						consumeCraftingMaterials();
+					}
 					itemOnMouse = ib.getItem();
 					ib.setItem(null);
 					break;
 				}
 			}
-			
+						
 		} else {
 			
 			// Click to place item
@@ -117,7 +120,7 @@ public class Inventory {
 							
 						} else {
 							
-							//  Swap
+							// Swap
 							Item aux = ib.getItem();
 							ib.setItem(itemOnMouse);
 							itemOnMouse = aux;
@@ -148,7 +151,19 @@ public class Inventory {
 		for (InventoryBox ib : craftingBoxes) {
 			if (ib.getItem() != null && ib.getItem() instanceof Wood && ib.getItem().getAmount() >= 3) {
 				Stone stone = new Stone();
+				stone.setAmount(ib.getItem().getAmount() / 3);
 				craftingResultBoxes.get(currentResultBox).setItem(stone);
+			}
+		}
+	}
+	
+	/**
+	 * Consumes the current recipe items
+	 */
+	private void consumeCraftingMaterials() {
+		for (InventoryBox ib : craftingBoxes) {
+			if (ib.getItem() != null && ib.getItem() instanceof Wood && ib.getItem().getAmount() >= 3) {
+				ib.getItem().decreaseAmountBy(ib.getItem().getAmount() * 3);
 			}
 		}
 	}

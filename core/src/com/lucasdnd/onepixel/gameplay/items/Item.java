@@ -16,6 +16,10 @@ public abstract class Item {
 		this.amount += amount;
 	}
 	
+	public void decreaseAmountBy(int amount) {
+		this.amount -= amount;
+	}
+	
 	public void increaseAmount() {
 		amount++;
 	}
