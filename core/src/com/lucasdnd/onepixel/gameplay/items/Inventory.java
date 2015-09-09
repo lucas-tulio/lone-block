@@ -4,22 +4,26 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Align;
+import com.lucasdnd.onepixel.FontUtils;
 import com.lucasdnd.onepixel.OnePixel;
 
 public class Inventory {
 	
 	protected int size;
-	private int selectedItem;
+	int selectedItem;
 	protected ArrayList<InventoryBox> inventoryBoxes;
-	private int inventoryRows = 3;
+	int inventoryRows = 3;
 	
 	// Replacing items
-	private Item aux;
+	Item aux;
+	FontUtils font;
 	
 	public Inventory(int size) {
 		
 		this.size = size;
 		inventoryBoxes = new ArrayList<InventoryBox>();
+		font = new FontUtils();
 		
 		final float margin = 20f;
 		final float x = ((OnePixel)Gdx.app.getApplicationListener()).getSideBar().getX();
@@ -80,7 +84,12 @@ public class Inventory {
 		
 		// Render the item on the mouse
 		if (aux != null) {
-			aux.render(sr, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+			int x = Gdx.input.getX();
+			int y = Gdx.graphics.getHeight() - Gdx.input.getY();
+			aux.render(sr, x, y);
+			if (aux.getAmount() > 1) {
+				font.drawWhiteFont("" + aux.getAmount(), x + 38f, y - 18f, false, Align.right, 0);
+			}
 		}
 	}
 	
