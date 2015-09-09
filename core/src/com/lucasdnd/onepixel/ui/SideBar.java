@@ -41,7 +41,7 @@ public class SideBar {
 
 			@Override
 			public void onClick() {
-				((OnePixel)Gdx.app.getApplicationListener()).create();
+				((OnePixel)Gdx.app.getApplicationListener()).startNewGame();
 			}
 			
 		});

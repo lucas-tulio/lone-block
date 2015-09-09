@@ -8,7 +8,7 @@ import com.lucasdnd.onepixel.gameplay.items.StatRecovery;
 
 public class Water extends MapObject {
 	
-	final static Color color = new Color(0.11f, 0.19f, 0.74f, 1f);
+	final static Color color = new Color(0.15f, 0.29f, 0.92f, 1f);
 	
 	public Water(Disposer disposer, int x, int y) {
 		super(disposer, x, y);

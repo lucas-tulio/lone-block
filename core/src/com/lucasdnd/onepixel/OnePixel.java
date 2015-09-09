@@ -235,18 +235,9 @@ public class OnePixel extends ApplicationAdapter {
 		// Debug
 		if (debug) {
 			fontBatch.begin();
-			Resources.get().whiteFont.draw(fontBatch, "u: " + input.upPressed, 0f, Gdx.graphics.getHeight());
-			Resources.get().whiteFont.draw(fontBatch, "l: " + input.leftPressed, 0f, Gdx.graphics.getHeight() - 20f);
-			Resources.get().whiteFont.draw(fontBatch, "d: " + input.downPressed, 0f, Gdx.graphics.getHeight() - 40f);
-			Resources.get().whiteFont.draw(fontBatch, "r: " + input.rightPressed, 0f, Gdx.graphics.getHeight() - 60f);
-			Resources.get().whiteFont.draw(fontBatch, "e: " + input.ePressed, 0f, Gdx.graphics.getHeight() - 100f);
-			Resources.get().whiteFont.draw(fontBatch, "w: " + input.wPressed, 0f, Gdx.graphics.getHeight() - 120f);
-			Resources.get().whiteFont.draw(fontBatch, "shift: " + input.shiftPressed, 0f, Gdx.graphics.getHeight() - 140f);
-			Resources.get().whiteFont.draw(fontBatch, "left: " + input.leftMouseDown, 0f, Gdx.graphics.getHeight() - 180f);
-			Resources.get().whiteFont.draw(fontBatch, "right: " + input.rightMouseDown, 0f, Gdx.graphics.getHeight() - 200f);			
-			Resources.get().whiteFont.draw(fontBatch, "movement: " + input.movementDelay, 0f, Gdx.graphics.getHeight() - 240f);
-			Resources.get().whiteFont.draw(fontBatch, "action: " + input.actionDelay, 0f, Gdx.graphics.getHeight() - 260f);
-			Resources.get().whiteFont.draw(fontBatch, "use: " + input.useDelay, 0f, Gdx.graphics.getHeight() - 280f);
+			Resources.get().whiteFont.draw(fontBatch, "x: " + player.getX(), 0f, Gdx.graphics.getHeight());
+			Resources.get().whiteFont.draw(fontBatch, "y: " + player.getY(), 0f, Gdx.graphics.getHeight() - 20f);
+			Resources.get().whiteFont.draw(fontBatch, "world size: " + world.getSize() + "x" + world.getSize(), 0f, Gdx.graphics.getHeight() - 40f);
 			fontBatch.end();
 		}
 	}

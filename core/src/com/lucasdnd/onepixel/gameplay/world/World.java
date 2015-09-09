@@ -21,7 +21,7 @@ public class World implements Disposer {
 	private MapObject[][] mapObjects;
 
 	// World settings
-	int numTrees = 10000;
+	int numTrees;
 
 	// Terrain levels
 	int archipelago = 100;
@@ -38,7 +38,7 @@ public class World implements Disposer {
 
 	public World() {
 
-		size = 512;
+		size = 128;
 		mapObjects = new MapObject[size][size];
 
 		r = new Random();
@@ -71,14 +71,15 @@ public class World implements Disposer {
 				} else if (k <= mountainLevel && k > seaLevel) {
 
 				} else if (k <= seaLevel && k > waterLevel) {
-					mapObjects[i][j] = new DeepWater(this, i, j);
-				} else {
 					mapObjects[i][j] = new Water(this, i, j);
+				} else {
+					mapObjects[i][j] = new DeepWater(this, i, j);
 				}
 			}
 		}
 		
 		// Add Trees
+		numTrees = size * size / 32;
 		for (int i = 0; i < numTrees; i++) {
 			int x = r.nextInt(size);
 			int y = r.nextInt(size);
