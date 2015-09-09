@@ -17,10 +17,7 @@ public class SideBar {
 	// Status bar attributes
 	float barHeight;
 	float barWidth;
-	
-	// Inventory attributes
-	int inventoryRows = 3;
-	
+		
 	// Main Buttons
 	Button newGameButton, saveGameButton, loadGameButton, quitButton;
 	

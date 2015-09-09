@@ -26,9 +26,8 @@ public class Inventory {
 		float height = Gdx.graphics.getHeight();
 		
 		// Create the inventory boxes (that show on the sidebar)
-		for (int i = 0; i < size / inventoryRows; i++) {
-			for (int j = 0; j < inventoryRows; j++) {
-				
+		for (int j = 0; j < inventoryRows; j++) {
+			for (int i = 0; i < size / inventoryRows; i++) {
 				InventoryBox ib = new InventoryBox(
 						x + InventoryBox.SIZE * i + margin,
 						height - margin * 17 - InventoryBox.SIZE * j);
