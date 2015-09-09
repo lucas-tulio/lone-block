@@ -50,25 +50,37 @@ public class Inventory {
 			((OnePixel)Gdx.app.getApplicationListener()).getTooltip().hide();
 		}
 		
-		// Clicks
-		InventoryBox clickedInventoryBox = null;
-		for (InventoryBox ib : inventoryBoxes) {
-			if (ib.isMouseOver() && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
-				clickedInventoryBox = ib;
-				break;
+		if (aux == null) {
+			
+			// Click to swap item
+			for (InventoryBox ib : inventoryBoxes) {
+				if (ib.isMouseOver() && ib.getItem() != null && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
+					aux = ib.getItem();
+					ib.setItem(null);
+					break;
+				}
 			}
-		}
-		
-		if (clickedInventoryBox != null) {
-			aux = inventoryBoxes.get(0).getItem();
-			inventoryBoxes.get(0).setItem(clickedInventoryBox.getItem());
-			clickedInventoryBox.setItem(aux);
+		} else {
+			
+			// Click to place item
+			for (InventoryBox ib : inventoryBoxes) {
+				if (ib.isMouseOver() && ib.getItem() == null && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
+					ib.setItem(aux);
+					aux = null;
+					break;
+				}
+			}
 		}
 	}
 	
 	public void render(ShapeRenderer sr) {
 		for (InventoryBox ib : inventoryBoxes) {
 			ib.render(sr);
+		}
+		
+		// Render the item on the mouse
+		if (aux != null) {
+			aux.render(sr, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
 		}
 	}
 	
