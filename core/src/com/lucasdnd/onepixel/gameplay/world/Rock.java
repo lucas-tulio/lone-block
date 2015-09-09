@@ -1,7 +1,5 @@
 package com.lucasdnd.onepixel.gameplay.world;
 
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepixel.OnePixel;
@@ -10,16 +8,13 @@ import com.lucasdnd.onepixel.gameplay.items.Stone;
 public class Rock extends MapObject {
 	
 	static final Color color = new Color(0.31f, 0.31f, 0.31f, 1f);
-	int stone;
 
 	public Rock(Disposer disposer, int x, int y) {
 		super(disposer, x, y);
-		stone = new Random().nextInt(3) + 1;
 	}
 	
 	public Rock(Disposer disposer, int x, int y, int amount) {
 		super(disposer, x, y);
-		stone = 1;
 	}
 	
 	public void render(ShapeRenderer sr, float x, float y) {
@@ -29,16 +24,7 @@ public class Rock extends MapObject {
 
 	@Override
 	public Object performAction() {
-		
-		if (stone > 0) {
-			stone--;
-		
-			if (stone == 0) {
-				disposer.dispose(this);
-			}
-			return new Stone();
-		}
-		
-		return null;
+		disposer.dispose(this);
+		return new Stone();
 	}
 }
