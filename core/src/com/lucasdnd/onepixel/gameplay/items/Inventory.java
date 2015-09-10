@@ -90,29 +90,37 @@ public class Inventory {
 		// Moving items update
 		if (itemOnMouse == null) {
 			
-			// Click to pick item from Inventory or Crafting
+			// Pick Item
+			
 			for (InventoryBox ib : allBoxes) {
 				if (ib.getItem() != null && ib.isMouseOver() && (leftClick || rightClick)) {
 					if (leftClick) {	// Pick up the whole stack
+						leftClick = false;
 						if (craftingResultBoxes.contains(ib)) {
 							consumeCraftingMaterials();
 						}
 						itemOnMouse = ib.getItem();
 						ib.setItem(null);
 					} else if (rightClick) {	// Split the stack in two and pick one half
+						rightClick = false;
 						try {
 							if (craftingResultBoxes.contains(ib)) { // If taking up crafting result, consume half
 								consumeCraftingMaterials();
 							}
-							itemOnMouse = ib.getItem().getClass().newInstance();
-							int originalAmount = ib.getItem().getAmount();
-							int half = originalAmount / 2;
-							int otherHalf = originalAmount - half;
-							ib.getItem().setAmount(otherHalf);
-							if (ib.getItem().getAmount() == 0) {
+							if (ib.getItem().getAmount() == 1) {
+								itemOnMouse = ib.getItem();
 								ib.setItem(null);
+							} else {
+								itemOnMouse = ib.getItem().getClass().newInstance();
+								int originalAmount = ib.getItem().getAmount();
+								int half = originalAmount / 2;
+								int otherHalf = originalAmount - half;
+								ib.getItem().setAmount(otherHalf);
+								if (ib.getItem().getAmount() == 0) {
+									ib.setItem(null);
+								}
+								itemOnMouse.setAmount(half);
 							}
-							itemOnMouse.setAmount(half);
 						} catch (InstantiationException e) {
 							e.printStackTrace();
 							Gdx.app.exit();
@@ -128,33 +136,77 @@ public class Inventory {
 						
 		} else {
 			
-			// Click to place item
+			// Place Item
+			
 			for (InventoryBox ib : allBoxesExceptCraftingResult) {
 				
-				if (ib.isMouseOver() && leftClick) {
+				if (leftClick == false && rightClick == false) {
+					break;
+				}
+				
+				if (ib.isMouseOver()) {
+					
+					// Place item in an empty slot
 					
 					if (ib.getItem() == null) {
-						// Place it in an empty spot
-						ib.setItem(itemOnMouse);
-						itemOnMouse = null;
-						break;
+						if (leftClick) {
+							leftClick = false;			// Whole Stack (left click)
+							ib.setItem(itemOnMouse);
+							itemOnMouse = null;
+							break;
+						} else if (rightClick) {
+							rightClick = false;			// One item (right click)
+							try {
+								Item newItem = itemOnMouse.getClass().newInstance();
+								newItem.setAmount(1);
+								ib.setItem(newItem);
+								itemOnMouse.decreaseAmount();
+								if (itemOnMouse.getAmount() <= 0) {
+									itemOnMouse = null;
+								}
+								break;
+							} catch (InstantiationException e) {
+								e.printStackTrace();
+								Gdx.app.exit();
+							} catch (IllegalAccessException e) {
+								e.printStackTrace();
+								Gdx.app.exit();
+							}
+						}
 					} else {
 						
 						if (ib.getItem().getClass() == itemOnMouse.getClass()) {
 							
 							// Stack
-							ib.getItem().increaseAmountBy(itemOnMouse.getAmount());
-							itemOnMouse = null;
-							break;
 							
+							if (leftClick) {
+								leftClick = false;
+								ib.getItem().increaseAmountBy(itemOnMouse.getAmount());
+								itemOnMouse = null;
+								break;
+							} else if (rightClick) {
+								rightClick = false;
+								ib.getItem().increaseAmount();
+								itemOnMouse.decreaseAmount();
+								if (itemOnMouse.getAmount() <= 0) {
+									itemOnMouse = null;
+								}
+								break;
+							}
 						} else {
 							
-							// Swap
-							Item aux = ib.getItem();
-							ib.setItem(itemOnMouse);
-							itemOnMouse = aux;
-							isDrawingTooltip = false;
-							break;
+							if (leftClick || rightClick) {
+								leftClick = false;
+								rightClick = false;
+								
+								// Swap
+								
+								Item aux = ib.getItem();
+								ib.setItem(itemOnMouse);
+								itemOnMouse = aux;
+								isDrawingTooltip = false;
+								break;
+							}
 						}
 					}
 				}
