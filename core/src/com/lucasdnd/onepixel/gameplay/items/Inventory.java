@@ -15,6 +15,7 @@ public class Inventory {
 	protected ArrayList<InventoryBox> inventoryBoxes;
 	protected ArrayList<InventoryBox> craftingBoxes;
 	protected ArrayList<InventoryBox> craftingResultBoxes;
+	Craftable craftable;	// Item being made
 	final int inventoryRows = 3;
 	final int numCraftingBoxes = 3;
 	
@@ -96,17 +97,14 @@ public class Inventory {
 				if (ib.getItem() != null && ib.isMouseOver() && (leftClick || rightClick)) {
 					if (leftClick) {	// Pick up the whole stack
 						leftClick = false;
-						if (craftingResultBoxes.contains(ib)) {
-							consumeCraftingMaterials();
+						if (craftingResultBoxes.contains(ib)) { // Taking up crafting result
+							consumeIngredients((Craftable)ib.getItem()); // Trust me, compiler :)
 						}
 						itemOnMouse = ib.getItem();
 						ib.setItem(null);
 					} else if (rightClick) {	// Split the stack in two and pick one half
 						rightClick = false;
 						try {
-							if (craftingResultBoxes.contains(ib)) { // If taking up crafting result, consume half
-								consumeCraftingMaterials();
-							}
 							if (ib.getItem().getAmount() == 1) {
 								itemOnMouse = ib.getItem();
 								ib.setItem(null);
@@ -221,50 +219,101 @@ public class Inventory {
 	 */
 	private void checkCraftingRecipes() {
 		
-		// Empty the crafting result list
+		// Empty the crafting result boxes
 		for (InventoryBox ib : craftingResultBoxes) {
 			ib.setItem(null);
 		}
 		
-		// Check what the player is trying to create
-		int currentResultBox = 0;
-		for (InventoryBox ib : craftingBoxes) {
-			if (ib.getItem() != null) {
-				
-				// Create the Item and show it in the craftingResult box
-				
-				if (ib.getItem() instanceof Wood && ib.getItem().getAmount() >= 3) {
-					Campfire stone = new Campfire();
-					int reagentAmount = ib.getItem().getAmount();
-					int amountGenerated = reagentAmount / 3;
-					stone.setAmount(amountGenerated);
-					craftingResultBoxes.get(currentResultBox).setItem(stone);
-					currentResultBox++;
-				}
-			}
+		// Check what the player is trying to create, then show that item there
+		// Testing this way to do it
+		Craftable campfire = new Campfire();
+		if (isCraftableMatch(campfire)) {
+			craftingResultBoxes.get(0).setItem((Item)campfire);
 		}
+		
+		// Add other craftables here
+		
 	}
 	
 	/**
-	 * Consumes the current recipe items
+	 * Consume the crafting ingredients
+	 * @param craftable
 	 */
-	private void consumeCraftingMaterials() {
-		for (InventoryBox ib : craftingBoxes) {
-			if (ib.getItem() != null && ib.getItem() instanceof Wood && ib.getItem().getAmount() >= 3) {
-				int amount = ib.getItem().getAmount();
-				int consumedAmount = amount - ib.getItem().getAmount() % 3;
-				ib.getItem().decreaseAmountBy(consumedAmount);
-				break;
+	private void consumeIngredients(Craftable craftable) {
+		
+		for (Item item : craftable.getIngredients()) {
+			for (InventoryBox ib : craftingBoxes) {
+				if (ib.getItem() != null) {
+					if (ib.getItem().getClass() == item.getClass() && ib.getItem().getAmount() >= item.getAmount()) {
+						ib.getItem().decreaseAmountBy(item.getAmount());
+						break;
+					}
+				}
 			}
 		}
 		
-		// Clear the box if consumed all items
+		// Clear the crafting boxes if consumed all items
 		for (InventoryBox consumedIb : craftingBoxes) {
 			if (consumedIb.getItem() != null && consumedIb.getItem().getAmount() == 0) {
 				consumedIb.setItem(null);
 			}
 		}
 	}
+	
+	/**
+	 * Check if the player is trying to create this item
+	 * @return
+	 */
+	private boolean isCraftableMatch(Craftable craftable) {
+		
+		ArrayList<Item> ingredients = craftable.getIngredients();
+		boolean[] ingredientsOk = new boolean[ingredients.size()];
+		int i = 0;
+		for (Item item : ingredients) {
+			// Check if it's in the box
+			for (InventoryBox ib : craftingBoxes) {
+				if (ib.getItem() != null && ib.getItem().getClass() == item.getClass()) {
+					// Check if it's the right amount
+					if (ib.getItem().getAmount() >= item.getAmount()) {
+						ingredientsOk[i] = true;
+						break;
+					}
+				}
+			}
+			i++;
+		}
+		
+		for (i = 0; i < ingredientsOk.length; i++) {
+			if (ingredientsOk[i] == false) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+//	/**
+//	 * Consumes the current recipe items
+//	 */
+//	private void consumeCraftingMaterials() {
+//		
+//		for (InventoryBox ib : craftingBoxes) {
+//			
+//			if (ib.getItem() != null && ib.getItem() instanceof Wood && ib.getItem().getAmount() >= 3) {
+//				int amount = ib.getItem().getAmount();
+//				int consumedAmount = amount - ib.getItem().getAmount() % 3;
+//				ib.getItem().decreaseAmountBy(consumedAmount);
+//				break;
+//			}
+//		}
+//		
+//		// Clear the box if consumed all items
+//		for (InventoryBox consumedIb : craftingBoxes) {
+//			if (consumedIb.getItem() != null && consumedIb.getItem().getAmount() == 0) {
+//				consumedIb.setItem(null);
+//			}
+//		}
+//	}
 	
 	public void render(ShapeRenderer sr) {
 		
