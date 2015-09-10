@@ -236,6 +236,7 @@ public class OnePixel extends ApplicationAdapter {
 			Resources.get().whiteFont.draw(fontBatch, "x: " + player.getX(), 0f, Gdx.graphics.getHeight());
 			Resources.get().whiteFont.draw(fontBatch, "y: " + player.getY(), 0f, Gdx.graphics.getHeight() - 20f);
 			Resources.get().whiteFont.draw(fontBatch, "world size: " + world.getSize() + "x" + world.getSize(), 0f, Gdx.graphics.getHeight() - 40f);
+			Resources.get().whiteFont.draw(fontBatch, "heating up: " + player.isHeatingUp(), 0f, Gdx.graphics.getHeight() - 60f);
 			fontBatch.end();
 		}
 	}

@@ -3,6 +3,7 @@ package com.lucasdnd.onepixel.gameplay;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -15,6 +16,7 @@ import com.lucasdnd.onepixel.gameplay.items.StatRecovery;
 import com.lucasdnd.onepixel.gameplay.items.Stone;
 import com.lucasdnd.onepixel.gameplay.items.Usable;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
+import com.lucasdnd.onepixel.gameplay.world.CampfireBlock;
 import com.lucasdnd.onepixel.gameplay.world.MapObject;
 import com.lucasdnd.onepixel.gameplay.world.Water;
 import com.lucasdnd.onepixel.gameplay.world.World;
@@ -34,7 +36,7 @@ public class Player {
 	private int health, cold, food, drink;
 	private int statusDecrease;
 	private int statusDecreaseLimit = 10;
-	private boolean dead;
+	private boolean heatingUp, dead;
 	
 	// Inventory, crafting
 	private Inventory inventory;
@@ -74,7 +76,41 @@ public class Player {
 
 	public void update() {
 		
+		// Inventory, crafting, etc
 		inventory.update();
+		
+		// Check if the Player is close to a campfire to heat it up
+		World world = ((OnePixel)Gdx.app.getApplicationListener()).getWorld();
+		int minCampfireRangeCheckX = x - 5;
+		int maxCampfireRangeCheckX = x + 5;
+		int minCampfireRangeCheckY = y - 5;
+		int maxCampfireRangeCheckY = y + 5;
+		// Bounds safe check
+		if (minCampfireRangeCheckX <= 0) {
+			minCampfireRangeCheckX = 0;
+		}
+		if (maxCampfireRangeCheckX >= world.getSize()) {
+			maxCampfireRangeCheckX = world.getSize();
+		}
+		if (minCampfireRangeCheckY <= 0) {
+			minCampfireRangeCheckY = 0;
+		}
+		if (maxCampfireRangeCheckY >= world.getSize()) {
+			maxCampfireRangeCheckY = world.getSize();
+		}
+		
+		heatingUp = false;
+		for (int i = minCampfireRangeCheckX; i < maxCampfireRangeCheckX; i++) {
+			for (int j = minCampfireRangeCheckY; j < maxCampfireRangeCheckY; j++) {
+				if (world.getMapObjectAt(i, j) instanceof CampfireBlock) {
+					heatingUp = true;
+					break;
+				}
+			}
+		}
+		if (heatingUp) { 
+			cold++;
+		}
 		
 		// Status
 		statusDecrease++;
@@ -397,6 +433,14 @@ public class Player {
 
 	public boolean isDead() {
 		return dead;
+	}
+	
+	public void setHeatingUp(boolean heatingUp) {
+		this.heatingUp = heatingUp;
+	}
+
+	public boolean isHeatingUp() {
+		return heatingUp;
 	}
 
 }

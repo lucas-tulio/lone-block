@@ -11,7 +11,7 @@ public class Campfire extends Item implements Craftable {
 	
 	public Campfire() {
 		this.setName("Campfire");
-		this.setColor(Color.FIREBRICK);
+		this.setColor(Color.ORANGE);
 	}
 	
 	@Override

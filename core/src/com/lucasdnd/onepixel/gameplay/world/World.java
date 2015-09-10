@@ -93,7 +93,7 @@ public class World implements Disposer {
 	}
 	
 	public void update() {
-
+		
 	}
 
 	public void render(ShapeRenderer sr) {
@@ -191,7 +191,7 @@ public class World implements Disposer {
 
 		return null;
 	}
-
+	
 	@Override
 	public void dispose(MapObject mapObject) {
 		mapObjects[mapObject.x][mapObject.y] = null;
