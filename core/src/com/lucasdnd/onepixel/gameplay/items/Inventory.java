@@ -93,23 +93,26 @@ public class Inventory {
 			// Click to pick item from Inventory or Crafting
 			for (InventoryBox ib : allBoxes) {
 				if (ib.getItem() != null && ib.isMouseOver() && (leftClick || rightClick)) {
-					if (craftingResultBoxes.contains(ib)) {
-						consumeCraftingMaterials();
-					}
 					if (leftClick) {	// Pick up the whole stack
+						if (craftingResultBoxes.contains(ib)) {
+							consumeCraftingMaterials();
+						}
 						itemOnMouse = ib.getItem();
 						ib.setItem(null);
 					} else if (rightClick) {	// Split the stack in two and pick one half
 						try {
+							if (craftingResultBoxes.contains(ib)) { // If taking up crafting result, consume half
+								consumeCraftingMaterials();
+							}
 							itemOnMouse = ib.getItem().getClass().newInstance();
 							int originalAmount = ib.getItem().getAmount();
 							int half = originalAmount / 2;
 							int otherHalf = originalAmount - half;
-							ib.getItem().setAmount(half);
+							ib.getItem().setAmount(otherHalf);
 							if (ib.getItem().getAmount() == 0) {
 								ib.setItem(null);
 							}
-							itemOnMouse.setAmount(otherHalf);
+							itemOnMouse.setAmount(half);
 						} catch (InstantiationException e) {
 							e.printStackTrace();
 							Gdx.app.exit();
@@ -175,13 +178,18 @@ public class Inventory {
 		// Check what the player is trying to create
 		int currentResultBox = 0;
 		for (InventoryBox ib : craftingBoxes) {
-			if (ib.getItem() != null && ib.getItem() instanceof Wood && ib.getItem().getAmount() >= 3) {
-				Campfire stone = new Campfire();
-				int reagentAmount = ib.getItem().getAmount();
-				int amountGenerated = reagentAmount / 3;
-				stone.setAmount(amountGenerated);
-				craftingResultBoxes.get(currentResultBox).setItem(stone);
-				currentResultBox++;
+			if (ib.getItem() != null) {
+				
+				// Create the Item and show it in the craftingResult box
+				
+				if (ib.getItem() instanceof Wood && ib.getItem().getAmount() >= 3) {
+					Campfire stone = new Campfire();
+					int reagentAmount = ib.getItem().getAmount();
+					int amountGenerated = reagentAmount / 3;
+					stone.setAmount(amountGenerated);
+					craftingResultBoxes.get(currentResultBox).setItem(stone);
+					currentResultBox++;
+				}
 			}
 		}
 	}
@@ -192,13 +200,14 @@ public class Inventory {
 	private void consumeCraftingMaterials() {
 		for (InventoryBox ib : craftingBoxes) {
 			if (ib.getItem() != null && ib.getItem() instanceof Wood && ib.getItem().getAmount() >= 3) {
-				int consumedAmount = ib.getItem().getAmount() - ib.getItem().getAmount() % 3;
+				int amount = ib.getItem().getAmount();
+				int consumedAmount = amount - ib.getItem().getAmount() % 3;
 				ib.getItem().decreaseAmountBy(consumedAmount);
 				break;
 			}
 		}
 		
-		// Clear the boxes of the consumed items
+		// Clear the box if consumed all items
 		for (InventoryBox consumedIb : craftingBoxes) {
 			if (consumedIb.getItem() != null && consumedIb.getItem().getAmount() == 0) {
 				consumedIb.setItem(null);
