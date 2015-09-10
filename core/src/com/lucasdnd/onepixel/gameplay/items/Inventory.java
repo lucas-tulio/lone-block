@@ -83,17 +83,42 @@ public class Inventory {
 			((OnePixel)Gdx.app.getApplicationListener()).getTooltip().hide();
 		}
 		
+		// Get clicks
+		boolean leftClick = ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked;
+		boolean rightClick = ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().rightMouseJustClicked;
+		
 		// Moving items update
 		if (itemOnMouse == null) {
 			
 			// Click to pick item from Inventory or Crafting
 			for (InventoryBox ib : allBoxes) {
-				if (ib.isMouseOver() && ib.getItem() != null && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
+				if (ib.getItem() != null && ib.isMouseOver() && (leftClick || rightClick)) {
 					if (craftingResultBoxes.contains(ib)) {
 						consumeCraftingMaterials();
 					}
-					itemOnMouse = ib.getItem();
-					ib.setItem(null);
+					if (leftClick) {	// Pick up the whole stack
+						itemOnMouse = ib.getItem();
+						ib.setItem(null);
+					} else if (rightClick) {	// Split the stack in two and pick one half
+						try {
+							itemOnMouse = ib.getItem().getClass().newInstance();
+							int originalAmount = ib.getItem().getAmount();
+							int half = originalAmount / 2;
+							int otherHalf = originalAmount - half;
+							ib.getItem().setAmount(half);
+							if (ib.getItem().getAmount() == 0) {
+								ib.setItem(null);
+							}
+							itemOnMouse.setAmount(otherHalf);
+						} catch (InstantiationException e) {
+							e.printStackTrace();
+							Gdx.app.exit();
+						} catch (IllegalAccessException e) {
+							e.printStackTrace();
+							Gdx.app.exit();
+						}
+					}
+					
 					break;
 				}
 			}
@@ -102,7 +127,8 @@ public class Inventory {
 			
 			// Click to place item
 			for (InventoryBox ib : allBoxesExceptCraftingResult) {
-				if (ib.isMouseOver() && ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
+				
+				if (ib.isMouseOver() && leftClick) {
 					
 					if (ib.getItem() == null) {
 						// Place it in an empty spot
