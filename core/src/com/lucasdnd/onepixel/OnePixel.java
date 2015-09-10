@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.gameplay.Player;
 import com.lucasdnd.onepixel.gameplay.world.World;
@@ -17,7 +18,7 @@ public class OnePixel extends ApplicationAdapter {
 	
 	// General stuff
 	public final static String GAME_NAME = "One Pixel";
-	public final static String VERSION = "v0.2.0";
+	public final static String VERSION = "v0.3.0";
 	boolean debug = false;
 	
 	// Rendering, font
@@ -25,13 +26,17 @@ public class OnePixel extends ApplicationAdapter {
 	Tooltip tooltip;
 	FontUtils font;
 	public static float PIXEL_SIZE = 8f;
-	private final float MIN_PIXEL_SIZE = 2f;
-	private final float MAX_PIXEL_SIZE = 32f;
+	final float MIN_PIXEL_SIZE = 2f;
+	final float MAX_PIXEL_SIZE = 32f;
+	final int sideBarWidth = 400;
+	int playableAreaWidth;
+	int playableAreaHeight;
 	
 	// Game objects
 	World world;
 	Player player;
 	SideBar sideBar;
+	TimeController timeController;
 	
 	// Input, camera
 	InputHandler input;
@@ -56,8 +61,9 @@ public class OnePixel extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(input);
 
 		// UI
-		int sideBarWidth = 400;
 		sideBar = new SideBar(Gdx.graphics.getWidth() - sideBarWidth, 0, sideBarWidth);
+		playableAreaWidth = Gdx.graphics.getWidth() - sideBar.getWidth();
+		playableAreaHeight = Gdx.graphics.getHeight();
 		tooltip = new Tooltip();
 		
 		startNewGame();
@@ -178,10 +184,11 @@ public class OnePixel extends ApplicationAdapter {
 	
 	private void update() {
 		
-		// Loading new game
+		// Starting new game
 		if (creatingWorld) {
 			world = new World();
 			player = new Player(world);
+			timeController = new TimeController();
 			creatingWorld = false;
 		}
 		
@@ -193,6 +200,7 @@ public class OnePixel extends ApplicationAdapter {
 			camera.update();
 			shapeRenderer.setProjectionMatrix(camera.combined);
 			
+			timeController.update();
 			world.update();
 			player.update();
 			sideBar.update();
@@ -224,6 +232,19 @@ public class OnePixel extends ApplicationAdapter {
 		player.render(shapeRenderer);
 		sideBar.render(uiShapeRenderer);
 		
+		// Day and night
+		if (timeController.isNight()) {
+			shapeRenderer.begin(ShapeType.Filled);
+			Gdx.gl.glEnable(GL20.GL_BLEND);
+			shapeRenderer.setColor(0f, 0f, 0f, 0.3f);
+			shapeRenderer.rect(
+					player.getX() * PIXEL_SIZE - playableAreaWidth / 2,
+					player.getY() * PIXEL_SIZE + playableAreaHeight / 2,
+					playableAreaWidth,
+					-playableAreaHeight);
+			shapeRenderer.end();
+		}
+		
 		tooltip.render();
 		
 		if (player.isDead()) {
@@ -237,6 +258,12 @@ public class OnePixel extends ApplicationAdapter {
 			Resources.get().whiteFont.draw(fontBatch, "y: " + player.getY(), 0f, Gdx.graphics.getHeight() - 20f);
 			Resources.get().whiteFont.draw(fontBatch, "world size: " + world.getSize() + "x" + world.getSize(), 0f, Gdx.graphics.getHeight() - 40f);
 			Resources.get().whiteFont.draw(fontBatch, "heating up: " + player.isHeatingUp(), 0f, Gdx.graphics.getHeight() - 60f);
+			
+			Resources.get().whiteFont.draw(fontBatch, "time: " + timeController.getTime(), 0f, Gdx.graphics.getHeight() - 100f);
+			Resources.get().whiteFont.draw(fontBatch, "hour of day: " + timeController.getHourOfDay() + " (" + (int)(((float)timeController.getHourOfDay() / (float)timeController.oneDay)*100f) + "%)", 0f, Gdx.graphics.getHeight() - 120f);
+			Resources.get().whiteFont.draw(fontBatch, "night: " + timeController.isNight(), 0f, Gdx.graphics.getHeight() - 140f);
+			Resources.get().whiteFont.draw(fontBatch, "day: " + timeController.getDay(), 0f, Gdx.graphics.getHeight() - 160f);
+			
 			fontBatch.end();
 		}
 	}
