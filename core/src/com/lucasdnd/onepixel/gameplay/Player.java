@@ -31,7 +31,7 @@ public class Player {
 	private Color color;
 	
 	// Status
-	private int health, stamina, food, drink;
+	private int health, cold, food, drink;
 	private int statusDecrease;
 	private int statusDecreaseLimit = 10;
 	private boolean dead;
@@ -51,7 +51,7 @@ public class Player {
 		
 		color = Color.BLACK;
 		health = MAX_STAT_VALUE;
-		stamina = MAX_STAT_VALUE;
+		cold = MAX_STAT_VALUE;
 		food = MAX_STAT_VALUE;
 		drink = MAX_STAT_VALUE;
 		
@@ -79,7 +79,7 @@ public class Player {
 		// Status
 		statusDecrease++;
 		if (statusDecrease % statusDecreaseLimit == 0) {
-			stamina--;
+			cold--;
 			food--;
 			drink -= 2;
 			statusDecrease = 0;
@@ -89,8 +89,8 @@ public class Player {
 		if (health >= MAX_STAT_VALUE) {
 			health = MAX_STAT_VALUE;
 		}
-		if (stamina >= MAX_STAT_VALUE) {
-			stamina = MAX_STAT_VALUE;
+		if (cold >= MAX_STAT_VALUE) {
+			cold = MAX_STAT_VALUE;
 		}
 		if (food >= MAX_STAT_VALUE) {
 			food = MAX_STAT_VALUE;
@@ -100,7 +100,7 @@ public class Player {
 		}
 		
 		// Death check
-		if (food <= 0 || drink <= 0 || health <= 0) {
+		if (food <= 0 || drink <= 0 || health <= 0 || cold <= 0) {
 			dead = true;
 		}
 	}
@@ -157,7 +157,6 @@ public class Player {
 			if (result instanceof Item) {
 				
 				inventory.addItem((Item)result);
-				stamina -= 10;
 				food -= 3;
 				drink -= 5;
 				
@@ -228,7 +227,6 @@ public class Player {
 			Resources.get().placementSound.play(0.2f);
 			
 			// Stats update
-			stamina -= 10;
 			food -= 3;
 			drink -= 5;
 		}
@@ -240,7 +238,7 @@ public class Player {
 	
 	private void recoverStats(StatRecovery statRecovery) {
 		health += statRecovery.getHealth();
-		stamina += statRecovery.getStamina();
+		cold += statRecovery.getCold();
 		food += statRecovery.getFood();
 		drink += statRecovery.getDrink();
 	}
@@ -316,22 +314,18 @@ public class Player {
 	}
 	
 	public void moveUp() {
-		stamina--;
 		y++;
 	}
 	
 	public void moveDown() {
-		stamina--;
 		y--;
 	}
 	
 	public void moveRight() {
-		stamina--;
 		x++;
 	}
 	
 	public void moveLeft() {
-		stamina--;
 		x--;
 	}
 
@@ -345,12 +339,12 @@ public class Player {
 		this.health = health;
 	}
 
-	public int getStamina() {
-		return stamina;
+	public int getCold() {
+		return cold;
 	}
 
-	public void setStamina(int stamina) {
-		this.stamina = stamina;
+	public void setCold(int cold) {
+		this.cold = cold;
 	}
 
 	public int getFood() {

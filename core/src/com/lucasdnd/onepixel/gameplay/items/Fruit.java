@@ -22,6 +22,6 @@ public class Fruit extends Item implements Usable {
 
 	@Override
 	public StatRecovery use() {
-		return new StatRecovery(0, 0, 100, 10);
+		return new StatRecovery(0, 20, 100, 10);
 	}
 }

@@ -2,11 +2,11 @@ package com.lucasdnd.onepixel.gameplay.items;
 
 public class StatRecovery {
 	
-	int health, stamina, food, drink;
+	int health, cold, food, drink;
 	
-	public StatRecovery(int health, int stamina, int food, int drink) {
+	public StatRecovery(int health, int cold, int food, int drink) {
 		this.health = health;
-		this.stamina = stamina;
+		this.cold = cold;
 		this.food = food;
 		this.drink = drink;
 	}
@@ -15,8 +15,8 @@ public class StatRecovery {
 		return health;
 	}
 
-	public int getStamina() {
-		return stamina;
+	public int getCold() {
+		return cold;
 	}
 
 	public int getFood() {

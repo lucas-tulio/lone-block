@@ -96,7 +96,7 @@ public class SideBar {
 		Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
 		
 		drawRectFill(sr, null, x + margin, height - margin,       barWidth, barHeight, player.getHealth(),  Player.MAX_STAT_VALUE);
-		drawRectFill(sr, null, x + margin, height - margin * 5,   barWidth, barHeight, player.getStamina(), Player.MAX_STAT_VALUE);
+		drawRectFill(sr, null, x + margin, height - margin * 5,   barWidth, barHeight, player.getCold(), Player.MAX_STAT_VALUE);
 		drawRectFill(sr, null, x + margin, height - margin * 9,   barWidth, barHeight, player.getFood(),    Player.MAX_STAT_VALUE);
 		drawRectFill(sr, null, x + margin, height - margin * 13,  barWidth, barHeight, player.getDrink(),   Player.MAX_STAT_VALUE);
 		
@@ -107,7 +107,7 @@ public class SideBar {
 		
 		// UI Text
 		font.drawWhiteFont("Health",  x + margin, height - margin * 3, true);
-		font.drawWhiteFont("Stamina", x + margin, height - margin * 7, true);
+		font.drawWhiteFont("Cold",    x + margin, height - margin * 7, true);
 		font.drawWhiteFont("Hunger",  x + margin, height - margin * 11, true);
 		font.drawWhiteFont("Thirst",  x + margin, height - margin * 15, true);
 		
