@@ -40,7 +40,7 @@ public class World implements Disposer {
 
 	public World() {
 
-		size = 128;
+		size = 1024;
 		mapObjects = new MapObject[size][size];
 
 		r = new Random();
