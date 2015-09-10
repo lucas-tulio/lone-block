@@ -7,14 +7,21 @@ import com.lucasdnd.onepixel.gameplay.items.Campfire;
 
 public class CampfireBlock extends MapObject {
 	
-	final static Color color = Color.FIREBRICK;
+	static Color[] colors = {Color.FIREBRICK, Color.RED, Color.ORANGE, Color.YELLOW};
+	int currentColor, timer, maxTimer;
 
 	public CampfireBlock(Disposer disposer, int x, int y) {
 		super(disposer, x, y);
+		maxTimer = 100;
+		timer = 0;
 	}
 	
 	public void render(ShapeRenderer sr, float x, float y) {
-		sr.setColor(color);
+		timer++;
+		if (timer % maxTimer == 0) {
+			currentColor++;
+		}
+		sr.setColor(colors[currentColor % colors.length]);
 		sr.rect(x, y, OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
 	}
 

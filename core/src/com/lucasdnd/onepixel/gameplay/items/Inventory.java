@@ -129,7 +129,6 @@ public class Inventory {
 							Gdx.app.exit();
 						}
 					}
-					
 					break;
 				}
 			}
@@ -177,15 +176,15 @@ public class Inventory {
 						
 						if (ib.getItem().getClass() == itemOnMouse.getClass()) {
 							
-							// Stack
+							// Stack item
 							
 							if (leftClick) {
-								leftClick = false;
+								leftClick = false;	// Left click: all of them
 								ib.getItem().increaseAmountBy(itemOnMouse.getAmount());
 								itemOnMouse = null;
 								break;
 							} else if (rightClick) {
-								rightClick = false;
+								rightClick = false;	// Right click: only one
 								ib.getItem().increaseAmount();
 								itemOnMouse.decreaseAmount();
 								if (itemOnMouse.getAmount() <= 0) {
