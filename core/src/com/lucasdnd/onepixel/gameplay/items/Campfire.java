@@ -5,12 +5,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.ui.SideBar;
 
-public class Wood extends Item {
-	
-	public Wood() {
-		super();
-		this.setName("Wood");
-		this.setColor(Color.BROWN);
+public class Campfire extends Item {
+
+	public Campfire() {
+		this.setName("Campfire");
+		this.setColor(Color.FIREBRICK);
 	}
 	
 	@Override

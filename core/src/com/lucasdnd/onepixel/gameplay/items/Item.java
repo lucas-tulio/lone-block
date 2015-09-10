@@ -7,6 +7,7 @@ public abstract class Item {
 	private String name;
 	private Color color;
 	private int amount;
+	protected final float offsetY = -32f;
 	
 	public Item() {
 		this.amount = 1;

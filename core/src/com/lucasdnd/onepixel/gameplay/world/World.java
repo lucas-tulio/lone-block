@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.Player;
+import com.lucasdnd.onepixel.gameplay.items.Campfire;
 import com.lucasdnd.onepixel.gameplay.items.Item;
 import com.lucasdnd.onepixel.gameplay.items.Stone;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
@@ -142,19 +143,9 @@ public class World implements Disposer {
 		// World objects
 		for (int i = minRenderX; i < maxRenderX; i++) {
 			for (int j = minRenderY; j < maxRenderY; j++) {
-
 				MapObject mapObject = mapObjects[i][j];
-
-				if (mapObject instanceof Tree) {
-					((Tree) mapObject).render(sr, i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE);
-				} else if (mapObject instanceof WoodBlock) {
-					((WoodBlock) mapObject).render(sr, i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE);
-				} else if (mapObject instanceof Rock) {
-					((Rock) mapObject).render(sr, i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE);
-				} else if (mapObject instanceof Water) {
-					((Water) mapObject).render(sr, i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE);
-				} else if (mapObject instanceof DeepWater) {
-					((DeepWater) mapObject).render(sr, i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE);
+				if (mapObject != null) {
+					mapObject.render(sr, i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE);
 				}
 			}
 		}
@@ -194,6 +185,8 @@ public class World implements Disposer {
 			return new WoodBlock(this, x, y);
 		} else if (item instanceof Stone) {
 			return new Rock(this, x, y, 1);
+		} else if (item instanceof Campfire) {
+			return new CampfireBlock(this, x, y);
 		}
 
 		return null;

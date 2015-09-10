@@ -7,8 +7,6 @@ import com.lucasdnd.onepixel.ui.SideBar;
 
 public class Stone extends Item {
 	
-	final float offsetY = -32f;
-	
 	public Stone() {
 		super();
 		this.setName("Stone");

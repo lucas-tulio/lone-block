@@ -176,7 +176,7 @@ public class Inventory {
 		int currentResultBox = 0;
 		for (InventoryBox ib : craftingBoxes) {
 			if (ib.getItem() != null && ib.getItem() instanceof Wood && ib.getItem().getAmount() >= 3) {
-				Stone stone = new Stone();
+				Campfire stone = new Campfire();
 				int reagentAmount = ib.getItem().getAmount();
 				int amountGenerated = reagentAmount / 3;
 				stone.setAmount(amountGenerated);
