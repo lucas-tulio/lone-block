@@ -84,9 +84,16 @@ public class Inventory {
 			((OnePixel)Gdx.app.getApplicationListener()).getTooltip().hide();
 		}
 		
+		// Crafting
+		checkCraftingRecipes();
+		
 		// Get clicks
 		boolean leftClick = ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked;
 		boolean rightClick = ((OnePixel)Gdx.app.getApplicationListener()).getInputHandler().rightMouseJustClicked;
+
+		if (leftClick == false && rightClick == false) {
+			return;
+		}
 		
 		// Moving items update
 		if (itemOnMouse == null) {
@@ -94,7 +101,7 @@ public class Inventory {
 			// Pick Item
 			
 			for (InventoryBox ib : allBoxes) {
-				if (ib.getItem() != null && ib.isMouseOver() && (leftClick || rightClick)) {
+				if (ib.getItem() != null && ib.isMouseOver()) {
 					if (leftClick) {	// Pick up the whole stack
 						leftClick = false;
 						if (craftingResultBoxes.contains(ib)) { // Taking up crafting result
@@ -136,10 +143,6 @@ public class Inventory {
 			// Place Item
 			
 			for (InventoryBox ib : allBoxesExceptCraftingResult) {
-				
-				if (leftClick == false && rightClick == false) {
-					break;
-				}
 				
 				if (ib.isMouseOver()) {
 					
@@ -208,9 +211,6 @@ public class Inventory {
 					}
 				}
 			}
-			
-			// Crafting
-			checkCraftingRecipes();
 		}
 	}
 	
