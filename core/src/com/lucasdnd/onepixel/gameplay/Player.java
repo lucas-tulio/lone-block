@@ -115,7 +115,11 @@ public class Player {
 		// Status
 		statusDecrease++;
 		if (statusDecrease % statusDecreaseLimit == 0) {
-			cold--;
+			if (((OnePixel)Gdx.app.getApplicationListener()).getTimeController().isNight()) {
+				cold -= 5;
+			} else {
+				cold--;
+			}
 			food--;
 			drink -= 2;
 			statusDecrease = 0;
