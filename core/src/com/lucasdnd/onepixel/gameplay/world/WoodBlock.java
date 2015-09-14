@@ -24,4 +24,10 @@ public class WoodBlock extends MapObject {
 		return new Wood();
 	}
 
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

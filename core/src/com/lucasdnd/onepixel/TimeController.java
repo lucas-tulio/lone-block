@@ -11,7 +11,7 @@ public class TimeController {
 	final long fps = 60;
 	
 	long time;	// 1 time == one real second
-	long oneDay = 600;	// how many seconds in one day. 3600 = 10 minutes
+	public static final long ONE_DAY = 600;	// how many seconds in one day. 3600 = 10 minutes
 	
 	String text;
 	FontUtils font;
@@ -31,7 +31,7 @@ public class TimeController {
 		if (ticks % fps == 0) {
 			time++;
 		}
-		text = (int)(((float)getHourOfDay() / (float)oneDay) * 100f) + "% of day " + getDay();
+		text = (int)(((float)getHourOfDay() / (float)ONE_DAY) * 100f) + "% of day " + getDay();
 		textWidth = font.getTextWidth(text) + textPaddingX * 2f;
 		x = Gdx.graphics.getWidth() - OnePixel.SIDEBAR_WIDTH - textWidth;
 	}
@@ -45,15 +45,15 @@ public class TimeController {
 	}
 	
 	public boolean isNight() {
-		return (int)(time % oneDay) > oneDay / 2;
+		return (int)(time % ONE_DAY) > ONE_DAY / 2;
 	}
 	
 	public int getHourOfDay() {
-		return (int)(time % oneDay);
+		return (int)(time % ONE_DAY);
 	}
 	
 	public int getDay() {
-		return (int)(time / oneDay);
+		return (int)(time / ONE_DAY);
 	}
 
 	public long getTicks() {

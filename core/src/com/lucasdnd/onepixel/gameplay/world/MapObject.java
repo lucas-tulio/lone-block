@@ -13,5 +13,6 @@ public abstract class MapObject implements Harvestable {
 		this.disposer = disposer;
 	}
 	
+	public abstract void update();
 	public abstract void render(ShapeRenderer sr, float x, float y);
 }

@@ -31,4 +31,10 @@ public class CampfireBlock extends MapObject {
 		return new Campfire();
 	}
 
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

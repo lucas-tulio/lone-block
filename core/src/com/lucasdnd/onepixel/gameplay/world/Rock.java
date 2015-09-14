@@ -28,4 +28,10 @@ public class Rock extends MapObject {
 		disposer.dispose(this);
 		return new Stone();
 	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }

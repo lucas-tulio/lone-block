@@ -24,4 +24,10 @@ public class DeepWater extends MapObject {
 		Resources.get().randomDrinkingSound().play(0.7f);
 		return new StatRecovery(0, 1, 0, 80);
 	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }

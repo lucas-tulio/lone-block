@@ -93,7 +93,14 @@ public class World implements Disposer {
 	}
 	
 	public void update() {
-		
+		// Update MapObjects
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (mapObjects[i][j] != null) {
+					mapObjects[i][j].update();
+				}
+			}
+		}
 	}
 
 	public void render(ShapeRenderer sr) {
