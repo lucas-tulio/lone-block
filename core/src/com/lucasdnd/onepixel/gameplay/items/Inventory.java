@@ -298,29 +298,6 @@ public class Inventory {
 		return true;
 	}
 	
-//	/**
-//	 * Consumes the current recipe items
-//	 */
-//	private void consumeCraftingMaterials() {
-//		
-//		for (InventoryBox ib : craftingBoxes) {
-//			
-//			if (ib.getItem() != null && ib.getItem() instanceof Wood && ib.getItem().getAmount() >= 3) {
-//				int amount = ib.getItem().getAmount();
-//				int consumedAmount = amount - ib.getItem().getAmount() % 3;
-//				ib.getItem().decreaseAmountBy(consumedAmount);
-//				break;
-//			}
-//		}
-//		
-//		// Clear the box if consumed all items
-//		for (InventoryBox consumedIb : craftingBoxes) {
-//			if (consumedIb.getItem() != null && consumedIb.getItem().getAmount() == 0) {
-//				consumedIb.setItem(null);
-//			}
-//		}
-//	}
-	
 	public void render(ShapeRenderer sr) {
 		
 		// Render all boxes
