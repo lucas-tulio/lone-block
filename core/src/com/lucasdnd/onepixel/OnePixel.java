@@ -26,9 +26,9 @@ public class OnePixel extends ApplicationAdapter {
 	Tooltip tooltip;
 	FontUtils font;
 	public static float PIXEL_SIZE = 8f;
-	final float MIN_PIXEL_SIZE = 2f;
-	final float MAX_PIXEL_SIZE = 32f;
-	final int sideBarWidth = 400;
+	public static final float MIN_PIXEL_SIZE = 2f;
+	public static final float MAX_PIXEL_SIZE = 32f;
+	public static final int SIDEBAR_WIDTH = 400;
 	int playableAreaWidth;
 	int playableAreaHeight;
 	
@@ -61,7 +61,7 @@ public class OnePixel extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(input);
 
 		// UI
-		sideBar = new SideBar(Gdx.graphics.getWidth() - sideBarWidth, 0, sideBarWidth);
+		sideBar = new SideBar(Gdx.graphics.getWidth() - SIDEBAR_WIDTH, 0, SIDEBAR_WIDTH);
 		playableAreaWidth = Gdx.graphics.getWidth() - sideBar.getWidth();
 		playableAreaHeight = Gdx.graphics.getHeight();
 		tooltip = new Tooltip();
@@ -263,6 +263,9 @@ public class OnePixel extends ApplicationAdapter {
 			Resources.get().whiteFont.draw(fontBatch, "hour of day: " + timeController.getHourOfDay() + " (" + (int)(((float)timeController.getHourOfDay() / (float)timeController.oneDay)*100f) + "%)", 0f, Gdx.graphics.getHeight() - 120f);
 			Resources.get().whiteFont.draw(fontBatch, "night: " + timeController.isNight(), 0f, Gdx.graphics.getHeight() - 140f);
 			Resources.get().whiteFont.draw(fontBatch, "day: " + timeController.getDay(), 0f, Gdx.graphics.getHeight() - 160f);
+			
+			Resources.get().whiteFont.draw(fontBatch, "x: " + Gdx.input.getX(), 0f, Gdx.graphics.getHeight() - 200f);
+			Resources.get().whiteFont.draw(fontBatch, "y: " + Gdx.input.getY(), 0f, Gdx.graphics.getHeight() - 220f);
 			
 			fontBatch.end();
 		}

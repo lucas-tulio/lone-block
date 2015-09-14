@@ -140,6 +140,12 @@ public class Inventory {
 						
 		} else {
 			
+			// Drop item
+			
+			if (leftClick && Gdx.input.getX() < Gdx.graphics.getWidth() - OnePixel.SIDEBAR_WIDTH) {
+				itemOnMouse = null;
+			}
+			
 			// Place Item
 			
 			for (InventoryBox ib : allBoxesExceptCraftingResult) {
