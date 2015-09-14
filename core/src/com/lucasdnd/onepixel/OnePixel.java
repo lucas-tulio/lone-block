@@ -231,6 +231,7 @@ public class OnePixel extends ApplicationAdapter {
 		world.render(shapeRenderer);
 		player.render(shapeRenderer);
 		sideBar.render(uiShapeRenderer);
+		timeController.render(uiShapeRenderer);
 		
 		// Day and night
 		if (timeController.isNight()) {
@@ -295,5 +296,9 @@ public class OnePixel extends ApplicationAdapter {
 	
 	public InputHandler getInputHandler() {
 		return input;
+	}
+	
+	public TimeController getTimeController() {
+		return timeController;
 	}
 }
