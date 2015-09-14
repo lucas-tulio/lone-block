@@ -111,12 +111,6 @@ public class SideBar {
 		font.drawWhiteFont("Hunger",  x + margin, height - margin * 11, true);
 		font.drawWhiteFont("Thirst",  x + margin, height - margin * 15, true);
 		
-		// Inventory, crafting and result
-		player.getInventory().render(sr);
-		font.drawWhiteFont("Inventory", x + margin,      height - margin * 23 - 3f, true);
-		font.drawWhiteFont("Crafting",  x + margin * 13, height - margin * 19 - 3f, true);
-		font.drawWhiteFont("Result",    x + margin * 13, height - margin * 23 - 3f, true);
-		
 		// Instructions
 		font.drawWhiteFont("E: harvest/collect",        x + margin, height - margin * 25 - 3f, true);
 		font.drawWhiteFont("W: use selected item",      x + margin, height - margin * 26 - 3f, true);
@@ -133,6 +127,13 @@ public class SideBar {
 		// Game name and version
 		font.drawWhiteFont(OnePixel.GAME_NAME, x + margin,                  margin * 1.5f, true);
 		font.drawWhiteFont(OnePixel.VERSION,   x + width - margin * 4 - 6f, margin * 1.5f, true);
+		
+		// Inventory, crafting and result
+		// (should be rendered last so the items you hold on the mouse won't go behind things) 
+		font.drawWhiteFont("Inventory", x + margin,      height - margin * 23 - 3f, true);
+		font.drawWhiteFont("Crafting",  x + margin * 13, height - margin * 19 - 3f, true);
+		font.drawWhiteFont("Result",    x + margin * 13, height - margin * 23 - 3f, true);
+		player.getInventory().render(sr);
 	}
 	
 	private void drawRectFrame(ShapeRenderer sr, float x, float y, float width, float height) {
