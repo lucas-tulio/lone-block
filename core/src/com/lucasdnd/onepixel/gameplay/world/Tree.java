@@ -50,7 +50,7 @@ public class Tree extends MapObject {
 	}
 	
 	private void refreshFruits() {
-		fruit = new Random().nextInt(4) + 1;
+		fruit = 2;
 	}
 	
 	private void refreshWood() {
