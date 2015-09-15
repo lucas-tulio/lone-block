@@ -25,7 +25,7 @@ public class DialogBox {
 	}
 	
 	private void updatePosition() {
-		x = Gdx.graphics.getWidth() / 2f - ((OnePixel)Gdx.app.getApplicationListener()).getSideBar().getWidth() / 2f;
+		x = Gdx.graphics.getWidth() / 2f - SideBar.SIDEBAR_WIDTH / 2f;
 		y = Gdx.graphics.getHeight() / 2f;
 		
 		

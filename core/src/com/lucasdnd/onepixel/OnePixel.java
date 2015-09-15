@@ -28,7 +28,6 @@ public class OnePixel extends ApplicationAdapter {
 	public static float PIXEL_SIZE = 8f;
 	public static final float MIN_PIXEL_SIZE = 2f;
 	public static final float MAX_PIXEL_SIZE = 32f;
-	public static final int SIDEBAR_WIDTH = 400;
 	int playableAreaWidth;
 	int playableAreaHeight;
 	
@@ -61,8 +60,8 @@ public class OnePixel extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(input);
 
 		// UI
-		sideBar = new SideBar(Gdx.graphics.getWidth() - SIDEBAR_WIDTH, 0, SIDEBAR_WIDTH);
-		playableAreaWidth = Gdx.graphics.getWidth() - sideBar.getWidth();
+		sideBar = new SideBar(Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH, 0);
+		playableAreaWidth = SideBar.SIDEBAR_WIDTH;
 		playableAreaHeight = Gdx.graphics.getHeight();
 		tooltip = new Tooltip();
 		
@@ -196,7 +195,7 @@ public class OnePixel extends ApplicationAdapter {
 		if (player.isDead() == false) {
 			handleInput();
 			
-			camera.position.set(player.getX() * OnePixel.PIXEL_SIZE + (sideBar.getWidth() * 0.5f), player.getY() * OnePixel.PIXEL_SIZE, 0f);
+			camera.position.set(player.getX() * OnePixel.PIXEL_SIZE + (SideBar.SIDEBAR_WIDTH * 0.5f), player.getY() * OnePixel.PIXEL_SIZE, 0f);
 			camera.update();
 			shapeRenderer.setProjectionMatrix(camera.combined);
 			
@@ -223,7 +222,7 @@ public class OnePixel extends ApplicationAdapter {
 		if (creatingWorld) {
 			sideBar.render(uiShapeRenderer);
 			String text = "Creating new world...";
-			float space = Gdx.graphics.getWidth() / 2f - sideBar.getWidth() / 2f;
+			float space = Gdx.graphics.getWidth() / 2f - SideBar.SIDEBAR_WIDTH / 2f;
 			font.drawWhiteFont(text, space, Gdx.graphics.getHeight() / 2f - 12f, true, Align.center, 0);
 			return;
 		}
@@ -249,7 +248,7 @@ public class OnePixel extends ApplicationAdapter {
 		tooltip.render();
 		
 		if (player.isDead()) {
-			font.drawRedFont("You died", 0f, Gdx.graphics.getHeight() / 2f, false, Align.center, Gdx.graphics.getWidth() - sideBar.getWidth());
+			font.drawRedFont("You died", 0f, Gdx.graphics.getHeight() / 2f, false, Align.center, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);
 		}
 		
 		// Debug

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.FontUtils;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.ui.SideBar;
 
 public class Inventory {
 	
@@ -142,7 +143,7 @@ public class Inventory {
 			
 			// Drop item
 			
-			if (leftClick && Gdx.input.getX() < Gdx.graphics.getWidth() - OnePixel.SIDEBAR_WIDTH) {
+			if (leftClick && Gdx.input.getX() < Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH) {
 				itemOnMouse = null;
 			}
 			

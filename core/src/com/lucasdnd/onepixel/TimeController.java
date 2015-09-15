@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.lucasdnd.onepixel.ui.SideBar;
 
 public class TimeController {
 	
@@ -33,7 +34,7 @@ public class TimeController {
 		}
 		text = (int)(((float)getHourOfDay() / (float)ONE_DAY) * 100f) + "% of day " + getDay();
 		textWidth = font.getTextWidth(text) + textPaddingX * 2f;
-		x = Gdx.graphics.getWidth() - OnePixel.SIDEBAR_WIDTH - textWidth;
+		x = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH - textWidth;
 	}
 	
 	public void render(ShapeRenderer uiShapeRenderer) {

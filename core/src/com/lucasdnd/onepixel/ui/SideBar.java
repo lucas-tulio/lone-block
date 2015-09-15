@@ -10,9 +10,10 @@ import com.lucasdnd.onepixel.gameplay.Player;
 
 public class SideBar {
 	
-	int x, y, width;
+	int x, y;
 	final float margin = 20f;
 	public static final float lineWeight = 4f;
+	public static final int SIDEBAR_WIDTH = 400;
 	
 	// Status bar attributes
 	float barHeight;
@@ -23,12 +24,11 @@ public class SideBar {
 	
 	FontUtils font;
 	
-	public SideBar(int x, int y, int width) {
+	public SideBar(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.width = width;
 		barHeight = margin * 1.8f;
-		barWidth = width - margin * 2;
+		barWidth = SIDEBAR_WIDTH - margin * 2;
 		font = new FontUtils();
 		
 		// Buttons
@@ -89,7 +89,7 @@ public class SideBar {
 		// Black background
 		sr.begin(ShapeType.Filled);
 		sr.setColor(Color.BLACK);
-		sr.rect(x, y, width, height);
+		sr.rect(x, y, SIDEBAR_WIDTH, height);
 		sr.end();
 		
 		// Status bars
@@ -126,7 +126,7 @@ public class SideBar {
 		
 		// Game name and version
 		font.drawWhiteFont(OnePixel.GAME_NAME, x + margin,                  margin * 1.5f, true);
-		font.drawWhiteFont(OnePixel.VERSION,   x + width - margin * 4 - 6f, margin * 1.5f, true);
+		font.drawWhiteFont(OnePixel.VERSION,   x + SIDEBAR_WIDTH - margin * 4 - 6f, margin * 1.5f, true);
 		
 		// Inventory, crafting and result
 		// (should be rendered last so the items you hold on the mouse won't go behind things) 
@@ -175,10 +175,6 @@ public class SideBar {
 		
 		sr.rect(x + lineWeight, y - lineHeight, lineValue, lineHeight);
 		sr.end();
-	}
-	
-	public int getWidth() {
-		return width;
 	}
 	
 	public int getX() {

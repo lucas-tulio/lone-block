@@ -122,8 +122,7 @@ public class World implements Disposer {
 		int maxRenderY = 0;
 		
 		// Get the visible area on the screen
-		SideBar sideBar = ((OnePixel)Gdx.app.getApplicationListener()).getSideBar();
-		float gameViewWidth = Gdx.graphics.getWidth() - sideBar.getWidth();
+		float gameViewWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH;
 		float visibleBlocksX = gameViewWidth / OnePixel.PIXEL_SIZE;
 		float visibleBlocksY = Gdx.graphics.getHeight() / OnePixel.PIXEL_SIZE;
 		
