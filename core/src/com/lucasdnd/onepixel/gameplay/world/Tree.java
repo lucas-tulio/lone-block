@@ -101,14 +101,14 @@ public class Tree extends MapObject {
 				// Fruits and Sapling
 					
 				sr.setColor(saplingColor);
-				sr.rect(x + OnePixel.PIXEL_SIZE - OnePixel.PIXEL_SIZE / 3f,
-						y + OnePixel.PIXEL_SIZE - OnePixel.PIXEL_SIZE / 2f - OnePixel.PIXEL_SIZE / 8f,
+				sr.rect(x + OnePixel.PIXEL_SIZE / 8f,
+						y + OnePixel.PIXEL_SIZE - OnePixel.PIXEL_SIZE / 2.5f,
 						OnePixel.PIXEL_SIZE / 4f,
 						OnePixel.PIXEL_SIZE / 4f);
 				
 				sr.setColor(Color.RED);
-				sr.rect(x + OnePixel.PIXEL_SIZE / 8f,
-						y + OnePixel.PIXEL_SIZE - OnePixel.PIXEL_SIZE / 2f - OnePixel.PIXEL_SIZE / 8f,
+				sr.rect(x + (OnePixel.PIXEL_SIZE / 8f * 5f),
+						y + OnePixel.PIXEL_SIZE / 8f,
 						OnePixel.PIXEL_SIZE / 4f,
 						OnePixel.PIXEL_SIZE / 4f);
 			

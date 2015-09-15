@@ -268,6 +268,8 @@ public class OnePixel extends ApplicationAdapter {
 			Resources.get().whiteFont.draw(fontBatch, "x: " + Gdx.input.getX(), 0f, Gdx.graphics.getHeight() - 200f);
 			Resources.get().whiteFont.draw(fontBatch, "y: " + Gdx.input.getY(), 0f, Gdx.graphics.getHeight() - 220f);
 			
+			Resources.get().whiteFont.draw(fontBatch, "pixel_size: " + OnePixel.PIXEL_SIZE, 0f, Gdx.graphics.getHeight() - 260f);
+			
 			fontBatch.end();
 		}
 	}
