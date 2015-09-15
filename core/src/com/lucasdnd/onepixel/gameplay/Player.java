@@ -100,7 +100,7 @@ public class Player {
 			}
 		}
 		if (heatingUp) { 
-			cold++;
+			cold += 3;
 		}
 		
 		// Status
