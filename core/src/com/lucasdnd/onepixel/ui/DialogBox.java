@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.FontUtils;
-import com.lucasdnd.onepixel.OnePixel;
 
 public class DialogBox {
 	

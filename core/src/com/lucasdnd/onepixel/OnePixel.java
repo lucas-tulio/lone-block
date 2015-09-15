@@ -260,7 +260,7 @@ public class OnePixel extends ApplicationAdapter {
 			Resources.get().whiteFont.draw(fontBatch, "heating up: " + player.isHeatingUp(), 0f, Gdx.graphics.getHeight() - 60f);
 			
 			Resources.get().whiteFont.draw(fontBatch, "time: " + timeController.getTime(), 0f, Gdx.graphics.getHeight() - 100f);
-			Resources.get().whiteFont.draw(fontBatch, "hour of day: " + timeController.getHourOfDay() + " (" + (int)(((float)timeController.getHourOfDay() / (float)timeController.ONE_DAY)*100f) + "%)", 0f, Gdx.graphics.getHeight() - 120f);
+			Resources.get().whiteFont.draw(fontBatch, "hour of day: " + timeController.getHourOfDay() + " (" + (int)(((float)timeController.getHourOfDay() / (float)TimeController.ONE_DAY)*100f) + "%)", 0f, Gdx.graphics.getHeight() - 120f);
 			Resources.get().whiteFont.draw(fontBatch, "night: " + timeController.isNight(), 0f, Gdx.graphics.getHeight() - 140f);
 			Resources.get().whiteFont.draw(fontBatch, "day: " + timeController.getDay(), 0f, Gdx.graphics.getHeight() - 160f);
 			
