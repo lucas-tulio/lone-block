@@ -139,29 +139,29 @@ public class Player {
 	public void render(ShapeRenderer sr) {
 		sr.begin(ShapeType.Filled);
 		sr.setColor(color);
-		sr.rect(x * OnePixel.PIXEL_SIZE, y * OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+		sr.rect(x * OnePixel.pixelSize, y * OnePixel.pixelSize, OnePixel.pixelSize, OnePixel.pixelSize);
 		float directionOffsetX = 0f;
 		float directionOffsetY = 0f;
 		switch (direction) {
 		case UP:
-			directionOffsetX = OnePixel.PIXEL_SIZE / 2f - OnePixel.PIXEL_SIZE / 4f;
-			directionOffsetY = OnePixel.PIXEL_SIZE + OnePixel.PIXEL_SIZE / 4f;
-			sr.rect(x * OnePixel.PIXEL_SIZE + directionOffsetX, y * OnePixel.PIXEL_SIZE + directionOffsetY, OnePixel.PIXEL_SIZE / 2f, OnePixel.PIXEL_SIZE / 2f);
+			directionOffsetX = OnePixel.pixelSize / 2f - OnePixel.pixelSize / 4f;
+			directionOffsetY = OnePixel.pixelSize + OnePixel.pixelSize / 4f;
+			sr.rect(x * OnePixel.pixelSize + directionOffsetX, y * OnePixel.pixelSize + directionOffsetY, OnePixel.pixelSize / 2f, OnePixel.pixelSize / 2f);
 			break;
 		case LEFT:
-			directionOffsetX = -OnePixel.PIXEL_SIZE / 2f - OnePixel.PIXEL_SIZE / 4f;
-			directionOffsetY = OnePixel.PIXEL_SIZE / 2f - OnePixel.PIXEL_SIZE / 4f;
-			sr.rect(x * OnePixel.PIXEL_SIZE + directionOffsetX, y * OnePixel.PIXEL_SIZE + directionOffsetY, OnePixel.PIXEL_SIZE / 2f, OnePixel.PIXEL_SIZE / 2f);
+			directionOffsetX = -OnePixel.pixelSize / 2f - OnePixel.pixelSize / 4f;
+			directionOffsetY = OnePixel.pixelSize / 2f - OnePixel.pixelSize / 4f;
+			sr.rect(x * OnePixel.pixelSize + directionOffsetX, y * OnePixel.pixelSize + directionOffsetY, OnePixel.pixelSize / 2f, OnePixel.pixelSize / 2f);
 			break;
 		case DOWN:
-			directionOffsetX = OnePixel.PIXEL_SIZE / 2f - OnePixel.PIXEL_SIZE / 4f;
-			directionOffsetY = -OnePixel.PIXEL_SIZE / 2f - OnePixel.PIXEL_SIZE / 4f;
-			sr.rect(x * OnePixel.PIXEL_SIZE + directionOffsetX, y * OnePixel.PIXEL_SIZE + directionOffsetY, OnePixel.PIXEL_SIZE / 2f, OnePixel.PIXEL_SIZE / 2f);
+			directionOffsetX = OnePixel.pixelSize / 2f - OnePixel.pixelSize / 4f;
+			directionOffsetY = -OnePixel.pixelSize / 2f - OnePixel.pixelSize / 4f;
+			sr.rect(x * OnePixel.pixelSize + directionOffsetX, y * OnePixel.pixelSize + directionOffsetY, OnePixel.pixelSize / 2f, OnePixel.pixelSize / 2f);
 			break;
 		case RIGHT:
-			directionOffsetX = OnePixel.PIXEL_SIZE + OnePixel.PIXEL_SIZE / 4f;
-			directionOffsetY = OnePixel.PIXEL_SIZE / 2f - OnePixel.PIXEL_SIZE / 4f;
-			sr.rect(x * OnePixel.PIXEL_SIZE + directionOffsetX, y * OnePixel.PIXEL_SIZE + directionOffsetY, OnePixel.PIXEL_SIZE / 2f, OnePixel.PIXEL_SIZE / 2f);
+			directionOffsetX = OnePixel.pixelSize + OnePixel.pixelSize / 4f;
+			directionOffsetY = OnePixel.pixelSize / 2f - OnePixel.pixelSize / 4f;
+			sr.rect(x * OnePixel.pixelSize + directionOffsetX, y * OnePixel.pixelSize + directionOffsetY, OnePixel.pixelSize / 2f, OnePixel.pixelSize / 2f);
 			break;
 		default:
 			break;

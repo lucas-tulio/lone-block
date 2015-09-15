@@ -18,14 +18,14 @@ public class OnePixel extends ApplicationAdapter {
 	
 	// General stuff
 	public final static String GAME_NAME = "One Pixel";
-	public final static String VERSION = "v0.3.0";
+	public final static String VERSION = "v0.4.0";
 	boolean debug = false;
 	
 	// Rendering, font
 	SpriteBatch fontBatch;
 	Tooltip tooltip;
 	FontUtils font;
-	public static float PIXEL_SIZE = 8f;
+	public static float pixelSize = 8f;
 	public static final float MIN_PIXEL_SIZE = 2f;
 	public static final float MAX_PIXEL_SIZE = 32f;
 	int playableAreaWidth;
@@ -164,14 +164,14 @@ public class OnePixel extends ApplicationAdapter {
 		
 		// Zoom control
 		if (Gdx.input.isKeyJustPressed(Keys.EQUALS)) {
-			PIXEL_SIZE *= 2f;
-			if (PIXEL_SIZE >= MAX_PIXEL_SIZE) {
-				PIXEL_SIZE = MAX_PIXEL_SIZE;
+			pixelSize *= 2f;
+			if (pixelSize >= MAX_PIXEL_SIZE) {
+				pixelSize = MAX_PIXEL_SIZE;
 			}
 		} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
-			PIXEL_SIZE /= 2f;
-			if (PIXEL_SIZE <= MIN_PIXEL_SIZE) {
-				PIXEL_SIZE = MIN_PIXEL_SIZE;
+			pixelSize /= 2f;
+			if (pixelSize <= MIN_PIXEL_SIZE) {
+				pixelSize = MIN_PIXEL_SIZE;
 			}
 		}
 		
@@ -187,6 +187,7 @@ public class OnePixel extends ApplicationAdapter {
 		if (creatingWorld) {
 			world = new World();
 			player = new Player(world);
+			world.spawnMonsters();
 			timeController = new TimeController();
 			creatingWorld = false;
 		}
@@ -195,7 +196,7 @@ public class OnePixel extends ApplicationAdapter {
 		if (player.isDead() == false) {
 			handleInput();
 			
-			camera.position.set(player.getX() * OnePixel.PIXEL_SIZE + (SideBar.SIDEBAR_WIDTH * 0.5f), player.getY() * OnePixel.PIXEL_SIZE, 0f);
+			camera.position.set(player.getX() * OnePixel.pixelSize + (SideBar.SIDEBAR_WIDTH * 0.5f), player.getY() * OnePixel.pixelSize, 0f);
 			camera.update();
 			shapeRenderer.setProjectionMatrix(camera.combined);
 			
@@ -238,8 +239,8 @@ public class OnePixel extends ApplicationAdapter {
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			shapeRenderer.setColor(0f, 0f, 0f, 0.3f);
 			shapeRenderer.rect(
-					player.getX() * PIXEL_SIZE - playableAreaWidth / 2,
-					player.getY() * PIXEL_SIZE + playableAreaHeight / 2,
+					player.getX() * pixelSize - playableAreaWidth / 2,
+					player.getY() * pixelSize + playableAreaHeight / 2,
 					playableAreaWidth,
 					-playableAreaHeight);
 			shapeRenderer.end();
@@ -267,7 +268,7 @@ public class OnePixel extends ApplicationAdapter {
 			Resources.get().whiteFont.draw(fontBatch, "x: " + Gdx.input.getX(), 0f, Gdx.graphics.getHeight() - 200f);
 			Resources.get().whiteFont.draw(fontBatch, "y: " + Gdx.input.getY(), 0f, Gdx.graphics.getHeight() - 220f);
 			
-			Resources.get().whiteFont.draw(fontBatch, "pixel_size: " + OnePixel.PIXEL_SIZE, 0f, Gdx.graphics.getHeight() - 260f);
+			Resources.get().whiteFont.draw(fontBatch, "pixel_size: " + OnePixel.pixelSize, 0f, Gdx.graphics.getHeight() - 260f);
 			
 			fontBatch.end();
 		}

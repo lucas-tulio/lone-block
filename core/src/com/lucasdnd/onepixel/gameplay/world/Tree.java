@@ -24,6 +24,7 @@ public class Tree extends MapObject {
 	int fruit;
 	long fruitTicks, maxFruitTicks;
 	long growthTicks, maxGrowthTicks;
+	long saplingTicks, maxSaplingTicks;
 	
 	public Tree(Disposer disposer, int x, int y, boolean isGrown) {
 		super(disposer, x, y);
@@ -40,8 +41,8 @@ public class Tree extends MapObject {
 			// 1/20 of the trees have fruits
 			refreshWood();
 			hasFruits = r.nextInt(20) == 0;
+			calculateMaxFruitAndSaplingTicks();
 			if (hasFruits) {
-				calculateMaxFruitTicks();
 				refreshFruits();
 			} else {
 				fruit = 0;
@@ -53,14 +54,20 @@ public class Tree extends MapObject {
 		fruit = 2;
 	}
 	
+	private void refreshSapling() {
+		hasSapling = true;
+	}
+	
 	private void refreshWood() {
 		wood = new Random().nextInt(4) + 2;
 	}
 	
-	private void calculateMaxFruitTicks() {
+	private void calculateMaxFruitAndSaplingTicks() {
 		Random r = new Random();
-		maxFruitTicks = TimeController.ONE_DAY + (r.nextInt((int)TimeController.ONE_DAY));
-		maxFruitTicks *= TimeController.FPS;
+		long maxTicks = TimeController.ONE_DAY + (r.nextInt((int)TimeController.ONE_DAY));
+		maxTicks *= TimeController.FPS;
+		maxFruitTicks = maxTicks;
+		maxSaplingTicks = maxTicks;
 	}
 	
 	private void calculateMaxGrowthTicks() {
@@ -79,7 +86,7 @@ public class Tree extends MapObject {
 				hasFruits = new Random().nextInt(2) == 0;
 				if (hasFruits) {
 					refreshFruits();
-					calculateMaxFruitTicks();
+					calculateMaxFruitAndSaplingTicks();
 				}
 				refreshWood();
 			}
@@ -91,6 +98,13 @@ public class Tree extends MapObject {
 					refreshFruits();
 				}
 			}
+			// Sapling renewal
+			if (hasSapling == false) {
+				saplingTicks++;
+				if (saplingTicks % maxSaplingTicks == 0) {
+					refreshSapling();
+				}
+			}
 		}
 	}
 	
@@ -100,43 +114,43 @@ public class Tree extends MapObject {
 			
 			// Tree
 			sr.setColor(color);
-			sr.rect(x, y, OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+			sr.rect(x, y, OnePixel.pixelSize, OnePixel.pixelSize);
 			
 			if (hasSapling && fruit > 0) {
 
 				// Fruits and Sapling
 					
 				sr.setColor(saplingColor);
-				sr.rect(x + OnePixel.PIXEL_SIZE / 8f,
-						y + OnePixel.PIXEL_SIZE - OnePixel.PIXEL_SIZE / 2.5f,
-						OnePixel.PIXEL_SIZE / 4f,
-						OnePixel.PIXEL_SIZE / 4f);
+				sr.rect(x + OnePixel.pixelSize / 8f,
+						y + OnePixel.pixelSize - OnePixel.pixelSize / 2.5f,
+						OnePixel.pixelSize / 4f,
+						OnePixel.pixelSize / 4f);
 				
 				sr.setColor(Color.RED);
-				sr.rect(x + (OnePixel.PIXEL_SIZE / 8f * 5f),
-						y + OnePixel.PIXEL_SIZE / 8f,
-						OnePixel.PIXEL_SIZE / 4f,
-						OnePixel.PIXEL_SIZE / 4f);
+				sr.rect(x + (OnePixel.pixelSize / 8f * 5f),
+						y + OnePixel.pixelSize / 8f,
+						OnePixel.pixelSize / 4f,
+						OnePixel.pixelSize / 4f);
 			
 			} else if (hasSapling && fruit <= 0) {
 				
 				// Sapling only
 				
 				sr.setColor(saplingColor);
-				sr.rect(x + OnePixel.PIXEL_SIZE - OnePixel.PIXEL_SIZE / 2f - OnePixel.PIXEL_SIZE / 8f,
-						y + OnePixel.PIXEL_SIZE - OnePixel.PIXEL_SIZE / 2f - OnePixel.PIXEL_SIZE / 8f,
-						OnePixel.PIXEL_SIZE / 4f,
-						OnePixel.PIXEL_SIZE / 4f);
+				sr.rect(x + OnePixel.pixelSize - OnePixel.pixelSize / 2f - OnePixel.pixelSize / 8f,
+						y + OnePixel.pixelSize - OnePixel.pixelSize / 2f - OnePixel.pixelSize / 8f,
+						OnePixel.pixelSize / 4f,
+						OnePixel.pixelSize / 4f);
 			
 			} else if (hasSapling == false && fruit > 0) {
 				
 				// Fruits only
 				
 				sr.setColor(Color.RED);
-				sr.rect(x + OnePixel.PIXEL_SIZE - OnePixel.PIXEL_SIZE / 2f - OnePixel.PIXEL_SIZE / 8f,
-						y + OnePixel.PIXEL_SIZE - OnePixel.PIXEL_SIZE / 2f - OnePixel.PIXEL_SIZE / 8f,
-						OnePixel.PIXEL_SIZE / 4f,
-						OnePixel.PIXEL_SIZE / 4f);
+				sr.rect(x + OnePixel.pixelSize - OnePixel.pixelSize / 2f - OnePixel.pixelSize / 8f,
+						y + OnePixel.pixelSize - OnePixel.pixelSize / 2f - OnePixel.pixelSize / 8f,
+						OnePixel.pixelSize / 4f,
+						OnePixel.pixelSize / 4f);
 			}
 			
 		} else {
@@ -144,10 +158,10 @@ public class Tree extends MapObject {
 			// Growing sapling
 			
 			sr.setColor(saplingColor);
-			sr.rect(x + OnePixel.PIXEL_SIZE / 2f - OnePixel.PIXEL_SIZE / 4f,
-					y + OnePixel.PIXEL_SIZE / 4f,
-					OnePixel.PIXEL_SIZE / 2f,
-					OnePixel.PIXEL_SIZE / 2f);
+			sr.rect(x + OnePixel.pixelSize / 2f - OnePixel.pixelSize / 4f,
+					y + OnePixel.pixelSize / 4f,
+					OnePixel.pixelSize / 2f,
+					OnePixel.pixelSize / 2f);
 			
 		}
 	}

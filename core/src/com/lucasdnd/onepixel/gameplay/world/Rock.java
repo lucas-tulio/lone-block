@@ -17,7 +17,7 @@ public class Rock extends MapObject {
 	@Override
 	public void render(ShapeRenderer sr, float x, float y) {
 		sr.setColor(color);
-		sr.rect(x, y, OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+		sr.rect(x, y, OnePixel.pixelSize, OnePixel.pixelSize);
 	}
 
 	@Override

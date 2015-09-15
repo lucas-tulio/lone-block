@@ -22,7 +22,7 @@ public class CampfireBlock extends MapObject {
 			currentColor++;
 		}
 		sr.setColor(colors[currentColor % colors.length]);
-		sr.rect(x, y, OnePixel.PIXEL_SIZE, OnePixel.PIXEL_SIZE);
+		sr.rect(x, y, OnePixel.pixelSize, OnePixel.pixelSize);
 	}
 
 	@Override

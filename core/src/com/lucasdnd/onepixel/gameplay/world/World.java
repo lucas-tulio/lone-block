@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.gameplay.Monster;
 import com.lucasdnd.onepixel.gameplay.Player;
 import com.lucasdnd.onepixel.gameplay.items.Campfire;
 import com.lucasdnd.onepixel.gameplay.items.Item;
@@ -23,8 +24,9 @@ public class World implements Disposer {
 	private int size;
 	private MapObject[][] mapObjects;
 	
-	// World objects
+	// World objects that need to be updated()
 	private ArrayList<Tree> trees;
+	private ArrayList<Monster> monsters;
 
 	// World settings
 	int numTrees;
@@ -85,10 +87,11 @@ public class World implements Disposer {
 			}
 		}
 		
-		// Start lists of objects
-		trees = new ArrayList<Tree>();
+		// TODO: problem
+		// I can't have an ArrayList of Trees and at the same time keep them in mapObjects[][]. That's bad
 		
 		// Add Trees
+		trees = new ArrayList<Tree>();
 		numTrees = size * size / 32;
 		for (int i = 0; i < numTrees; i++) {
 			int x = r.nextInt(size);
@@ -99,12 +102,22 @@ public class World implements Disposer {
 				mapObjects[x][y] = tree;
 			}
 		}
+		
+		// Create monsters
+		monsters = new ArrayList<Monster>();
+		int numMonsters = 3;
+		for (int i = 0; i < numMonsters; i++) {
+			monsters.add(new Monster());
+		}
 	}
 	
 	public void update() {
-		// Update map object
+		// Update map objects
 		for (Tree t : trees) {
 			t.update();
+		}
+		for (Monster m : monsters) {
+			m.update();
 		}
 	}
 
@@ -112,7 +125,7 @@ public class World implements Disposer {
 		
 		sr.begin(ShapeType.Filled);
 		sr.setColor(Color.FOREST);
-		sr.rect(0f, 0f, size * OnePixel.PIXEL_SIZE, size * OnePixel.PIXEL_SIZE);
+		sr.rect(0f, 0f, size * OnePixel.pixelSize, size * OnePixel.pixelSize);
 
 		// Calculate the visible world objects
 		// so we clip the view and prevent rendering shit that wouldn't even be visible to the player
@@ -123,8 +136,8 @@ public class World implements Disposer {
 		
 		// Get the visible area on the screen
 		float gameViewWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH;
-		float visibleBlocksX = gameViewWidth / OnePixel.PIXEL_SIZE;
-		float visibleBlocksY = Gdx.graphics.getHeight() / OnePixel.PIXEL_SIZE;
+		float visibleBlocksX = gameViewWidth / OnePixel.pixelSize;
+		float visibleBlocksY = Gdx.graphics.getHeight() / OnePixel.pixelSize;
 		
 		// Get the Player's position
 		Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
@@ -156,11 +169,11 @@ public class World implements Disposer {
 			for (int j = minRenderY; j < maxRenderY; j++) {
 				MapObject mapObject = mapObjects[i][j];
 				if (mapObject != null) {
-					mapObject.render(sr, i * OnePixel.PIXEL_SIZE, j * OnePixel.PIXEL_SIZE);
+					mapObject.render(sr, i * OnePixel.pixelSize, j * OnePixel.pixelSize);
 				}
 			}
 		}
-
+		
 		sr.end();
 	}
 
@@ -212,5 +225,11 @@ public class World implements Disposer {
 	
 	public ArrayList<Tree> getTrees() {
 		return trees;
+	}
+
+	public void spawnMonsters() {
+		for (Monster m : monsters) {
+			m.spawn();
+		}
 	}
 }
