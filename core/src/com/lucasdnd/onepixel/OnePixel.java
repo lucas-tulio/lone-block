@@ -61,7 +61,7 @@ public class OnePixel extends ApplicationAdapter {
 
 		// UI
 		sideBar = new SideBar(Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH, 0);
-		playableAreaWidth = SideBar.SIDEBAR_WIDTH;
+		playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH;
 		playableAreaHeight = Gdx.graphics.getHeight();
 		tooltip = new Tooltip();
 		

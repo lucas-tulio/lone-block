@@ -22,9 +22,8 @@ public class Tree extends MapObject {
 	boolean hasSapling = true;
 	
 	int fruit;
-	long ticks, fruitTicks;
-	long growth;
-	long maxGrowth;
+	long fruitTicks, maxFruitTicks;
+	long growthTicks, maxGrowthTicks;
 	
 	public Tree(Disposer disposer, int x, int y, boolean isGrown) {
 		super(disposer, x, y);
@@ -60,20 +59,22 @@ public class Tree extends MapObject {
 	
 	private void calculateMaxFruitTicks() {
 		Random r = new Random();
-		fruitTicks = TimeController.ONE_DAY * r.nextInt(2) + (r.nextInt((int)TimeController.ONE_DAY));
+		maxFruitTicks = TimeController.ONE_DAY + (r.nextInt((int)TimeController.ONE_DAY));
+		maxFruitTicks *= TimeController.FPS;
 	}
 	
 	private void calculateMaxGrowthTicks() {
 		Random r = new Random();
-		maxGrowth = TimeController.ONE_DAY * (r.nextInt(2) + 1) + (r.nextInt((int)TimeController.ONE_DAY));
+		maxGrowthTicks = TimeController.ONE_DAY * (r.nextInt(2) + 1) + (r.nextInt((int)TimeController.ONE_DAY));
+		maxGrowthTicks *= TimeController.FPS;
 	}
 	
 	public void update() {
 		
 		if (isGrown == false) {
 			// Sapling growth
-			growth++;
-			if (growth >= maxGrowth) {
+			growthTicks++;
+			if (growthTicks >= maxGrowthTicks) {
 				isGrown = true;
 				hasFruits = new Random().nextInt(2) == 0;
 				if (hasFruits) {
@@ -85,8 +86,8 @@ public class Tree extends MapObject {
 		} else {
 			// Fruit renewal
 			if (hasFruits) {
-				ticks++;
-				if (ticks % fruitTicks == 0) {
+				fruitTicks++;
+				if (fruitTicks % maxFruitTicks == 0) {
 					refreshFruits();
 				}
 			}

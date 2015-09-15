@@ -9,7 +9,7 @@ import com.lucasdnd.onepixel.ui.SideBar;
 public class TimeController {
 	
 	long ticks;
-	final long fps = 60;
+	public final static long FPS = 60;
 	
 	long time;	// 1 time == one real second
 	public static final long ONE_DAY = 600;	// how many seconds in one day. 3600 = 10 minutes
@@ -29,7 +29,7 @@ public class TimeController {
 	
 	protected void update() {
 		ticks++;
-		if (ticks % fps == 0) {
+		if (ticks % FPS == 0) {
 			time++;
 		}
 		text = (int)(((float)getHourOfDay() / (float)ONE_DAY) * 100f) + "% of day " + getDay();
