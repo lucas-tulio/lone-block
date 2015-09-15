@@ -1,5 +1,6 @@
 package com.lucasdnd.onepixel.gameplay.world;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -10,6 +11,7 @@ import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.Player;
 import com.lucasdnd.onepixel.gameplay.items.Campfire;
 import com.lucasdnd.onepixel.gameplay.items.Item;
+import com.lucasdnd.onepixel.gameplay.items.Sapling;
 import com.lucasdnd.onepixel.gameplay.items.Stone;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
 import com.lucasdnd.onepixel.ui.SideBar;
@@ -20,6 +22,9 @@ public class World implements Disposer {
 
 	private int size;
 	private MapObject[][] mapObjects;
+	
+	// World objects
+	private ArrayList<Tree> trees;
 
 	// World settings
 	int numTrees;
@@ -69,7 +74,7 @@ public class World implements Disposer {
 				}
 				
 				if (k > mountainLevel) {
-					mapObjects[i][j] = new Rock(this, i, j, 0);
+					mapObjects[i][j] = new Rock(this, i, j);
 				} else if (k <= mountainLevel && k > seaLevel) {
 
 				} else if (k <= seaLevel && k > waterLevel) {
@@ -80,26 +85,26 @@ public class World implements Disposer {
 			}
 		}
 		
+		// Start lists of objects
+		trees = new ArrayList<Tree>();
+		
 		// Add Trees
 		numTrees = size * size / 32;
 		for (int i = 0; i < numTrees; i++) {
 			int x = r.nextInt(size);
 			int y = r.nextInt(size);
 			if (mapObjects[x][y] == null) {
-				Tree tree = new Tree(this, x, y);
+				Tree tree = new Tree(this, x, y, true);
+				trees.add(tree);
 				mapObjects[x][y] = tree;
 			}
 		}
 	}
 	
 	public void update() {
-		// Update MapObjects
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				if (mapObjects[i][j] != null) {
-					mapObjects[i][j].update();
-				}
-			}
+		// Update map object
+		for (Tree t : trees) {
+			t.update();
 		}
 	}
 
@@ -191,9 +196,11 @@ public class World implements Disposer {
 		if (item instanceof Wood) {
 			return new WoodBlock(this, x, y);
 		} else if (item instanceof Stone) {
-			return new Rock(this, x, y, 1);
+			return new Rock(this, x, y);
 		} else if (item instanceof Campfire) {
 			return new CampfireBlock(this, x, y);
+		} else if (item instanceof Sapling) {
+			return new Tree(this, x, y, false);
 		}
 
 		return null;
@@ -202,5 +209,9 @@ public class World implements Disposer {
 	@Override
 	public void dispose(MapObject mapObject) {
 		mapObjects[mapObject.x][mapObject.y] = null;
+	}
+	
+	public ArrayList<Tree> getTrees() {
+		return trees;
 	}
 }

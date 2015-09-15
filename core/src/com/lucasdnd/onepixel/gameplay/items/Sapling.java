@@ -4,15 +4,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
-public class Fruit extends Item implements Usable {
+public class Sapling extends Item {
 	
 	private final static float margin = InventoryBox.SIZE / 3f;
 	
-	public Fruit() {
-		this.setName("Fruit");
-		this.setColor(Color.RED);
+	public Sapling() {
+		this.setName("Sapling");
+		this.setColor(new Color(0f, 0.3f, 0f, 1f));
 	}
-	
+
 	@Override
 	public void render(ShapeRenderer sr, float x, float y) {
 		sr.begin(ShapeType.Filled);
@@ -21,8 +21,4 @@ public class Fruit extends Item implements Usable {
 		sr.end();
 	}
 
-	@Override
-	public StatRecovery use() {
-		return new StatRecovery(0, 20, 100, 10);
-	}
 }

@@ -12,12 +12,14 @@ import com.lucasdnd.onepixel.Resources;
 import com.lucasdnd.onepixel.gameplay.items.Fruit;
 import com.lucasdnd.onepixel.gameplay.items.Inventory;
 import com.lucasdnd.onepixel.gameplay.items.Item;
+import com.lucasdnd.onepixel.gameplay.items.Sapling;
 import com.lucasdnd.onepixel.gameplay.items.StatRecovery;
 import com.lucasdnd.onepixel.gameplay.items.Stone;
 import com.lucasdnd.onepixel.gameplay.items.Usable;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
 import com.lucasdnd.onepixel.gameplay.world.CampfireBlock;
 import com.lucasdnd.onepixel.gameplay.world.MapObject;
+import com.lucasdnd.onepixel.gameplay.world.Tree;
 import com.lucasdnd.onepixel.gameplay.world.Water;
 import com.lucasdnd.onepixel.gameplay.world.World;
 
@@ -203,15 +205,6 @@ public class Player {
 			} else if (result instanceof StatRecovery) {
 				recoverStats((StatRecovery)result);
 			}
-			
-			// Play the appropriate sound effect
-			if (result instanceof Wood) {
-				Resources.get().woodcuttingSound.play(0.3f);
-			} else if (result instanceof Stone) {
-				Resources.get().miningSound.play(0.4f);
-			} else if (result instanceof Fruit) {
-				Resources.get().randomLeavesSound().play(0.4f);
-			}
 		}
 	}
 	
@@ -264,6 +257,9 @@ public class Player {
 			}
 			
 			world.getMapObjects()[targetX][targetY] = itemBlock;
+			if (itemBlock instanceof Tree) {
+				world.getTrees().add((Tree)itemBlock);
+			}
 			Resources.get().placementSound.play(0.2f);
 			
 			// Stats update

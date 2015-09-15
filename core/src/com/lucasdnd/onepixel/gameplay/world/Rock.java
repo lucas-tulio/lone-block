@@ -3,6 +3,7 @@ package com.lucasdnd.onepixel.gameplay.world;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.Resources;
 import com.lucasdnd.onepixel.gameplay.items.Stone;
 
 public class Rock extends MapObject {
@@ -10,10 +11,6 @@ public class Rock extends MapObject {
 	static final Color color = new Color(0.31f, 0.31f, 0.31f, 1f);
 
 	public Rock(Disposer disposer, int x, int y) {
-		super(disposer, x, y);
-	}
-	
-	public Rock(Disposer disposer, int x, int y, int amount) {
 		super(disposer, x, y);
 	}
 	
@@ -25,6 +22,7 @@ public class Rock extends MapObject {
 
 	@Override
 	public Object performAction() {
+		Resources.get().miningSound.play(0.4f);
 		disposer.dispose(this);
 		return new Stone();
 	}
