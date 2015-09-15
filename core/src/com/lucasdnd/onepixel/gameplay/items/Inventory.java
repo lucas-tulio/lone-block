@@ -138,7 +138,7 @@ public class Inventory {
 					break;
 				}
 			}
-						
+			
 		} else {
 			
 			// Drop item
