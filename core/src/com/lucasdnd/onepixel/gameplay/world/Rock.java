@@ -8,6 +8,8 @@ import com.lucasdnd.onepixel.gameplay.items.Stone;
 
 public class Rock extends MapObject {
 	
+	public static final int saveId = 3;
+	
 	static final Color color = new Color(0.31f, 0.31f, 0.31f, 1f);
 
 	public Rock(Disposer disposer, int x, int y) {
@@ -31,5 +33,10 @@ public class Rock extends MapObject {
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getSaveId() {
+		return saveId;
 	}
 }

@@ -410,4 +410,12 @@ public class Inventory {
 	public InventoryBox getSelectedInventoryBox() {
 		return inventoryBoxes.get(selectedItem);
 	}
+
+	public ArrayList<InventoryBox> getInventoryBoxes() {
+		return inventoryBoxes;
+	}
+
+	public ArrayList<InventoryBox> getCraftingBoxes() {
+		return craftingBoxes;
+	}
 }

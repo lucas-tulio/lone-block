@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.FontUtils;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.SaveLoad;
 import com.lucasdnd.onepixel.gameplay.Player;
 
 public class SideBar {
@@ -43,12 +44,11 @@ public class SideBar {
 		});
 		
 		saveGameButton = new Button("Save", this.x + margin * 5 + 6f, margin * 4);
-		saveGameButton.setEnabled(false);
 		saveGameButton.setClickListener(new ButtonClickListener() {
 
 			@Override
 			public void onClick() {
-				System.out.println("Save game not yet implemented");
+				SaveLoad.save(0);
 			}
 			
 		});

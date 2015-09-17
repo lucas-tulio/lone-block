@@ -7,6 +7,8 @@ import com.lucasdnd.onepixel.gameplay.items.Campfire;
 
 public class CampfireBlock extends MapObject {
 	
+	public static final int saveId = 6;
+	
 	static Color[] colors = {Color.FIREBRICK, Color.RED, Color.ORANGE, Color.YELLOW};
 	int currentColor, timer, maxTimer;
 
@@ -35,6 +37,11 @@ public class CampfireBlock extends MapObject {
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getSaveId() {
+		return saveId;
 	}
 
 }

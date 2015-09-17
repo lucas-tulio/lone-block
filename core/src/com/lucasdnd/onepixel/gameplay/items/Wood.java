@@ -7,6 +7,8 @@ import com.lucasdnd.onepixel.ui.SideBar;
 
 public class Wood extends Item {
 	
+	public static final int saveId = 3;
+	
 	public Wood() {
 		super();
 		this.setName("Wood");
@@ -22,6 +24,11 @@ public class Wood extends Item {
 				InventoryBox.SIZE - SideBar.lineWeight,
 				InventoryBox.SIZE - SideBar.lineWeight);
 		sr.end();
+	}
+
+	@Override
+	public int getSaveId() {
+		return saveId;
 	}
 
 }

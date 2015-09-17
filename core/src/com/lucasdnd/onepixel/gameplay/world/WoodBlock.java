@@ -7,6 +7,8 @@ import com.lucasdnd.onepixel.gameplay.items.Wood;
 
 public class WoodBlock extends MapObject {
 	
+	public static final int saveId = 2;
+	
 	final static Color color = Color.BROWN;
 
 	public WoodBlock(Disposer disposer, int x, int y) {
@@ -28,6 +30,11 @@ public class WoodBlock extends MapObject {
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getSaveId() {
+		return saveId;
 	}
 
 }

@@ -8,6 +8,8 @@ import com.lucasdnd.onepixel.gameplay.items.StatRecovery;
 
 public class DeepWater extends MapObject {
 	
+	public static final int saveId = 5;
+	
 	final static Color color = new Color(0.11f, 0.19f, 0.74f, 1f);
 
 	public DeepWater(Disposer disposer, int x, int y) {
@@ -29,5 +31,10 @@ public class DeepWater extends MapObject {
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getSaveId() {
+		return saveId;
 	}
 }

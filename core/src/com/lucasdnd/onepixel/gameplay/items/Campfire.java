@@ -9,6 +9,8 @@ import com.lucasdnd.onepixel.ui.SideBar;
 
 public class Campfire extends Item implements Craftable {
 	
+	public static final int saveId = 5;
+	
 	public Campfire() {
 		this.setName("Campfire");
 		this.setColor(Color.ORANGE);
@@ -32,6 +34,11 @@ public class Campfire extends Item implements Craftable {
 		wood.setAmount(3);
 		ingredients.add(wood);
 		return ingredients;
+	}
+
+	@Override
+	public int getSaveId() {
+		return saveId;
 	}
 
 }

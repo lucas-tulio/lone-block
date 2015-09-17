@@ -7,6 +7,8 @@ import com.lucasdnd.onepixel.gameplay.items.Sapling;
 
 public class SaplingBlock extends MapObject {
 
+	public static final int saveId = 1;
+	
 	public SaplingBlock(Disposer disposer, int x, int y) {
 		super(disposer, x, y);
 	}
@@ -27,6 +29,11 @@ public class SaplingBlock extends MapObject {
 	public void render(ShapeRenderer sr, float x, float y) {
 		sr.setColor(Tree.color);
 		sr.rect(x, y, OnePixel.pixelSize, OnePixel.pixelSize);
+	}
+
+	@Override
+	public int getSaveId() {
+		return saveId;
 	}
 
 }

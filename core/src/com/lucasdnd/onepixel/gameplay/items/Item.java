@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public abstract class Item {
+	
 	private String name;
 	private Color color;
 	private int amount;
@@ -12,6 +13,9 @@ public abstract class Item {
 	public Item() {
 		this.amount = 1;
 	}
+	
+	public abstract int getSaveId();
+	public abstract void render(ShapeRenderer sr, float x, float y);
 	
 	public void increaseAmountBy(int amount) {
 		this.amount += amount;
@@ -28,8 +32,6 @@ public abstract class Item {
 	public void decreaseAmount() {
 		amount--;
 	}
-	
-	public abstract void render(ShapeRenderer sr, float x, float y);
 
 	public String getName() {
 		return name;

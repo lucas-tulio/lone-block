@@ -12,6 +12,8 @@ import com.lucasdnd.onepixel.gameplay.items.Sapling;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
 
 public class Tree extends MapObject {
+	
+	public static final int saveId = 7;
 
 	final static Color color = new Color(0f, 0.3f, 0f, 1f);
 	final static Color saplingColor = new Color(0.3f, 0.8f, 0.3f, 1f);
@@ -216,4 +218,44 @@ public class Tree extends MapObject {
 		return null;
 	}
 
+	@Override
+	public int getSaveId() {
+		return saveId;
+	}
+
+	public int getHitsToChopDown() {
+		return hitsToChopDown;
+	}
+
+	public boolean isGrown() {
+		return isGrown;
+	}
+
+	public boolean hasFruits() {
+		return hasFruits;
+	}
+
+	public int getFruits() {
+		return fruits;
+	}
+
+	public int getSaplings() {
+		return saplings;
+	}
+
+	public int getSaplingsToGrow() {
+		return saplingsToGrow;
+	}
+
+	public long getFruitTicks() {
+		return fruitTicks;
+	}
+
+	public long getGrowthTicks() {
+		return growthTicks;
+	}
+
+	public long getSaplingTicks() {
+		return saplingTicks;
+	}
 }

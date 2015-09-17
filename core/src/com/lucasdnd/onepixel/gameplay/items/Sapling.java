@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class Sapling extends Item {
 	
+	public static final int saveId = 1;
+	
 	private final static float margin = InventoryBox.SIZE / 3f;
 	
 	public Sapling() {
@@ -19,6 +21,11 @@ public class Sapling extends Item {
 		sr.setColor(this.getColor());
 		sr.rect(x + margin + 2f, y - margin - margin + 2f, margin, margin);
 		sr.end();
+	}
+
+	@Override
+	public int getSaveId() {
+		return saveId;
 	}
 
 }

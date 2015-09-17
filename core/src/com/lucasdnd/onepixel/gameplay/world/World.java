@@ -18,7 +18,7 @@ import com.lucasdnd.onepixel.gameplay.items.Wood;
 import com.lucasdnd.onepixel.ui.SideBar;
 
 public class World implements Disposer {
-
+	
 	private Random r;
 
 	private int size;

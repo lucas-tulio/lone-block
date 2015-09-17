@@ -7,6 +7,8 @@ import com.lucasdnd.onepixel.ui.SideBar;
 
 public class Stone extends Item {
 	
+	public static final int saveId = 4;
+	
 	public Stone() {
 		super();
 		this.setName("Stone");
@@ -22,6 +24,11 @@ public class Stone extends Item {
 				InventoryBox.SIZE - SideBar.lineWeight,
 				InventoryBox.SIZE - SideBar.lineWeight);
 		sr.end();
+	}
+
+	@Override
+	public int getSaveId() {
+		return saveId;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 /**
@@ -41,6 +42,10 @@ public class Resources {
 		drinkingSound1 = Gdx.audio.newSound(Gdx.files.internal("sfx/drinking-1.wav"));
 		drinkingSound2 = Gdx.audio.newSound(Gdx.files.internal("sfx/drinking-2.wav"));
 		drinkingSound3 = Gdx.audio.newSound(Gdx.files.internal("sfx/drinking-3.wav"));
+		
+		save1 = Gdx.files.internal("saves/save1.op");
+		save2 = Gdx.files.internal("saves/save2.op");
+		save3 = Gdx.files.internal("saves/save3.op");
 		
 	}
 	
@@ -100,5 +105,10 @@ public class Resources {
 	private Sound eatingSound3;
 	private Sound drinkingSound1;
 	private Sound drinkingSound2;
-	private Sound drinkingSound3;	
+	private Sound drinkingSound3;
+	
+	// Save Files
+	public FileHandle save1;
+	public FileHandle save2;
+	public FileHandle save3;
 }

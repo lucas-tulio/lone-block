@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class Fruit extends Item implements Usable {
 	
+	public static final int saveId = 2;
+	
 	private final static float margin = InventoryBox.SIZE / 3f;
 	
 	public Fruit() {
@@ -24,5 +26,10 @@ public class Fruit extends Item implements Usable {
 	@Override
 	public StatRecovery use() {
 		return new StatRecovery(0, 20, 100, 10);
+	}
+
+	@Override
+	public int getSaveId() {
+		return saveId;
 	}
 }

@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public abstract class MapObject implements Harvestable {
 	
-	Disposer disposer;
-	int x, y;
+	protected Disposer disposer;
+	protected int x, y;
 
 	public MapObject(Disposer disposer, int x, int y) {
 		this.x = x;
@@ -13,6 +13,24 @@ public abstract class MapObject implements Harvestable {
 		this.disposer = disposer;
 	}
 	
+	public abstract int getSaveId();
 	public abstract void update();
 	public abstract void render(ShapeRenderer sr, float x, float y);
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
 }
