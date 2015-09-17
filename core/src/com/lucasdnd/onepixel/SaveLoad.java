@@ -59,8 +59,8 @@ public class SaveLoad {
 				p.getDirection() + separator +
 				p.getHealth() + separator +
 				p.getCold() + separator +
-				p.getFood() + separator +
-				p.getDrink()
+				p.getHunger() + separator +
+				p.getThirst()
 				);
 		
 		sb.append(lineBreak);

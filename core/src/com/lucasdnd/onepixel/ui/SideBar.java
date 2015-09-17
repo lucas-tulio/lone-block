@@ -96,8 +96,8 @@ public class SideBar {
 		
 		drawRectFill(sr, null, x + margin, height - margin,       barWidth, barHeight, player.getHealth(),  Player.MAX_STAT_VALUE);
 		drawRectFill(sr, null, x + margin, height - margin * 5,   barWidth, barHeight, player.getCold(), Player.MAX_STAT_VALUE);
-		drawRectFill(sr, null, x + margin, height - margin * 9,   barWidth, barHeight, player.getFood(),    Player.MAX_STAT_VALUE);
-		drawRectFill(sr, null, x + margin, height - margin * 13,  barWidth, barHeight, player.getDrink(),   Player.MAX_STAT_VALUE);
+		drawRectFill(sr, null, x + margin, height - margin * 9,   barWidth, barHeight, player.getHunger(),    Player.MAX_STAT_VALUE);
+		drawRectFill(sr, null, x + margin, height - margin * 13,  barWidth, barHeight, player.getThirst(),   Player.MAX_STAT_VALUE);
 		
 		drawRectFrame(sr, x + margin, height - margin,      barWidth, barHeight);
 		drawRectFrame(sr, x + margin, height - margin * 5,  barWidth, barHeight);

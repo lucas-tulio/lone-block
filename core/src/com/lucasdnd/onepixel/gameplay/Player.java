@@ -32,7 +32,7 @@ public class Player {
 	private Color color;
 	
 	// Status
-	private int health, cold, food, drink;
+	private int health, cold, hunger, thirst;
 	private int statusDecrease;
 	private int statusDecreaseLimit = 10;
 	private boolean heatingUp, dead;
@@ -55,8 +55,8 @@ public class Player {
 		
 		health = MAX_STAT_VALUE;
 		cold = MAX_STAT_VALUE;
-		food = MAX_STAT_VALUE;
-		drink = MAX_STAT_VALUE;
+		hunger = MAX_STAT_VALUE;
+		thirst = MAX_STAT_VALUE;
 		
 		faceUp();
 		inventory = new Inventory();
@@ -92,8 +92,8 @@ public class Player {
 		this.direction = direction;
 		this.health = health;
 		this.cold = cold;
-		this.food = hunger;
-		this.drink = thirst;
+		this.hunger = hunger;
+		this.thirst = thirst;
 	}
 
 	public void update() {
@@ -142,8 +142,8 @@ public class Player {
 			} else {
 				cold--;
 			}
-			food--;
-			drink -= 2;
+			hunger--;
+			thirst -= 2;
 			statusDecrease = 0;
 		}
 		
@@ -154,15 +154,15 @@ public class Player {
 		if (cold >= MAX_STAT_VALUE) {
 			cold = MAX_STAT_VALUE;
 		}
-		if (food >= MAX_STAT_VALUE) {
-			food = MAX_STAT_VALUE;
+		if (hunger >= MAX_STAT_VALUE) {
+			hunger = MAX_STAT_VALUE;
 		}
-		if (drink >= MAX_STAT_VALUE) {
-			drink = MAX_STAT_VALUE;
+		if (thirst >= MAX_STAT_VALUE) {
+			thirst = MAX_STAT_VALUE;
 		}
 		
 		// Death check
-		if (food <= 0 || drink <= 0 || health <= 0 || cold <= 0) {
+		if (hunger <= 0 || thirst <= 0 || health <= 0 || cold <= 0) {
 			dead = true;
 		}
 	}
@@ -219,8 +219,8 @@ public class Player {
 			if (result instanceof Item) {
 				
 				inventory.addItem((Item)result);
-				food -= 3;
-				drink -= 5;
+				hunger -= 3;
+				thirst -= 5;
 				
 			} else if (result instanceof StatRecovery) {
 				recoverStats((StatRecovery)result);
@@ -283,8 +283,8 @@ public class Player {
 			Resources.get().placementSound.play(0.2f);
 			
 			// Stats update
-			food -= 3;
-			drink -= 5;
+			hunger -= 3;
+			thirst -= 5;
 		}
 		
 		// Consume it
@@ -295,8 +295,8 @@ public class Player {
 	private void recoverStats(StatRecovery statRecovery) {
 		health += statRecovery.getHealth();
 		cold += statRecovery.getCold();
-		food += statRecovery.getFood();
-		drink += statRecovery.getDrink();
+		hunger += statRecovery.getFood();
+		thirst += statRecovery.getDrink();
 	}
 	
 	/**
@@ -403,20 +403,20 @@ public class Player {
 		this.cold = cold;
 	}
 
-	public int getFood() {
-		return food;
+	public int getHunger() {
+		return hunger;
 	}
 
-	public void setFood(int food) {
-		this.food = food;
+	public void setHunger(int hunger) {
+		this.hunger = hunger;
 	}
 
-	public int getDrink() {
-		return drink;
+	public int getThirst() {
+		return thirst;
 	}
 
-	public void setDrink(int drink) {
-		this.drink = drink;
+	public void setThirst(int thirst) {
+		this.thirst = thirst;
 	}
 
 	public Inventory getInventory() {
