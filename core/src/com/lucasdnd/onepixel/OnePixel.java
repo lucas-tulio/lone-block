@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.gameplay.Player;
 import com.lucasdnd.onepixel.gameplay.world.World;
+import com.lucasdnd.onepixel.ui.ButtonClickListener;
+import com.lucasdnd.onepixel.ui.DialogBox;
 import com.lucasdnd.onepixel.ui.SideBar;
 import com.lucasdnd.onepixel.ui.Tooltip;
 
@@ -38,6 +40,7 @@ public class OnePixel extends ApplicationAdapter {
 	
 	// UI
 	private SideBar sideBar;
+	private DialogBox dialogBox;
 	
 	// Input, camera
 	private InputHandler input;
@@ -46,6 +49,8 @@ public class OnePixel extends ApplicationAdapter {
 	private ShapeRenderer uiShapeRenderer;
 	
 	// Game states
+	private boolean paused = false;
+	
 	private boolean justStarted = true;
 	private boolean waiting = true;
 	
@@ -72,6 +77,27 @@ public class OnePixel extends ApplicationAdapter {
 		playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH;
 		playableAreaHeight = Gdx.graphics.getHeight();
 		tooltip = new Tooltip();
+		
+		// Quit game dialog box
+		dialogBox = new DialogBox("Quit?");
+		
+		dialogBox.getYesButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				Gdx.app.exit();
+			}
+			
+		});
+		
+		dialogBox.getNoButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				dialogBox.hide();
+			}
+			
+		});
 	}
 	
 	public void startNewGame() {
@@ -87,7 +113,7 @@ public class OnePixel extends ApplicationAdapter {
 	}
 	
 	public void quitGame() {
-		Gdx.app.exit();
+		dialogBox.show();
 	}
 	
 	private void handleInput() {
@@ -235,6 +261,11 @@ public class OnePixel extends ApplicationAdapter {
 			loadingGame = false;
 		}
 		
+		// Dialog box update
+		if (dialogBox.isVisible()) {
+			dialogBox.update();
+		}
+		
 		// Normal game loop
 		if (player.isDead() == false) {
 			
@@ -318,6 +349,7 @@ public class OnePixel extends ApplicationAdapter {
 		}
 		
 		tooltip.render();
+		dialogBox.render();
 		
 		if (player.isDead()) {
 			font.drawRedFont("You died", 0f, Gdx.graphics.getHeight() / 2f, false, Align.center, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);
@@ -346,7 +378,6 @@ public class OnePixel extends ApplicationAdapter {
 	}
 	
 	public void handleInputEnd() {
-		// Mouse just clicked reset
 		input.leftMouseJustClicked = false;
 		input.rightMouseJustClicked = false;
 	}

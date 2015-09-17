@@ -4,43 +4,63 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.FontUtils;
 
 public class DialogBox {
 	
-	float x, y, width, height;
-	final float paddingX = 32f;
-	final float paddingY = 32f;
-	final float lineWeight = 4f;
+	private float x, y, width, height;
+	private final float paddingX = 16f;
+	private final float paddingY = 16f;
+	private final float lineWeight = 4f;
+	private boolean visible;
 	
-	String question;
-	Button yesButton, noButton;
-	FontUtils font;
-	ShapeRenderer sr;
+	private String text;
+	private Button yesButton, noButton;
+	private FontUtils font;
+	private ShapeRenderer sr;
 	
-	public DialogBox(String question) {
-		this.question = question;
-		updatePosition();
-	}
-	
-	private void updatePosition() {
-		x = Gdx.graphics.getWidth() / 2f - SideBar.SIDEBAR_WIDTH / 2f;
-		y = Gdx.graphics.getHeight() / 2f;
+	public DialogBox(String text) {
+		font = new FontUtils();
+		sr = new ShapeRenderer();
+		
+		this.text = text;
+		
+		width = font.getTextWidth(text) + paddingX * 8f;
+		height = paddingY * 6;
+		x = (Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH) / 2f - width / 2f;
+		y = Gdx.graphics.getHeight() / 2f + height / 2f;
+		
+		yesButton = new Button("Yes", x + paddingX, y - paddingY * 3f);
+		noButton = new Button("No", x + width / 2f + paddingX * 1.5f - lineWeight / 2f, y - paddingY * 3f);
 	}
 	
 	public void update() {
-			
+		yesButton.update();
+		noButton.update();
 	}
 	
 	public void render() {
-		drawFrame();
-//		font.drawWhiteFont(text, paddingX, paddingY, withShadow, align);
+		if (visible) {
+			
+			// Panel
+			sr.begin(ShapeType.Filled);
+			sr.setColor(Color.BLACK);
+			sr.rect(x + lineWeight, y, width - lineWeight, -height);
+			drawFrame();
+			sr.end();
+			
+			// Text and buttons
+			font.drawWhiteFont(text, x + paddingX, y - paddingY / 2f-2f, true, Align.center, font.getTextWidth(text));
+			yesButton.render();
+			noButton.render();
+		}
 	}
 	
 	private void drawFrame() {
 		final float lineHeight = height;
 		final float lineWidth = width + lineWeight;
-		sr.begin(ShapeType.Filled);
+		
 		sr.setColor(Color.WHITE);
 		
 		// Left
@@ -55,7 +75,14 @@ public class DialogBox {
 		// Bottom
 		sr.rect(x + lineWeight, y - lineHeight, lineWidth - lineWeight * 2, lineWeight); 
 		
-		sr.end();
+	}
+	
+	public void show() {
+		visible = true;
+	}
+	
+	public void hide() {
+		visible = false;
 	}
 
 	public float getX() {
@@ -104,5 +131,9 @@ public class DialogBox {
 
 	public void setNoButton(Button noButton) {
 		this.noButton = noButton;
+	}
+
+	public boolean isVisible() {
+		return visible;
 	}
 }
