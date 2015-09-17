@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.FontUtils;
 import com.lucasdnd.onepixel.OnePixel;
-import com.lucasdnd.onepixel.SaveLoad;
 import com.lucasdnd.onepixel.gameplay.Player;
 
 public class SideBar {

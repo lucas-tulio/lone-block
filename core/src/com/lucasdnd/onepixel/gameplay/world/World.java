@@ -22,6 +22,9 @@ public class World implements Disposer {
 	private Random r;
 
 	private int size;
+	public static final int SMALL = 512;
+	public static final int NORMAL = 1024;
+	public static final int LARGE = 4096;
 	private MapObject[][] mapObjects;
 	
 	// World objects that need to be updated()

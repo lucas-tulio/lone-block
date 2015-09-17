@@ -18,7 +18,7 @@ public class OnePixel extends ApplicationAdapter {
 	
 	// General stuff
 	public final static String GAME_NAME = "One Pixel";
-	public final static String VERSION = "v0.4.0";
+	public final static String VERSION = "v0.5.0";
 	private boolean debug = false;
 	
 	// Rendering, font
@@ -203,17 +203,18 @@ public class OnePixel extends ApplicationAdapter {
 		
 		// Just started the game
 		if (justStarted) {
-			world = new World(110);
+			int demoWorldSize = 110;
+			world = new World(demoWorldSize);
 			player = new Player(world);
 			timeController = new TimeController();
-			player.setX(55);
-			player.setY(55);
+			player.setX(demoWorldSize / 2);
+			player.setY(demoWorldSize / 2);
 			justStarted = false;
 		}
 		
 		// Starting new game
 		if (startingNewGame) {
-			world = new World(1024);
+			world = new World(World.SMALL);
 			player = new Player(world);
 			world.spawnMonsters();
 			timeController = new TimeController();
