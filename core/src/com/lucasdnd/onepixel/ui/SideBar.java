@@ -54,12 +54,11 @@ public class SideBar {
 		});
 		
 		loadGameButton = new Button("Load", this.x + margin * 10 + 4f, margin * 4);
-		loadGameButton.setEnabled(false);
 		loadGameButton.setClickListener(new ButtonClickListener() {
 
 			@Override
 			public void onClick() {
-				System.out.println("Load game not yet implemented");
+				SaveLoad.load(0);
 			}
 			
 		});

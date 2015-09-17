@@ -40,16 +40,26 @@ public class Player {
 	// Inventory, crafting
 	private Inventory inventory;
 	
+	private Player() {
+		color = Color.BLACK;
+		
+	}
+	
+	/**
+	 * New Game constructor
+	 * @param world
+	 */
 	public Player(World world) {
 		
-		color = Color.BLACK;
+		this();
+		
 		health = MAX_STAT_VALUE;
 		cold = MAX_STAT_VALUE;
 		food = MAX_STAT_VALUE;
 		drink = MAX_STAT_VALUE;
 		
 		faceUp();
-		inventory = new Inventory(15);
+		inventory = new Inventory();
 		
 		// Random spawn point
 		ArrayList<Point> spawnPoints = new ArrayList<Point>();
@@ -63,6 +73,27 @@ public class Player {
 		int randomPoint = new Random().nextInt(spawnPoints.size());
 		this.x = spawnPoints.get(randomPoint).x;
 		this.y = spawnPoints.get(randomPoint).y;
+	}
+
+	/**
+	 * Load Game constructor
+	 * @param x
+	 * @param y
+	 * @param direction
+	 * @param health
+	 * @param cold
+	 * @param hunger
+	 * @param thirst
+	 */
+	public Player(int x, int y, int direction, int health, int cold, int hunger, int thirst) {
+		this();
+		this.x = x;
+		this.y = y;
+		this.direction = direction;
+		this.health = health;
+		this.cold = cold;
+		this.food = hunger;
+		this.drink = thirst;
 	}
 
 	public void update() {

@@ -29,25 +29,29 @@ public class World implements Disposer {
 	private ArrayList<Monster> monsters;
 
 	// World settings
-	int numTrees;
+	private int numTrees;
 
 	// Terrain levels
-	int archipelago = 100;
-	int islands = 120;
-	int continents = 140;
-	int greatLakes = 180;
-	int plains = 200;
+	private int archipelago = 100;
+	private int islands = 120;
+	private int continents = 140;
+	private int greatLakes = 180;
+	private int plains = 200;
 
-	int seaLevel = islands;
+	private int seaLevel = islands;
 
 	// Mountain and water levels
-	int mountainLevel = seaLevel + 20;	// This is basically how much land there will be between water and mountains.
+	private int mountainLevel = seaLevel + 20;	// This is basically how much land there will be between water and mountains.
 										// Lowering this value will generate much larger mountains at the expanse of land.
-	int waterLevel = seaLevel - 20;
+	private int waterLevel = seaLevel - 20;
 
-	public World() {
+	/**
+	 * New Game constructor
+	 * @param size
+	 */
+	public World(int size) {
 
-		size = 1024;
+		this.size = size;
 		mapObjects = new MapObject[size][size];
 
 		r = new Random();
@@ -109,6 +113,14 @@ public class World implements Disposer {
 		for (int i = 0; i < numMonsters; i++) {
 			monsters.add(new Monster());
 		}
+	}
+	
+	/**
+	 * Load Game constructor
+	 * @param mapObjects
+	 */
+	public World() {
+		monsters = new ArrayList<Monster>();
 	}
 	
 	public void update() {
@@ -230,6 +242,24 @@ public class World implements Disposer {
 	public void spawnMonsters() {
 		for (Monster m : monsters) {
 			m.spawn();
+		}
+	}
+	
+	/**
+	 * Set the Map Objects after loading a game data from a save file
+	 * @param mapObjects
+	 * @param trees
+	 */
+	public void setMapObjects(MapObject[][] mapObjects, ArrayList<Tree> trees) {
+		
+		this.size = mapObjects.length;
+		this.mapObjects = mapObjects;
+		
+		// Trees
+		this.trees = trees;
+		this.numTrees = trees.size();
+		for (Tree t : trees) {
+			mapObjects[t.x][t.y] = t;
 		}
 	}
 }

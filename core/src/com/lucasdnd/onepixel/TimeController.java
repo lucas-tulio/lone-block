@@ -8,10 +8,10 @@ import com.lucasdnd.onepixel.ui.SideBar;
 
 public class TimeController {
 	
-	long ticks;
+	private long ticks;
 	public final static long FPS = 60;
 	
-	long time;	// 1 time == one real second
+	private long time;	// 1 time == one real second
 	public static final long ONE_DAY = 600;	// how many seconds in one day. 3600 = 10 minutes
 	
 	String text;
@@ -65,4 +65,8 @@ public class TimeController {
 		return time;
 	}
 	
+	public void setTicks(long ticks) {
+		this.ticks = ticks;
+		time = ticks / FPS;
+	}
 }

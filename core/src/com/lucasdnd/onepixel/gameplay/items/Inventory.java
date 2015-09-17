@@ -24,6 +24,10 @@ public class Inventory {
 	Item itemOnMouse;
 	FontUtils font;
 	
+	/**
+	 * Creates an inventory with an arbitrary size
+	 * @param size
+	 */
 	public Inventory(int size) {
 		
 		this.size = size;
@@ -61,6 +65,13 @@ public class Inventory {
 		}
 	}
 	
+	/**
+	 * Creates an inventory with the default size (15)
+	 */
+	public Inventory() {
+		this(15);
+	}
+
 	public void update() {
 		
 		// TODO: THIS SUCKS, we should create an int in InventoryBox to indicate which type of box it is 

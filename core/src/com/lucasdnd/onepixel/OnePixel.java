@@ -19,31 +19,35 @@ public class OnePixel extends ApplicationAdapter {
 	// General stuff
 	public final static String GAME_NAME = "One Pixel";
 	public final static String VERSION = "v0.4.0";
-	boolean debug = false;
+	private boolean debug = false;
 	
 	// Rendering, font
-	SpriteBatch fontBatch;
-	Tooltip tooltip;
-	FontUtils font;
+	private SpriteBatch fontBatch;
+	private Tooltip tooltip;
+	private FontUtils font;
 	public static float pixelSize = 8f;
 	public static final float MIN_PIXEL_SIZE = 2f;
 	public static final float MAX_PIXEL_SIZE = 32f;
-	int playableAreaWidth;
-	int playableAreaHeight;
+	private int playableAreaWidth;
+	private int playableAreaHeight;
 	
 	// Game objects
-	World world;
-	Player player;
-	SideBar sideBar;
-	TimeController timeController;
+	private World world;
+	private Player player;
+	private TimeController timeController;
+	
+	// UI
+	private SideBar sideBar;
 	
 	// Input, camera
-	InputHandler input;
-	OrthographicCamera camera;
-	ShapeRenderer shapeRenderer;
-	ShapeRenderer uiShapeRenderer;
+	private InputHandler input;
+	private OrthographicCamera camera;
+	private ShapeRenderer shapeRenderer;
+	private ShapeRenderer uiShapeRenderer;
 	
-	boolean creatingWorld = false;
+	// Game states
+	private boolean startingNewGame = false;
+	private boolean loadingGame = false;
 	
 	@Override
 	public void create () {
@@ -69,7 +73,7 @@ public class OnePixel extends ApplicationAdapter {
 	}
 	
 	public void startNewGame() {
-		creatingWorld = true;
+		startingNewGame = true;
 	}
 	
 	private void handleInput() {
@@ -184,12 +188,17 @@ public class OnePixel extends ApplicationAdapter {
 	private void update() {
 		
 		// Starting new game
-		if (creatingWorld) {
-			world = new World();
+		if (startingNewGame) {
+			world = new World(1024);
 			player = new Player(world);
 			world.spawnMonsters();
 			timeController = new TimeController();
-			creatingWorld = false;
+			startingNewGame = false;
+		}
+		
+		// Loading game
+		if (loadingGame) {
+			return;
 		}
 		
 		// Normal game loop
@@ -220,9 +229,19 @@ public class OnePixel extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		if (creatingWorld) {
+		// Starting new Game
+		if (startingNewGame) {
 			sideBar.render(uiShapeRenderer);
 			String text = "Creating new world...";
+			float space = Gdx.graphics.getWidth() / 2f - SideBar.SIDEBAR_WIDTH / 2f;
+			font.drawWhiteFont(text, space, Gdx.graphics.getHeight() / 2f - 12f, true, Align.center, 0);
+			return;
+		}
+		
+		// Loading game
+		if (loadingGame) {
+			sideBar.render(uiShapeRenderer);
+			String text = "Loading...";
 			float space = Gdx.graphics.getWidth() / 2f - SideBar.SIDEBAR_WIDTH / 2f;
 			font.drawWhiteFont(text, space, Gdx.graphics.getHeight() / 2f - 12f, true, Align.center, 0);
 			return;
@@ -303,4 +322,21 @@ public class OnePixel extends ApplicationAdapter {
 	public TimeController getTimeController() {
 		return timeController;
 	}
+
+	public boolean isLoadingGame() {
+		return loadingGame;
+	}
+
+	public void setLoadingGame(boolean loadingGame) {
+		this.loadingGame = loadingGame;
+	}
+
+	public void setWorld(World world) {
+		this.world = world;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+	
 }

@@ -31,9 +31,13 @@ public class Tree extends MapObject {
 	private long growthTicks, maxGrowthTicks;
 	private long saplingTicks, maxSaplingTicks;
 	
+	public Tree(Disposer disposer, int x, int y) {
+		super(disposer, x, y);
+	}
+	
 	public Tree(Disposer disposer, int x, int y, boolean isGrown) {
 		
-		super(disposer, x, y);
+		this(disposer, x, y);
 		
 		Random r = new Random();
 		this.isGrown = isGrown;
@@ -257,5 +261,66 @@ public class Tree extends MapObject {
 
 	public long getSaplingTicks() {
 		return saplingTicks;
+	}
+
+	public void setGrown(boolean isGrown) {
+		this.isGrown = isGrown;
+		
+	}
+
+	public void setHasFruits(boolean hasFruits) {
+		this.hasFruits = hasFruits;
+	}
+
+	public void setSaplings(int saplings) {
+		this.saplings = saplings;
+	}
+
+	public void setSaplingsToGrow(int saplingsToGrow) {
+		this.saplingsToGrow = saplingsToGrow;
+	}
+
+	public void setFruits(int fruits) {
+		this.fruits = fruits;
+	}
+
+	public void setHitsToChopDown(int hitsToChopDown) {
+		this.hitsToChopDown = hitsToChopDown;
+	}
+
+	public void setFruitTicks(long fruitTicks) {
+		this.fruitTicks = fruitTicks;
+	}
+
+	public void setGrowthTicks(long growthTicks) {
+		this.growthTicks = growthTicks;
+	}
+
+	public void setSaplingTicks(long saplingTicks) {
+		this.saplingTicks = saplingTicks;
+	}
+
+	public long getMaxFruitTicks() {
+		return maxFruitTicks;
+	}
+
+	public void setMaxFruitTicks(long maxFruitTicks) {
+		this.maxFruitTicks = maxFruitTicks;
+	}
+
+	public long getMaxGrowthTicks() {
+		return maxGrowthTicks;
+	}
+
+	public void setMaxGrowthTicks(long maxGrowthTicks) {
+		this.maxGrowthTicks = maxGrowthTicks;
+	}
+
+	public long getMaxSaplingTicks() {
+		return maxSaplingTicks;
+	}
+
+	public void setMaxSaplingTicks(long maxSaplingTicks) {
+		this.maxSaplingTicks = maxSaplingTicks;
 	}
 }

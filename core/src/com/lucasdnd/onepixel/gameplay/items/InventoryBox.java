@@ -28,11 +28,15 @@ public class InventoryBox {
 	boolean drawingTooltip;
 
 	public InventoryBox(float x, float y) {
+		this();
 		this.x = x;
 		this.y = y;
-		font = new FontUtils();
 	}
 	
+	public InventoryBox() {
+		font = new FontUtils();
+	}
+
 	public void update() {
 		int mouseX = Gdx.input.getX();
 		int mouseY = (Gdx.graphics.getHeight() - Gdx.input.getY()) + 34;
