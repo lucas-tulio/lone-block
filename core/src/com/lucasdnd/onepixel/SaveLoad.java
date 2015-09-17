@@ -14,8 +14,8 @@ import com.lucasdnd.onepixel.gameplay.world.Tree;
 
 public class SaveLoad {
 	
-	private static final char separator = ';';
-	private static final char innerSeparator = ',';
+	private static final String separator = ";";
+	private static final String innerSeparator = ",";
 	private static final String lineBreak = "\n";
 	
 	public static boolean save(int slot) {
@@ -40,7 +40,7 @@ public class SaveLoad {
 		
 		// Line 1: playerX, playerY, facing direction, health, cold, hunger, thirst
 		Player p = game.getPlayer();
-		sb.append(
+		sb.append("" +
 				p.getX() + separator +
 				p.getY() + separator +
 				p.getDirection() + separator +
@@ -131,9 +131,6 @@ public class SaveLoad {
 		
 		// Write to file
 		try {
-			System.out.println("Printing save data:\n");
-			System.out.println(sb.toString());
-			System.out.println("Done dump");
 			saveFile.writeString(sb.toString(), false);
 		} catch (GdxRuntimeException e) {
 			e.printStackTrace();

@@ -43,9 +43,9 @@ public class Resources {
 		drinkingSound2 = Gdx.audio.newSound(Gdx.files.internal("sfx/drinking-2.wav"));
 		drinkingSound3 = Gdx.audio.newSound(Gdx.files.internal("sfx/drinking-3.wav"));
 		
-		save1 = Gdx.files.internal("saves/save1.op");
-		save2 = Gdx.files.internal("saves/save2.op");
-		save3 = Gdx.files.internal("saves/save3.op");
+		save1 = Gdx.files.local("saves/save1.op");
+		save2 = Gdx.files.local("saves/save2.op");
+		save3 = Gdx.files.local("saves/save3.op");
 		
 	}
 	
