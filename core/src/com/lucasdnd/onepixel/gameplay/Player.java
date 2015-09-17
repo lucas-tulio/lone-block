@@ -70,9 +70,16 @@ public class Player {
 				}
 			}
 		}
-		int randomPoint = new Random().nextInt(spawnPoints.size());
-		this.x = spawnPoints.get(randomPoint).x;
-		this.y = spawnPoints.get(randomPoint).y;
+		
+		if (spawnPoints.size() > 0) {
+			int randomPoint = new Random().nextInt(spawnPoints.size());
+			this.x = spawnPoints.get(randomPoint).x;
+			this.y = spawnPoints.get(randomPoint).y;
+		} else {
+			this.x = world.getSize() / 2;
+			this.y = world.getSize() / 2;
+		}
+		
 	}
 
 	/**

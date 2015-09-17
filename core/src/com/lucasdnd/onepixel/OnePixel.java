@@ -46,7 +46,11 @@ public class OnePixel extends ApplicationAdapter {
 	private ShapeRenderer uiShapeRenderer;
 	
 	// Game states
+	private boolean justStarted = true;
+	private boolean waiting = true;
+	
 	private boolean startingNewGame = false;
+	private boolean savingGame = false;
 	private boolean loadingGame = false;
 	
 	@Override
@@ -68,12 +72,22 @@ public class OnePixel extends ApplicationAdapter {
 		playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH;
 		playableAreaHeight = Gdx.graphics.getHeight();
 		tooltip = new Tooltip();
-		
-		startNewGame();
 	}
 	
 	public void startNewGame() {
 		startingNewGame = true;
+	}
+	
+	public void saveGame() {
+		savingGame = true;
+	}
+	
+	public void loadGame() {
+		loadingGame = true;
+	}
+	
+	public void quitGame() {
+		Gdx.app.exit();
 	}
 	
 	private void handleInput() {
@@ -187,6 +201,16 @@ public class OnePixel extends ApplicationAdapter {
 	
 	private void update() {
 		
+		// Just started the game
+		if (justStarted) {
+			world = new World(110);
+			player = new Player(world);
+			timeController = new TimeController();
+			player.setX(55);
+			player.setY(55);
+			justStarted = false;
+		}
+		
 		// Starting new game
 		if (startingNewGame) {
 			world = new World(1024);
@@ -194,24 +218,40 @@ public class OnePixel extends ApplicationAdapter {
 			world.spawnMonsters();
 			timeController = new TimeController();
 			startingNewGame = false;
+			waiting = false;
 		}
 		
-		// Loading game
+		// Will Save
+		if (savingGame) {
+			SaveLoad.save(0);
+			waiting = false;
+			savingGame = false;
+		}
+		
 		if (loadingGame) {
-			return;
+			SaveLoad.load(0);
+			waiting = false;
+			loadingGame = false;
 		}
 		
 		// Normal game loop
 		if (player.isDead() == false) {
-			handleInput();
+			
+			if (waiting == false) {
+				handleInput();
+			}
 			
 			camera.position.set(player.getX() * OnePixel.pixelSize + (SideBar.SIDEBAR_WIDTH * 0.5f), player.getY() * OnePixel.pixelSize, 0f);
 			camera.update();
 			shapeRenderer.setProjectionMatrix(camera.combined);
 			
-			timeController.update();
-			world.update();
-			player.update();
+			if (waiting == false) {
+				timeController.update();
+				world.update();
+				player.update();
+			}
+			
+			sideBar.getSaveGameButton().setEnabled(!waiting);
 			sideBar.update();
 			
 			handleInputEnd();
@@ -247,10 +287,21 @@ public class OnePixel extends ApplicationAdapter {
 			return;
 		}
 		
+		// Saving game
+		if (savingGame) {
+			sideBar.render(uiShapeRenderer);
+			String text = "Saving...";
+			float space = Gdx.graphics.getWidth() / 2f - SideBar.SIDEBAR_WIDTH / 2f;
+			font.drawWhiteFont(text, space, Gdx.graphics.getHeight() / 2f - 12f, true, Align.center, 0);
+			return;
+		}
+		
 		world.render(shapeRenderer);
-		player.render(shapeRenderer);
+		if (waiting == false) {
+			player.render(shapeRenderer);
+			timeController.render(uiShapeRenderer);
+		}
 		sideBar.render(uiShapeRenderer);
-		timeController.render(uiShapeRenderer);
 		
 		// Day and night
 		if (timeController.isNight()) {
@@ -272,7 +323,7 @@ public class OnePixel extends ApplicationAdapter {
 		}
 		
 		// Debug
-		if (debug) {
+		if (debug && waiting == false) {
 			fontBatch.begin();
 			Resources.get().whiteFont.draw(fontBatch, "x: " + player.getX(), 0f, Gdx.graphics.getHeight());
 			Resources.get().whiteFont.draw(fontBatch, "y: " + player.getY(), 0f, Gdx.graphics.getHeight() - 20f);
@@ -337,6 +388,6 @@ public class OnePixel extends ApplicationAdapter {
 
 	public void setPlayer(Player player) {
 		this.player = player;
-	}
+	}	
 	
 }

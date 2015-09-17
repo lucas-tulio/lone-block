@@ -48,7 +48,7 @@ public class SideBar {
 
 			@Override
 			public void onClick() {
-				SaveLoad.save(0);
+				((OnePixel)Gdx.app.getApplicationListener()).saveGame();
 			}
 			
 		});
@@ -58,7 +58,7 @@ public class SideBar {
 
 			@Override
 			public void onClick() {
-				SaveLoad.load(0);
+				((OnePixel)Gdx.app.getApplicationListener()).loadGame();
 			}
 			
 		});
@@ -68,7 +68,7 @@ public class SideBar {
 
 			@Override
 			public void onClick() {
-				Gdx.app.exit();
+				((OnePixel)Gdx.app.getApplicationListener()).quitGame();
 			}
 			
 		});
@@ -178,5 +178,9 @@ public class SideBar {
 	
 	public int getX() {
 		return x;
+	}
+
+	public Button getSaveGameButton() {
+		return saveGameButton;
 	}
 }
