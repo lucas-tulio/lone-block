@@ -18,7 +18,7 @@ public class OnePixel extends ApplicationAdapter {
 	
 	// General stuff
 	public final static String GAME_NAME = "One Pixel";
-	public final static String VERSION = "v0.3.1";
+	public final static String VERSION = "v0.4.0";
 	boolean debug = false;
 	
 	// Rendering, font
