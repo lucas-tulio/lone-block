@@ -15,54 +15,58 @@ public class Tree extends MapObject {
 
 	final static Color color = new Color(0f, 0.3f, 0f, 1f);
 	final static Color saplingColor = new Color(0.3f, 0.8f, 0.3f, 1f);
-	int wood;
 	
-	boolean isGrown;
-	boolean hasFruits = false;
-	boolean hasSapling = true;
+	private int hitsToChopDown;	// How many times the user will press E to chop this Tree down
 	
-	int fruit;
-	long fruitTicks, maxFruitTicks;
-	long growthTicks, maxGrowthTicks;
-	long saplingTicks, maxSaplingTicks;
+	private boolean isGrown;	// If it's a sapling or a tree
+	private boolean hasFruits = false;
+	
+	private int fruits, saplings;
+	private int saplingsToGrow;
+	
+	// Growth clocks
+	private long fruitTicks, maxFruitTicks;
+	private long growthTicks, maxGrowthTicks;
+	private long saplingTicks, maxSaplingTicks;
 	
 	public Tree(Disposer disposer, int x, int y, boolean isGrown) {
-		super(disposer, x, y);
-		Random r = new Random();
 		
-		// Grown or sapling
+		super(disposer, x, y);
+		
+		Random r = new Random();
 		this.isGrown = isGrown;
+		
 		if (isGrown == false) {
-			hasSapling = true;
-			wood = 0;
-			fruit = 0;
+			// A sapling
+			hitsToChopDown = 0;
+			fruits = 0;
 			calculateMaxGrowthTicks();
 		} else {
-			// 1/20 of the trees have fruits
-			refreshWood();
+			// A tree 
+			refreshSaplings();
+			refreshHits();
 			hasFruits = r.nextInt(20) == 0;
-			calculateMaxFruitAndSaplingTicks();
+			calculateMaxGatherableTicks();
 			if (hasFruits) {
 				refreshFruits();
 			} else {
-				fruit = 0;
+				fruits = 0;
 			}
 		}
 	}
 	
+	private void refreshSaplings() {
+		saplings = 1;
+		saplingsToGrow = 1;
+	}
 	private void refreshFruits() {
-		fruit = 2;
+		fruits = 2;
+	}
+	private void refreshHits() {
+		hitsToChopDown = 3;
 	}
 	
-	private void refreshSapling() {
-		hasSapling = true;
-	}
-	
-	private void refreshWood() {
-		wood = new Random().nextInt(4) + 2;
-	}
-	
-	private void calculateMaxFruitAndSaplingTicks() {
+	private void calculateMaxGatherableTicks() {
 		Random r = new Random();
 		long maxTicks = TimeController.ONE_DAY + (r.nextInt((int)TimeController.ONE_DAY));
 		maxTicks *= TimeController.FPS;
@@ -86,9 +90,10 @@ public class Tree extends MapObject {
 				hasFruits = new Random().nextInt(2) == 0;
 				if (hasFruits) {
 					refreshFruits();
-					calculateMaxFruitAndSaplingTicks();
 				}
-				refreshWood();
+				refreshSaplings();
+				refreshHits();
+				calculateMaxGatherableTicks();
 			}
 		} else {
 			// Fruit renewal
@@ -99,10 +104,11 @@ public class Tree extends MapObject {
 				}
 			}
 			// Sapling renewal
-			if (hasSapling == false) {
+			if (saplingsToGrow > 0 && saplings <= 0) {
 				saplingTicks++;
 				if (saplingTicks % maxSaplingTicks == 0) {
-					refreshSapling();
+					saplings++;
+					saplingsToGrow--;
 				}
 			}
 		}
@@ -116,7 +122,7 @@ public class Tree extends MapObject {
 			sr.setColor(color);
 			sr.rect(x, y, OnePixel.pixelSize, OnePixel.pixelSize);
 			
-			if (hasSapling && fruit > 0) {
+			if (saplings > 0 && fruits > 0) {
 
 				// Fruits and Sapling
 					
@@ -132,7 +138,7 @@ public class Tree extends MapObject {
 						OnePixel.pixelSize / 4f,
 						OnePixel.pixelSize / 4f);
 			
-			} else if (hasSapling && fruit <= 0) {
+			} else if (saplings > 0 && fruits <= 0) {
 				
 				// Sapling only
 				
@@ -142,7 +148,7 @@ public class Tree extends MapObject {
 						OnePixel.pixelSize / 4f,
 						OnePixel.pixelSize / 4f);
 			
-			} else if (hasSapling == false && fruit > 0) {
+			} else if (saplings <= 0 && fruits > 0) {
 				
 				// Fruits only
 				
@@ -169,9 +175,19 @@ public class Tree extends MapObject {
 	@Override
 	public Object performAction() {
 		
-		if (hasSapling) {
+		// Sapling
+		
+		if (isGrown == false) {
+			Resources.get().randomLeavesSound().play(0.4f);
+			disposer.dispose(this);
+			return new Sapling();
+		}
+		
+		// Tree
+		
+		if (saplings > 0) {
 			
-			hasSapling = false;
+			saplings--;
 			Resources.get().randomLeavesSound().play(0.4f);
 			
 			if (isGrown == false) {
@@ -181,17 +197,17 @@ public class Tree extends MapObject {
 			return new Sapling();
 		}
 		
-		if (fruit > 0) {
-			fruit--;
+		if (fruits > 0) {
+			fruits--;
 			Resources.get().randomLeavesSound().play(0.4f);
 			return new Fruit();
 		}
 		
-		if (wood > 0) {
-			wood--;
+		if (hitsToChopDown > 0) {
+			hitsToChopDown--;
 			Resources.get().woodcuttingSound.play(0.3f);
 		
-			if (wood == 0) {
+			if (hitsToChopDown == 0) {
 				disposer.dispose(this);
 				return new Wood();
 			}
