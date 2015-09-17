@@ -64,5 +64,5 @@ build/
 .DS_Store
 
 ## Save games
-.op
+*.op
 
