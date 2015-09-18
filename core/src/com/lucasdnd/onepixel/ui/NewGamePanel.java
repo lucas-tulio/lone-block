@@ -62,6 +62,10 @@ public class NewGamePanel {
 			
 			// Title
 			font.drawWhiteFont(title, x, y - paddingY / 2f, true, Align.center, (int)width);
+			font.drawWhiteFont("Name", x, y - paddingY * 3f, true, Align.center, font.getTextWidth("font") + 200);
+			font.drawWhiteFont("Map Size", x + paddingX, y - paddingY * 6f, true, Align.left, (int)width);
+			font.drawWhiteFont("Trees", x + paddingX * 24f, y - paddingY * 6f, true, Align.left, font.getTextWidth("Trees"));
+			font.drawWhiteFont("Water", x + paddingX * 24f, y - paddingY * 10f, true, Align.left, font.getTextWidth("Trees"));
 			startButton.render();
 			cancelButton.render();
 		}
