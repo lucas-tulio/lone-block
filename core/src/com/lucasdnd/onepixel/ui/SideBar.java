@@ -33,44 +33,9 @@ public class SideBar {
 		
 		// Buttons
 		newGameButton = new Button("New", this.x + margin, margin * 4);
-		newGameButton.setClickListener(new ButtonClickListener() {
-
-			@Override
-			public void onClick() {
-				((OnePixel)Gdx.app.getApplicationListener()).startNewGame();
-			}
-			
-		});
-		
 		saveGameButton = new Button("Save", this.x + margin * 5 + 6f, margin * 4);
-		saveGameButton.setClickListener(new ButtonClickListener() {
-
-			@Override
-			public void onClick() {
-				((OnePixel)Gdx.app.getApplicationListener()).saveGame();
-			}
-			
-		});
-		
 		loadGameButton = new Button("Load", this.x + margin * 10 + 4f, margin * 4);
-		loadGameButton.setClickListener(new ButtonClickListener() {
-
-			@Override
-			public void onClick() {
-				((OnePixel)Gdx.app.getApplicationListener()).loadGame();
-			}
-			
-		});
-		
 		quitButton = new Button("Quit", this.x + margin * 15, margin * 4);
-		quitButton.setClickListener(new ButtonClickListener() {
-
-			@Override
-			public void onClick() {
-				((OnePixel)Gdx.app.getApplicationListener()).quitGame();
-			}
-			
-		});
 	}
 	
 	public void update() {
@@ -182,4 +147,17 @@ public class SideBar {
 	public Button getSaveGameButton() {
 		return saveGameButton;
 	}
+
+	public Button getNewGameButton() {
+		return newGameButton;
+	}
+
+	public Button getLoadGameButton() {
+		return loadGameButton;
+	}
+
+	public Button getQuitButton() {
+		return quitButton;
+	}
+	
 }

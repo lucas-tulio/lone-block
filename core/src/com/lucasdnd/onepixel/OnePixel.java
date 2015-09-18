@@ -11,8 +11,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.gameplay.Player;
 import com.lucasdnd.onepixel.gameplay.world.World;
+import com.lucasdnd.onepixel.ui.Button;
 import com.lucasdnd.onepixel.ui.ButtonClickListener;
 import com.lucasdnd.onepixel.ui.DialogBox;
+import com.lucasdnd.onepixel.ui.NewGamePanel;
 import com.lucasdnd.onepixel.ui.SideBar;
 import com.lucasdnd.onepixel.ui.Tooltip;
 
@@ -39,7 +41,9 @@ public class OnePixel extends ApplicationAdapter {
 	private TimeController timeController;
 	
 	// UI
+	private Button pauseButton;
 	private SideBar sideBar;
+	private NewGamePanel newGamePanel;
 	private DialogBox dialogBox;
 	
 	// Input, camera
@@ -98,6 +102,73 @@ public class OnePixel extends ApplicationAdapter {
 			}
 			
 		});
+		
+		// New Game Panel
+		newGamePanel = new NewGamePanel();
+		newGamePanel.show();
+		newGamePanel.getStartButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				hideAllPanels();
+				startNewGame();
+			}
+			
+		});
+		
+		newGamePanel.getCancelButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				hideAllPanels();
+			}
+			
+		});
+		
+		// Side Bar Buttons
+		sideBar.getNewGameButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				hideAllPanels();
+				newGamePanel.show();
+			}
+			
+		});
+		
+		sideBar.getSaveGameButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				hideAllPanels();
+				
+			}
+			
+		});
+		
+		sideBar.getLoadGameButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				hideAllPanels();
+			}
+			
+		});
+		
+		sideBar.getQuitButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				hideAllPanels();
+				quitGame();
+			}
+			
+		});
+	}
+	
+	private void hideAllPanels() {
+		dialogBox.hide();
+		newGamePanel.hide();
 	}
 	
 	public void startNewGame() {
@@ -266,6 +337,11 @@ public class OnePixel extends ApplicationAdapter {
 			dialogBox.update();
 		}
 		
+		// New Game Panel Update
+		if (newGamePanel.isVisible()) {
+			newGamePanel.update();
+		}
+		
 		// Normal game loop
 		if (player.isDead() == false) {
 			
@@ -328,12 +404,18 @@ public class OnePixel extends ApplicationAdapter {
 			return;
 		}
 		
+		// World, Player, Time
 		world.render(shapeRenderer);
 		if (waiting == false) {
 			player.render(shapeRenderer);
 			timeController.render(uiShapeRenderer);
 		}
+		
+		// UI
 		sideBar.render(uiShapeRenderer);
+		if (newGamePanel.isVisible()) {
+			newGamePanel.render();
+		}
 		
 		// Day and night
 		if (timeController.isNight()) {
@@ -420,6 +502,10 @@ public class OnePixel extends ApplicationAdapter {
 
 	public void setPlayer(Player player) {
 		this.player = player;
-	}	
+	}
+	
+	public NewGamePanel getNewGamePanel() {
+		return newGamePanel;
+	}
 	
 }

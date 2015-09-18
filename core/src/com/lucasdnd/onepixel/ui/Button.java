@@ -31,14 +31,18 @@ public class Button {
 	final Color normalColor = Color.WHITE;
 	final Color hoverColor = Color.WHITE;
 	
-	public Button(String text, float x, float y) {
-		this.x = x;
-		this.y = y;
+	public Button(String text) {
 		this.text = text;
 		sr = new ShapeRenderer();
 		font = new FontUtils();
 		calcButtonSize();
 		enabled = true;
+	}
+	
+	public Button(String text, float x, float y) {
+		this(text);
+		this.x = x;
+		this.y = y;
 	}
 	
 	public void update() {

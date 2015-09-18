@@ -10,29 +10,37 @@ import com.lucasdnd.onepixel.FontUtils;
 public class DialogBox {
 	
 	private float x, y, width, height;
-	private final float paddingX = 16f;
+	private final float paddingX = 15f;
 	private final float paddingY = 16f;
 	private final float lineWeight = 4f;
 	private boolean visible;
 	
 	private String text;
 	private Button yesButton, noButton;
+	private Panel panel;
 	private FontUtils font;
 	private ShapeRenderer sr;
 	
 	public DialogBox(String text) {
+		panel = new Panel();
 		font = new FontUtils();
 		sr = new ShapeRenderer();
 		
 		this.text = text;
 		
-		width = font.getTextWidth(text) + paddingX * 8f;
-		height = paddingY * 6;
-		x = (Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH) / 2f - width / 2f;
-		y = Gdx.graphics.getHeight() / 2f + height / 2f;
+		// Measures
+		width = 212f; // Multiples of 4
+		height = 100f;
+		x = (Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH) / 2f - width / 2f + 2f;
+		y = Gdx.graphics.getHeight() / 2f + height / 2f + 2f;
 		
-		yesButton = new Button("Yes", x + paddingX, y - paddingY * 3f);
-		noButton = new Button("No", x + width / 2f + paddingX * 1.5f - lineWeight / 2f, y - paddingY * 3f);
+		// Buttons
+		yesButton = new Button("Yes");
+		noButton = new Button("No");
+		yesButton.setX(x + paddingX);
+		yesButton.setY(y - height + yesButton.height + paddingY);
+		noButton.setX(x + width - paddingX - lineWeight - noButton.width);
+		noButton.setY(y - height + noButton.height + paddingY);
 	}
 	
 	public void update() {
@@ -47,34 +55,14 @@ public class DialogBox {
 			sr.begin(ShapeType.Filled);
 			sr.setColor(Color.BLACK);
 			sr.rect(x + lineWeight, y, width - lineWeight, -height);
-			drawFrame();
+			panel.drawFrame(sr, x, y, width, height, lineWeight);
 			sr.end();
 			
 			// Text and buttons
-			font.drawWhiteFont(text, x + paddingX, y - paddingY / 2f-2f, true, Align.center, font.getTextWidth(text));
+			font.drawWhiteFont(text, x, y - paddingY / 2f - 2f, true, Align.center, (int)width);
 			yesButton.render();
 			noButton.render();
 		}
-	}
-	
-	private void drawFrame() {
-		final float lineHeight = height;
-		final float lineWidth = width + lineWeight;
-		
-		sr.setColor(Color.WHITE);
-		
-		// Left
-		sr.rect(x, y, lineWeight, lineWeight - lineHeight);
-		
-		// Right
-		sr.rect(x + width, y, lineWeight, lineWeight - lineHeight);
-		
-		// Top
-		sr.rect(x + lineWeight, y, lineWidth - lineWeight * 2, lineWeight);
-		
-		// Bottom
-		sr.rect(x + lineWeight, y - lineHeight, lineWidth - lineWeight * 2, lineWeight); 
-		
 	}
 	
 	public void show() {
