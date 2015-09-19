@@ -81,6 +81,7 @@ public class OnePixel extends ApplicationAdapter {
 		playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH;
 		playableAreaHeight = Gdx.graphics.getHeight();
 		tooltip = new Tooltip();
+		pauseButton = new Button("||", 0f, 0f);
 		
 		// Quit game dialog box
 		dialogBox = new DialogBox("Quit?");
@@ -342,6 +343,9 @@ public class OnePixel extends ApplicationAdapter {
 			newGamePanel.update();
 		}
 		
+		// Pause Button
+		pauseButton.update();
+		
 		// Normal game loop
 		if (player.isDead() == false) {
 			
@@ -416,6 +420,7 @@ public class OnePixel extends ApplicationAdapter {
 		if (newGamePanel.isVisible()) {
 			newGamePanel.render();
 		}
+		pauseButton.render();
 		
 		// Day and night
 		if (timeController.isNight()) {
