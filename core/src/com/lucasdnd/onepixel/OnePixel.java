@@ -41,7 +41,6 @@ public class OnePixel extends ApplicationAdapter {
 	private TimeController timeController;
 	
 	// UI
-	private Button pauseButton;
 	private SideBar sideBar;
 	private NewGamePanel newGamePanel;
 	private DialogBox dialogBox;
@@ -67,7 +66,7 @@ public class OnePixel extends ApplicationAdapter {
 		
 		// Render, camera
 		shapeRenderer = new ShapeRenderer();
-		uiShapeRenderer = new ShapeRenderer();
+ 		uiShapeRenderer = new ShapeRenderer();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		fontBatch = new SpriteBatch();
 		font = new FontUtils();
@@ -81,7 +80,6 @@ public class OnePixel extends ApplicationAdapter {
 		playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH;
 		playableAreaHeight = Gdx.graphics.getHeight();
 		tooltip = new Tooltip();
-		pauseButton = new Button("||", 0f, 0f);
 		
 		// Quit game dialog box
 		dialogBox = new DialogBox("Quit?");
@@ -190,105 +188,113 @@ public class OnePixel extends ApplicationAdapter {
 	
 	private void handleInput() {
 		
-		// Movement delay
-		input.movementDelay--;
-		if (input.movementDelay <= 0) {
-			input.movementDelay = 0;
+		if (paused == false) {
 		
-			// Movement
-			if (input.upPressed) {
-				
-				if (input.shiftPressed) {
-					player.faceUp();
-				} else {
-					if (player.canMoveUp(world)) {
-						player.moveUp();
-						input.applyMovementDelay();
-					}
-					if (input.ctrlPressed == false) {
-						player.faceUp();
-					}
-				}
-			}
-			if (input.downPressed) {
-				
-				if (input.shiftPressed) {
-					player.faceDown();
-				} else {
-					if (player.canMoveDown(world)) {
-						player.moveDown();
-						input.applyMovementDelay();
-					}
-					if (input.ctrlPressed == false) {
-						player.faceDown();
-					}
-				}
-			}
-			if (input.leftPressed) {
-				
-				if (input.shiftPressed) {
-					player.faceLeft();
-				} else {
-					if (player.canMoveLeft(world)) {
-						player.moveLeft();
-						input.applyMovementDelay();
-					}
-					if (input.ctrlPressed == false) {
-						player.faceLeft();
-					}
-				}
-			}
-			if (input.rightPressed) {
-				
-				if (input.shiftPressed) {
-					player.faceRight();
-				} else {
-					if (player.canMoveRight(world)) {
-						player.moveRight();
-						input.applyMovementDelay();
-					}
-					if (input.ctrlPressed == false) {
-						player.faceRight();
-					}
-				}
-			}
-		}
-		
-		// Action delay
-		input.actionDelay--;
-		if (input.actionDelay <= 0) {
-			input.actionDelay = 0;
-
-			// Action
-			if (input.ePressed) {
-				player.performAction(world);
-				input.applyActionDelay();
-			}
-		}
-		
-		// Use delay
-		input.useDelay --;
-		if (input.useDelay <= 0) {
-			input.useDelay = 0;
+			// Movement delay
+			input.movementDelay--;
+			if (input.movementDelay <= 0) {
+				input.movementDelay = 0;
 			
-			// Use
-			if (input.wPressed) {
-				player.useItem(world);
-				input.applyUseDelay();
+				// Movement
+				if (input.upPressed) {
+					
+					if (input.shiftPressed) {
+						player.faceUp();
+					} else {
+						if (player.canMoveUp(world)) {
+							player.moveUp();
+							input.applyMovementDelay();
+						}
+						if (input.ctrlPressed == false) {
+							player.faceUp();
+						}
+					}
+				}
+				if (input.downPressed) {
+					
+					if (input.shiftPressed) {
+						player.faceDown();
+					} else {
+						if (player.canMoveDown(world)) {
+							player.moveDown();
+							input.applyMovementDelay();
+						}
+						if (input.ctrlPressed == false) {
+							player.faceDown();
+						}
+					}
+				}
+				if (input.leftPressed) {
+					
+					if (input.shiftPressed) {
+						player.faceLeft();
+					} else {
+						if (player.canMoveLeft(world)) {
+							player.moveLeft();
+							input.applyMovementDelay();
+						}
+						if (input.ctrlPressed == false) {
+							player.faceLeft();
+						}
+					}
+				}
+				if (input.rightPressed) {
+					
+					if (input.shiftPressed) {
+						player.faceRight();
+					} else {
+						if (player.canMoveRight(world)) {
+							player.moveRight();
+							input.applyMovementDelay();
+						}
+						if (input.ctrlPressed == false) {
+							player.faceRight();
+						}
+					}
+				}
+			}
+			
+			// Action delay
+			input.actionDelay--;
+			if (input.actionDelay <= 0) {
+				input.actionDelay = 0;
+
+				// Action
+				if (input.ePressed) {
+					player.performAction(world);
+					input.applyActionDelay();
+				}
+			}
+			
+			// Use delay
+			input.useDelay --;
+			if (input.useDelay <= 0) {
+				input.useDelay = 0;
+				
+				// Use
+				if (input.wPressed) {
+					player.useItem(world);
+					input.applyUseDelay();
+				}
+			}
+			
+			// Zoom control
+			if (Gdx.input.isKeyJustPressed(Keys.EQUALS)) {
+				pixelSize *= 2f;
+				if (pixelSize >= MAX_PIXEL_SIZE) {
+					pixelSize = MAX_PIXEL_SIZE;
+				}
+			} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
+				pixelSize /= 2f;
+				if (pixelSize <= MIN_PIXEL_SIZE) {
+					pixelSize = MIN_PIXEL_SIZE;
+				}
 			}
 		}
 		
-		// Zoom control
-		if (Gdx.input.isKeyJustPressed(Keys.EQUALS)) {
-			pixelSize *= 2f;
-			if (pixelSize >= MAX_PIXEL_SIZE) {
-				pixelSize = MAX_PIXEL_SIZE;
-			}
-		} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
-			pixelSize /= 2f;
-			if (pixelSize <= MIN_PIXEL_SIZE) {
-				pixelSize = MIN_PIXEL_SIZE;
-			}
+		// Pause
+		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) || Gdx.input.isKeyJustPressed(Keys.P)) {
+			paused = !paused;
 		}
 		
 		// Debug
@@ -342,9 +348,6 @@ public class OnePixel extends ApplicationAdapter {
 		if (newGamePanel.isVisible()) {
 			newGamePanel.update();
 		}
-		
-		// Pause Button
-		pauseButton.update();
 		
 		// Normal game loop
 		if (player.isDead() == false) {
@@ -415,26 +418,22 @@ public class OnePixel extends ApplicationAdapter {
 			timeController.render(uiShapeRenderer);
 		}
 		
+		// Day and night
+		if (timeController.isNight()) {
+			drawOverlay();
+		}
+		
+		// Pause
+		if (paused) {
+			drawOverlay();
+			font.drawWhiteFont("Paused", 0f, Gdx.graphics.getHeight() / 2f, true, Align.center, (int)((Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH)));
+		}
+		
 		// UI
 		sideBar.render(uiShapeRenderer);
 		if (newGamePanel.isVisible()) {
 			newGamePanel.render();
 		}
-		pauseButton.render();
-		
-		// Day and night
-		if (timeController.isNight()) {
-			shapeRenderer.begin(ShapeType.Filled);
-			Gdx.gl.glEnable(GL20.GL_BLEND);
-			shapeRenderer.setColor(0f, 0f, 0f, 0.3f);
-			shapeRenderer.rect(
-					player.getX() * pixelSize - playableAreaWidth / 2,
-					player.getY() * pixelSize + playableAreaHeight / 2,
-					playableAreaWidth,
-					-playableAreaHeight);
-			shapeRenderer.end();
-		}
-		
 		tooltip.render();
 		dialogBox.render();
 		
@@ -462,6 +461,18 @@ public class OnePixel extends ApplicationAdapter {
 			
 			fontBatch.end();
 		}
+	}
+	
+	private void drawOverlay() {
+		shapeRenderer.begin(ShapeType.Filled);
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+		shapeRenderer.setColor(0f, 0f, 0f, 0.3f);
+		shapeRenderer.rect(
+				player.getX() * pixelSize - playableAreaWidth / 2,
+				player.getY() * pixelSize + playableAreaHeight / 2,
+				playableAreaWidth,
+				-playableAreaHeight);
+		shapeRenderer.end();
 	}
 	
 	public void handleInputEnd() {
