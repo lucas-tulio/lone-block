@@ -306,6 +306,7 @@ public class OnePixel extends ApplicationAdapter {
 			player = new Player(world);
 			world.spawnMonsters();
 			timeController = new TimeController();
+			paused = false;
 			startingNewGame = false;
 			waiting = false;
 			OnePixel.updateZoomLevelDisplay();
@@ -314,12 +315,14 @@ public class OnePixel extends ApplicationAdapter {
 		// Will Save
 		if (savingGame) {
 			SaveLoad.save();
+			paused = false;
 			waiting = false;
 			savingGame = false;
 		}
 		// Will Load
 		if (loadingGame) {
 			SaveLoad.load();
+			paused = false;
 			waiting = false;
 			loadingGame = false;
 			OnePixel.updateZoomLevelDisplay();
@@ -337,14 +340,16 @@ public class OnePixel extends ApplicationAdapter {
 				handleInput();
 			}
 			
-			camera.position.set(player.getX() * OnePixel.blockSize + (SideBar.SIDEBAR_WIDTH * 0.5f), player.getY() * OnePixel.blockSize, 0f);
-			camera.update();
-			shapeRenderer.setProjectionMatrix(camera.combined);
-			
-			if (waiting == false) {
-				timeController.update();
-				world.update();
-				player.update();
+			if (paused == false) {
+				camera.position.set(player.getX() * OnePixel.blockSize + (SideBar.SIDEBAR_WIDTH * 0.5f), player.getY() * OnePixel.blockSize, 0f);
+				camera.update();
+				shapeRenderer.setProjectionMatrix(camera.combined);
+				
+				if (waiting == false) {
+					timeController.update();
+					world.update();
+					player.update();
+				}
 			}
 			
 			sideBar.getSaveGameButton().setEnabled(!waiting);
