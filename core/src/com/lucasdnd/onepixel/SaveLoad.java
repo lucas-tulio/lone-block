@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.lucasdnd.onepixel.gameplay.Player;
 import com.lucasdnd.onepixel.gameplay.items.Campfire;
@@ -190,7 +189,9 @@ public class SaveLoad {
 			player.setInventory(inventory);
 			
 			// Line 3: time
-			game.getTimeController().setTicks(Long.parseLong(br.readLine()));
+			TimeController timeController = new TimeController();
+			timeController.setTicks(Long.parseLong(br.readLine()));
+			game.setTimeController(timeController);
 			
 			// Line 4: map size
 			int mapSize = Integer.parseInt(br.readLine());

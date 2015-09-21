@@ -287,14 +287,16 @@ public class OnePixel extends ApplicationAdapter {
 	
 	private void update() {
 		
-		// Just started the game
+		// Just opened the game
 		if (justStarted) {
-			int demoWorldSize = 110;
-			world = new World(demoWorldSize);
-			player = new Player(world);
-			timeController = new TimeController();
-			player.setX(demoWorldSize / 2);
-			player.setY(demoWorldSize / 2);
+			if (Resources.get().saveFile.exists()) {
+				// If the player has a saved game, load it
+				loadingGame = true;
+			} else {
+				// Otherwise, start a new one
+				startingNewGame = true;
+			}
+			
 			justStarted = false;
 		}
 		
@@ -490,6 +492,10 @@ public class OnePixel extends ApplicationAdapter {
 
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+
+	public void setTimeController(TimeController timeController) {
+		this.timeController = timeController;
 	}
 	
 }
