@@ -322,6 +322,7 @@ public class OnePixel extends ApplicationAdapter {
 			SaveLoad.load();
 			waiting = false;
 			loadingGame = false;
+			OnePixel.updateZoomLevelDisplay();
 		}
 		
 		// Dialog box update
