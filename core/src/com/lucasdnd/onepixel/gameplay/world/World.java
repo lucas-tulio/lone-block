@@ -140,7 +140,7 @@ public class World implements Disposer {
 		
 		sr.begin(ShapeType.Filled);
 		sr.setColor(Color.FOREST);
-		sr.rect(0f, 0f, size * OnePixel.pixelSize, size * OnePixel.pixelSize);
+		sr.rect(0f, 0f, size * OnePixel.blockSize, size * OnePixel.blockSize);
 
 		// Calculate the visible world objects
 		// so we clip the view and prevent rendering shit that wouldn't even be visible to the player
@@ -151,8 +151,8 @@ public class World implements Disposer {
 		
 		// Get the visible area on the screen
 		float gameViewWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH;
-		float visibleBlocksX = gameViewWidth / OnePixel.pixelSize;
-		float visibleBlocksY = Gdx.graphics.getHeight() / OnePixel.pixelSize;
+		float visibleBlocksX = gameViewWidth / OnePixel.blockSize;
+		float visibleBlocksY = Gdx.graphics.getHeight() / OnePixel.blockSize;
 		
 		// Get the Player's position
 		Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
@@ -184,7 +184,7 @@ public class World implements Disposer {
 			for (int j = minRenderY; j < maxRenderY; j++) {
 				MapObject mapObject = mapObjects[i][j];
 				if (mapObject != null) {
-					mapObject.render(sr, i * OnePixel.pixelSize, j * OnePixel.pixelSize);
+					mapObject.render(sr, i * OnePixel.blockSize, j * OnePixel.blockSize);
 				}
 			}
 		}

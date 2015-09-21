@@ -126,43 +126,43 @@ public class Tree extends MapObject {
 			
 			// Tree
 			sr.setColor(color);
-			sr.rect(x, y, OnePixel.pixelSize, OnePixel.pixelSize);
+			sr.rect(x, y, OnePixel.blockSize, OnePixel.blockSize);
 			
 			if (saplings > 0 && fruits > 0) {
 
 				// Fruits and Sapling
 					
 				sr.setColor(saplingColor);
-				sr.rect(x + OnePixel.pixelSize / 8f,
-						y + OnePixel.pixelSize - OnePixel.pixelSize / 2.5f,
-						OnePixel.pixelSize / 4f,
-						OnePixel.pixelSize / 4f);
+				sr.rect(x + OnePixel.blockSize / 8f,
+						y + OnePixel.blockSize - OnePixel.blockSize / 2.5f,
+						OnePixel.blockSize / 4f,
+						OnePixel.blockSize / 4f);
 				
 				sr.setColor(Color.RED);
-				sr.rect(x + (OnePixel.pixelSize / 8f * 5f),
-						y + OnePixel.pixelSize / 8f,
-						OnePixel.pixelSize / 4f,
-						OnePixel.pixelSize / 4f);
+				sr.rect(x + (OnePixel.blockSize / 8f * 5f),
+						y + OnePixel.blockSize / 8f,
+						OnePixel.blockSize / 4f,
+						OnePixel.blockSize / 4f);
 			
 			} else if (saplings > 0 && fruits <= 0) {
 				
 				// Sapling only
 				
 				sr.setColor(saplingColor);
-				sr.rect(x + OnePixel.pixelSize - OnePixel.pixelSize / 2f - OnePixel.pixelSize / 8f,
-						y + OnePixel.pixelSize - OnePixel.pixelSize / 2f - OnePixel.pixelSize / 8f,
-						OnePixel.pixelSize / 4f,
-						OnePixel.pixelSize / 4f);
+				sr.rect(x + OnePixel.blockSize - OnePixel.blockSize / 2f - OnePixel.blockSize / 8f,
+						y + OnePixel.blockSize - OnePixel.blockSize / 2f - OnePixel.blockSize / 8f,
+						OnePixel.blockSize / 4f,
+						OnePixel.blockSize / 4f);
 			
 			} else if (saplings <= 0 && fruits > 0) {
 				
 				// Fruits only
 				
 				sr.setColor(Color.RED);
-				sr.rect(x + OnePixel.pixelSize - OnePixel.pixelSize / 2f - OnePixel.pixelSize / 8f,
-						y + OnePixel.pixelSize - OnePixel.pixelSize / 2f - OnePixel.pixelSize / 8f,
-						OnePixel.pixelSize / 4f,
-						OnePixel.pixelSize / 4f);
+				sr.rect(x + OnePixel.blockSize - OnePixel.blockSize / 2f - OnePixel.blockSize / 8f,
+						y + OnePixel.blockSize - OnePixel.blockSize / 2f - OnePixel.blockSize / 8f,
+						OnePixel.blockSize / 4f,
+						OnePixel.blockSize / 4f);
 			}
 			
 		} else {
@@ -170,10 +170,10 @@ public class Tree extends MapObject {
 			// Growing sapling
 			
 			sr.setColor(saplingColor);
-			sr.rect(x + OnePixel.pixelSize / 2f - OnePixel.pixelSize / 4f,
-					y + OnePixel.pixelSize / 4f,
-					OnePixel.pixelSize / 2f,
-					OnePixel.pixelSize / 2f);
+			sr.rect(x + OnePixel.blockSize / 2f - OnePixel.blockSize / 4f,
+					y + OnePixel.blockSize / 4f,
+					OnePixel.blockSize / 2f,
+					OnePixel.blockSize / 2f);
 			
 		}
 	}

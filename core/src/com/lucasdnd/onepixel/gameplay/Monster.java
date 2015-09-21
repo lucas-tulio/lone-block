@@ -80,7 +80,7 @@ public class Monster {
 	
 	public void render(ShapeRenderer sr) {
 		sr.begin(ShapeType.Filled);
-		sr.rect(location.x, location.y, OnePixel.pixelSize, OnePixel.pixelSize);
+		sr.rect(location.x, location.y, OnePixel.blockSize, OnePixel.blockSize);
 		sr.end();
 	}
 	

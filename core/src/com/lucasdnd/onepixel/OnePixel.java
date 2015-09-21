@@ -28,9 +28,9 @@ public class OnePixel extends ApplicationAdapter {
 	private Tooltip tooltip;
 	private FontUtils font;
 	private static int zoomLevelDisplay = 1;	// The zoom level the player will see in the debug prints. I did this just to avoid doing log(x)/log(2) in every render call
-	public static float pixelSize = 8f;
-	public static final float MIN_PIXEL_SIZE = 2f;
-	public static final float MAX_PIXEL_SIZE = 32f;
+	public static float blockSize = 8f;
+	public static final float MIN_BLOCK_SIZE = 2f;
+	public static final float MAX_BLOCK_SIZE = 32f;
 	private int playableAreaWidth;
 	private int playableAreaHeight;
 	
@@ -90,7 +90,7 @@ public class OnePixel extends ApplicationAdapter {
 			}
 			
 		});
-		
+
 		quitGameDialogBox.getNoButton().setClickListener(new ButtonClickListener() {
 
 			@Override
@@ -143,7 +143,7 @@ public class OnePixel extends ApplicationAdapter {
 	}
 	
 	private static void updateZoomLevelDisplay() {
-		OnePixel.zoomLevelDisplay = (int)(Math.log(pixelSize) / Math.log(2));
+		OnePixel.zoomLevelDisplay = (int)(Math.log(blockSize) / Math.log(2));
 	}
 	
 	private void hideAllPanels() {
@@ -260,15 +260,15 @@ public class OnePixel extends ApplicationAdapter {
 			
 			// Zoom control
 			if (Gdx.input.isKeyJustPressed(Keys.EQUALS)) {
-				pixelSize *= 2f;
-				if (pixelSize >= MAX_PIXEL_SIZE) {
-					pixelSize = MAX_PIXEL_SIZE;
+				blockSize *= 2f;
+				if (blockSize >= MAX_BLOCK_SIZE) {
+					blockSize = MAX_BLOCK_SIZE;
 				}
 				OnePixel.updateZoomLevelDisplay();
 			} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
-				pixelSize /= 2f;
-				if (pixelSize <= MIN_PIXEL_SIZE) {
-					pixelSize = MIN_PIXEL_SIZE;
+				blockSize /= 2f;
+				if (blockSize <= MIN_BLOCK_SIZE) {
+					blockSize = MIN_BLOCK_SIZE;
 				}
 				OnePixel.updateZoomLevelDisplay();
 			}
@@ -300,7 +300,7 @@ public class OnePixel extends ApplicationAdapter {
 		
 		// Starting new game
 		if (startingNewGame) {
-			world = new World(World.SMALL);
+			world = new World(World.NORMAL);
 			player = new Player(world);
 			world.spawnMonsters();
 			timeController = new TimeController();
@@ -334,7 +334,7 @@ public class OnePixel extends ApplicationAdapter {
 				handleInput();
 			}
 			
-			camera.position.set(player.getX() * OnePixel.pixelSize + (SideBar.SIDEBAR_WIDTH * 0.5f), player.getY() * OnePixel.pixelSize, 0f);
+			camera.position.set(player.getX() * OnePixel.blockSize + (SideBar.SIDEBAR_WIDTH * 0.5f), player.getY() * OnePixel.blockSize, 0f);
 			camera.update();
 			shapeRenderer.setProjectionMatrix(camera.combined);
 			
@@ -440,8 +440,8 @@ public class OnePixel extends ApplicationAdapter {
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		shapeRenderer.setColor(0f, 0f, 0f, 0.3f);
 		shapeRenderer.rect(
-				player.getX() * pixelSize - playableAreaWidth / 2,
-				player.getY() * pixelSize + playableAreaHeight / 2,
+				player.getX() * blockSize - playableAreaWidth / 2,
+				player.getY() * blockSize + playableAreaHeight / 2,
 				playableAreaWidth,
 				-playableAreaHeight);
 		shapeRenderer.end();
