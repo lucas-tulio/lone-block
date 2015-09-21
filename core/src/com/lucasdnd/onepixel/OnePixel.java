@@ -11,10 +11,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.gameplay.Player;
 import com.lucasdnd.onepixel.gameplay.world.World;
-import com.lucasdnd.onepixel.ui.Button;
 import com.lucasdnd.onepixel.ui.ButtonClickListener;
 import com.lucasdnd.onepixel.ui.DialogBox;
-import com.lucasdnd.onepixel.ui.NewGamePanel;
 import com.lucasdnd.onepixel.ui.SideBar;
 import com.lucasdnd.onepixel.ui.Tooltip;
 
@@ -29,6 +27,7 @@ public class OnePixel extends ApplicationAdapter {
 	private SpriteBatch fontBatch;
 	private Tooltip tooltip;
 	private FontUtils font;
+	private static int zoomLevelDisplay = 1;	// The zoom level the player will see in the debug prints. I did this just to avoid doing log(x)/log(2) in every render call
 	public static float pixelSize = 8f;
 	public static final float MIN_PIXEL_SIZE = 2f;
 	public static final float MAX_PIXEL_SIZE = 32f;
@@ -42,8 +41,7 @@ public class OnePixel extends ApplicationAdapter {
 	
 	// UI
 	private SideBar sideBar;
-	private NewGamePanel newGamePanel;
-	private DialogBox dialogBox;
+	private DialogBox quitGameDialogBox;
 	
 	// Input, camera
 	private InputHandler input;
@@ -82,9 +80,9 @@ public class OnePixel extends ApplicationAdapter {
 		tooltip = new Tooltip();
 		
 		// Quit game dialog box
-		dialogBox = new DialogBox("Quit?");
+		quitGameDialogBox = new DialogBox("Quit?");
 		
-		dialogBox.getYesButton().setClickListener(new ButtonClickListener() {
+		quitGameDialogBox.getYesButton().setClickListener(new ButtonClickListener() {
 
 			@Override
 			public void onClick() {
@@ -93,33 +91,11 @@ public class OnePixel extends ApplicationAdapter {
 			
 		});
 		
-		dialogBox.getNoButton().setClickListener(new ButtonClickListener() {
+		quitGameDialogBox.getNoButton().setClickListener(new ButtonClickListener() {
 
 			@Override
 			public void onClick() {
-				dialogBox.hide();
-			}
-			
-		});
-		
-		// New Game Panel
-		newGamePanel = new NewGamePanel();
-		newGamePanel.show();
-		newGamePanel.getStartButton().setClickListener(new ButtonClickListener() {
-
-			@Override
-			public void onClick() {
-				hideAllPanels();
-				startNewGame();
-			}
-			
-		});
-		
-		newGamePanel.getCancelButton().setClickListener(new ButtonClickListener() {
-
-			@Override
-			public void onClick() {
-				hideAllPanels();
+				quitGameDialogBox.hide();
 			}
 			
 		});
@@ -130,7 +106,7 @@ public class OnePixel extends ApplicationAdapter {
 			@Override
 			public void onClick() {
 				hideAllPanels();
-				newGamePanel.show();
+				startNewGame();
 			}
 			
 		});
@@ -140,7 +116,7 @@ public class OnePixel extends ApplicationAdapter {
 			@Override
 			public void onClick() {
 				hideAllPanels();
-				
+				savingGame = true;
 			}
 			
 		});
@@ -150,6 +126,7 @@ public class OnePixel extends ApplicationAdapter {
 			@Override
 			public void onClick() {
 				hideAllPanels();
+				loadingGame = true;
 			}
 			
 		});
@@ -165,9 +142,12 @@ public class OnePixel extends ApplicationAdapter {
 		});
 	}
 	
+	private static void updateZoomLevelDisplay() {
+		OnePixel.zoomLevelDisplay = (int)(Math.log(pixelSize) / Math.log(2));
+	}
+	
 	private void hideAllPanels() {
-		dialogBox.hide();
-		newGamePanel.hide();
+		quitGameDialogBox.hide();
 	}
 	
 	public void startNewGame() {
@@ -183,7 +163,7 @@ public class OnePixel extends ApplicationAdapter {
 	}
 	
 	public void quitGame() {
-		dialogBox.show();
+		quitGameDialogBox.show();
 	}
 	
 	private void handleInput() {
@@ -284,11 +264,13 @@ public class OnePixel extends ApplicationAdapter {
 				if (pixelSize >= MAX_PIXEL_SIZE) {
 					pixelSize = MAX_PIXEL_SIZE;
 				}
+				OnePixel.updateZoomLevelDisplay();
 			} else if (Gdx.input.isKeyJustPressed(Keys.MINUS)) {
 				pixelSize /= 2f;
 				if (pixelSize <= MIN_PIXEL_SIZE) {
 					pixelSize = MIN_PIXEL_SIZE;
 				}
+				OnePixel.updateZoomLevelDisplay();
 			}
 		}
 		
@@ -324,29 +306,25 @@ public class OnePixel extends ApplicationAdapter {
 			timeController = new TimeController();
 			startingNewGame = false;
 			waiting = false;
+			OnePixel.updateZoomLevelDisplay();
 		}
 		
 		// Will Save
 		if (savingGame) {
-			SaveLoad.save(0);
+			SaveLoad.save();
 			waiting = false;
 			savingGame = false;
 		}
-		
+		// Will Load
 		if (loadingGame) {
-			SaveLoad.load(0);
+			SaveLoad.load();
 			waiting = false;
 			loadingGame = false;
 		}
 		
 		// Dialog box update
-		if (dialogBox.isVisible()) {
-			dialogBox.update();
-		}
-		
-		// New Game Panel Update
-		if (newGamePanel.isVisible()) {
-			newGamePanel.update();
+		if (quitGameDialogBox.isVisible()) {
+			quitGameDialogBox.update();
 		}
 		
 		// Normal game loop
@@ -431,11 +409,8 @@ public class OnePixel extends ApplicationAdapter {
 		
 		// UI
 		sideBar.render(uiShapeRenderer);
-		if (newGamePanel.isVisible()) {
-			newGamePanel.render();
-		}
 		tooltip.render();
-		dialogBox.render();
+		quitGameDialogBox.render();
 		
 		if (player.isDead()) {
 			font.drawRedFont("You died", 0f, Gdx.graphics.getHeight() / 2f, false, Align.center, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);
@@ -454,10 +429,7 @@ public class OnePixel extends ApplicationAdapter {
 			Resources.get().whiteFont.draw(fontBatch, "night: " + timeController.isNight(), 0f, Gdx.graphics.getHeight() - 140f);
 			Resources.get().whiteFont.draw(fontBatch, "day: " + timeController.getDay(), 0f, Gdx.graphics.getHeight() - 160f);
 			
-			Resources.get().whiteFont.draw(fontBatch, "x: " + Gdx.input.getX(), 0f, Gdx.graphics.getHeight() - 200f);
-			Resources.get().whiteFont.draw(fontBatch, "y: " + Gdx.input.getY(), 0f, Gdx.graphics.getHeight() - 220f);
-			
-			Resources.get().whiteFont.draw(fontBatch, "pixel_size: " + OnePixel.pixelSize, 0f, Gdx.graphics.getHeight() - 260f);
+			Resources.get().whiteFont.draw(fontBatch, "zoom: " + OnePixel.zoomLevelDisplay, 0f, Gdx.graphics.getHeight() - 200f);
 			
 			fontBatch.end();
 		}
@@ -518,10 +490,6 @@ public class OnePixel extends ApplicationAdapter {
 
 	public void setPlayer(Player player) {
 		this.player = player;
-	}
-	
-	public NewGamePanel getNewGamePanel() {
-		return newGamePanel;
 	}
 	
 }

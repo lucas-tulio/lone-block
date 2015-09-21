@@ -31,23 +31,10 @@ public class SaveLoad {
 	private static final String innerSeparator = ",";
 	private static final String lineBreak = "\n";
 	
-	public static boolean save(int slot) {
+	public static boolean save() {
 		
 		OnePixel game = (OnePixel)Gdx.app.getApplicationListener();
 		StringBuilder sb = new StringBuilder();
-		
-		// Get the Save Slot
-		FileHandle saveFile;
-		switch (slot) {
-		case 0:
-			saveFile = Resources.get().save1;
-			break;
-		case 1:
-			saveFile = Resources.get().save2;
-			break;
-		default:
-			saveFile = Resources.get().save3;
-		}
 		
 		// Write stuff
 		
@@ -147,7 +134,7 @@ public class SaveLoad {
 		
 		// Write to file
 		try {
-			saveFile.writeString(sb.toString(), false);
+			Resources.get().saveFile.writeString(sb.toString(), false);
 		} catch (GdxRuntimeException e) {
 			e.printStackTrace();
 			return false;
@@ -156,28 +143,15 @@ public class SaveLoad {
 		return true;
 	}
 	
-	public static boolean load(int slot) {
+	public static boolean load() {
 		
 		OnePixel game = (OnePixel)Gdx.app.getApplicationListener();
 		game.setLoadingGame(true);
 		
-		// Get the Save Slot
-		FileHandle saveFile;
-		switch (slot) {
-		case 0:
-			saveFile = Resources.get().save1;
-			break;
-		case 1:
-			saveFile = Resources.get().save2;
-			break;
-		default:
-			saveFile = Resources.get().save3;
-		}
-		
 		// Read from file
 		try {
 			
-			BufferedReader br = saveFile.reader(1024);
+			BufferedReader br = Resources.get().saveFile.reader(1024);
 			
 			// Line 1: playerX, playerY, facing direction, health, cold, hunger, thirst
 			String[] playerData = br.readLine().split(";");
