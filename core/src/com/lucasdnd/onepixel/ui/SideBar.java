@@ -10,19 +10,19 @@ import com.lucasdnd.onepixel.gameplay.Player;
 
 public class SideBar {
 	
-	int x, y;
-	final float margin = 20f;
+	private int x, y;
+	private final float margin = 20f;
 	public static final float lineWeight = 4f;
 	public static final int SIDEBAR_WIDTH = 400;
 	
 	// Status bar attributes
-	float barHeight;
-	float barWidth;
+	private float barHeight;
+	private float barWidth;
 		
 	// Main Buttons
-	Button newGameButton, saveGameButton, loadGameButton, quitButton;
+	private Button newGameButton, saveGameButton, loadGameButton, quitButton;
 	
-	FontUtils font;
+	private FontUtils font;
 	
 	public SideBar(int x, int y) {
 		this.x = x;

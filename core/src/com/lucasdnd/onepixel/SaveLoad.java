@@ -153,7 +153,7 @@ public class SaveLoad {
 			BufferedReader br = Resources.get().saveFile.reader(1024);
 			
 			// Line 1: playerX, playerY, facing direction, health, cold, hunger, thirst
-			String[] playerData = br.readLine().split(";");
+			String[] playerData = br.readLine().split(separator);
 			int playerX = Integer.parseInt(playerData[0]);
 			int playerY = Integer.parseInt(playerData[1]);
 			int direction = Integer.parseInt(playerData[2]);
@@ -170,10 +170,10 @@ public class SaveLoad {
 			
 			Inventory inventory = new Inventory();
 			
-			String[] inventoryData = br.readLine().split(";");
+			String[] inventoryData = br.readLine().split(separator);
 			for (int i = 0; i < inventoryData.length; i++) {
 				
-				String[] boxContent = inventoryData[i].split(",");
+				String[] boxContent = inventoryData[i].split(innerSeparator);
 				Item itemInBox = getItemFromSaveId(Integer.parseInt(boxContent[0]));
 				if (itemInBox != null) {
 					itemInBox.setAmount(Integer.parseInt(boxContent[1]));
@@ -203,7 +203,7 @@ public class SaveLoad {
 			
 			for (int i = 0; i < mapSize; i++) {
 				
-				String[] objects = br.readLine().split(";");
+				String[] objects = br.readLine().split(separator);
 				if (objects.length != mapSize) {
 					System.out.println("Save data inconsistency at " + i + ", " + "j");
 					Gdx.app.exit();
@@ -211,7 +211,7 @@ public class SaveLoad {
 				
 				for (int j = 0; j < mapSize; j++) {
 					
-					String objectData[] = objects[j].split(",");
+					String objectData[] = objects[j].split(innerSeparator);
 					MapObject mapObject = getMapObjectFromSaveId(Integer.parseInt(objectData[0]), world, i, j);
 					
 					if (mapObject instanceof Tree) {

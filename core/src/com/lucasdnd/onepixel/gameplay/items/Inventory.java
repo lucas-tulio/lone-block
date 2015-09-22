@@ -11,18 +11,17 @@ import com.lucasdnd.onepixel.ui.SideBar;
 
 public class Inventory {
 	
-	protected int size;
-	int selectedItem;
-	protected ArrayList<InventoryBox> inventoryBoxes;
-	protected ArrayList<InventoryBox> craftingBoxes;
-	protected ArrayList<InventoryBox> craftingResultBoxes;
-	Craftable craftable;	// Item being made
-	final int inventoryRows = 3;
-	final int numCraftingBoxes = 3;
+	private int size;
+	private int selectedItem;
+	private ArrayList<InventoryBox> inventoryBoxes;
+	private ArrayList<InventoryBox> craftingBoxes;
+	private ArrayList<InventoryBox> craftingResultBoxes;
+	private final int inventoryRows = 3;
+	private final int numCraftingBoxes = 3;
 	
 	// Swapping items
-	Item itemOnMouse;
-	FontUtils font;
+	private Item itemOnMouse;
+	private FontUtils font;
 	
 	/**
 	 * Creates an inventory with an arbitrary size

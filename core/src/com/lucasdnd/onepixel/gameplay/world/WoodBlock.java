@@ -9,7 +9,7 @@ public class WoodBlock extends MapObject {
 	
 	public static final int saveId = 2;
 	
-	final static Color color = Color.BROWN;
+	private final static Color color = Color.BROWN;
 
 	public WoodBlock(Disposer disposer, int x, int y) {
 		super(disposer, x, y);

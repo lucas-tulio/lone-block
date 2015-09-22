@@ -9,19 +9,19 @@ import com.lucasdnd.onepixel.Resources;
 
 public class Tooltip {
 	
-	float x, y, width;
-	final float height = 32f;
-	final float textMarginX = 2f;
-	final float textMarginY = 5f;
-	final float tooltipPaddingX = 32f;
-	final float lineWeight = 4f;
+	private float x, y;
+	private final float height = 32f;
+	private final float textMarginX = 2f;
+	private final float textMarginY = 5f;
+	private final float tooltipPaddingX = 32f;
+	private final float lineWeight = 4f;
 	
-	FontUtils font;
-	ShapeRenderer sr;
+	private FontUtils font;
+	private ShapeRenderer sr;
 	
-	String text;
-	float charSize, textSize;
-	boolean shouldDraw;
+	private String text;
+	private float charSize, textSize;
+	private boolean shouldDraw;
 	
 	public Tooltip() {
 		font = new FontUtils();

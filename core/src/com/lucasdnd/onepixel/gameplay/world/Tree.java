@@ -15,8 +15,8 @@ public class Tree extends MapObject {
 	
 	public static final int saveId = 7;
 
-	final static Color color = new Color(0f, 0.3f, 0f, 1f);
-	final static Color saplingColor = new Color(0.3f, 0.8f, 0.3f, 1f);
+	protected final static Color color = new Color(0f, 0.3f, 0f, 1f);
+	protected final static Color saplingColor = new Color(0.3f, 0.8f, 0.3f, 1f);
 	
 	private int hitsToChopDown;	// How many times the user will press E to chop this Tree down
 	

@@ -24,8 +24,8 @@ public class InventoryBox {
 	private int tooltipOffsetX = 32;
 	private int tooltipOffsetY = 32;
 	
-	FontUtils font;
-	boolean drawingTooltip;
+	private FontUtils font;
+	private boolean drawingTooltip;
 
 	public InventoryBox(float x, float y) {
 		this();

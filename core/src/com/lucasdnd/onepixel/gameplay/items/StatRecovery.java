@@ -2,7 +2,7 @@ package com.lucasdnd.onepixel.gameplay.items;
 
 public class StatRecovery {
 	
-	int health, cold, food, drink;
+	private int health, cold, food, drink;
 	
 	public StatRecovery(int health, int cold, int food, int drink) {
 		this.health = health;

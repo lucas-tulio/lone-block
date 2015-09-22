@@ -11,25 +11,25 @@ import com.lucasdnd.onepixel.Resources;
 
 public class Button {
 	
-	float x, y, width;
-	float charSize, textSize;
-	String text;
+	protected float x, y, width;
+	protected final float height = 32f;
+	private final float textPaddingX = 2f;
+	private final float textPaddingY = 5f;
+	private final float paddingX = 32f;
+	private final float lineWeight = 4f;
 	
-	final float height = 32f;
-	final float textPaddingX = 2f;
-	final float textPaddingY = 5f;
-	final float paddingX = 32f;
-	final float lineWeight = 4f;
+	private float charSize, textSize;
+	private String text;
 	
-	boolean mouseOver, enabled;
+	private boolean mouseOver, enabled;
 	
-	FontUtils font;
-	ShapeRenderer sr;
-	ButtonClickListener clickListener;
+	private FontUtils font;
+	private ShapeRenderer sr;
+	private ButtonClickListener clickListener;
 	
-	final Color disabledColor = Color.GRAY;
-	final Color normalColor = Color.WHITE;
-	final Color hoverColor = Color.WHITE;
+	private final Color disabledColor = Color.GRAY;
+	private final Color normalColor = Color.WHITE;
+	private final Color hoverColor = Color.WHITE;
 	
 	public Button(String text) {
 		this.text = text;

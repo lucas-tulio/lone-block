@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class FontUtils {
 	
-	SpriteBatch fontBatch;
+	private SpriteBatch fontBatch;
 	
 	public FontUtils() {
 		this.fontBatch = new SpriteBatch();

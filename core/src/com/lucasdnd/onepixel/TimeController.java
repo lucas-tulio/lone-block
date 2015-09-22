@@ -14,13 +14,13 @@ public class TimeController {
 	private long time;	// 1 time == one real second
 	public static final long ONE_DAY = 600;	// how many seconds in one day. 3600 = 10 minutes
 	
-	String text;
-	FontUtils font;
-	float x = 0f;
-	float textWidth = 160f;
-	final float boxHeight = 26f;
-	final float textPaddingX = 4f;
-	final float textPaddingY = 4f;
+	private String text;
+	private FontUtils font;
+	private float x = 0f;
+	private float textWidth = 160f;
+	private final float boxHeight = 26f;
+	private final float textPaddingX = 4f;
+	private final float textPaddingY = 4f;
 	
 	public TimeController() {
 		font = new FontUtils();
