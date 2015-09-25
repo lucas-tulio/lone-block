@@ -34,19 +34,14 @@ public class World implements Disposer {
 	// World settings
 	private int numTrees;
 
-	// Terrain levels
-	private int archipelago = 100;
-	private int islands = 120;
-	private int continents = 140;
-	private int greatLakes = 180;
-	private int plains = 200;
-
-	private int seaLevel = islands;
-
-	// Mountain and water levels
-	private int mountainLevel = seaLevel + 20;	// This is basically how much land there will be between water and mountains.
-										// Lowering this value will generate much larger mountains at the expanse of land.
-	private int waterLevel = seaLevel - 20;
+	/**
+	 * Terrain settings
+	 */
+	private final int land = 120;
+	private final int mountainOffset = 20;
+	private final int waterOffset = 20;
+	private final int mountainLevel = land + mountainOffset;
+	private final int waterLevel = land - waterOffset;
 
 	/**
 	 * New Game constructor
@@ -84,9 +79,9 @@ public class World implements Disposer {
 				
 				if (k > mountainLevel) {
 					mapObjects[i][j] = new Rock(this, i, j);
-				} else if (k <= mountainLevel && k > seaLevel) {
+				} else if (k <= mountainLevel && k > land) {
 
-				} else if (k <= seaLevel && k > waterLevel) {
+				} else if (k <= land && k > waterLevel) {
 					mapObjects[i][j] = new Water(this, i, j);
 				} else {
 					mapObjects[i][j] = new DeepWater(this, i, j);
