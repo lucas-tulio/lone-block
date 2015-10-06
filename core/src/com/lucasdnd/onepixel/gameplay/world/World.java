@@ -155,10 +155,10 @@ public class World implements Disposer {
 		int centerY = player.getY();
 		
 		// Calculate the number of visible blocks in each direction
-		minRenderX = (int)(centerX - visibleBlocksX / 2f);
-		maxRenderX = (int)(centerX + visibleBlocksX / 2f);
-		minRenderY = (int)(centerY - visibleBlocksY / 2f);
-		maxRenderY = (int)(centerY + visibleBlocksY / 2f);
+		minRenderX = (int)Math.floor(centerX - visibleBlocksX / 2f);
+		maxRenderX = (int)Math.ceil(centerX + visibleBlocksX / 2f);
+		minRenderY = (int)Math.floor(centerY - visibleBlocksY / 2f);
+		maxRenderY = (int)Math.ceil(centerY + visibleBlocksY / 2f);
 		
 		// Bounds check
 		if (minRenderX < 0) {
