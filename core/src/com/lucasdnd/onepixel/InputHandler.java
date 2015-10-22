@@ -3,6 +3,9 @@ package com.lucasdnd.onepixel;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
+/**
+* Input Controller. It handles mouse clicks, key press and delays.
+*/
 public class InputHandler implements InputProcessor {
 	
 	public boolean leftMouseDown, leftMouseJustClicked, rightMouseDown, rightMouseJustClicked;
