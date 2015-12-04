@@ -1,8 +1,5 @@
 package com.lucasdnd.onepixel.gameplay;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -47,9 +44,9 @@ public class Player implements Mover {
 	
 	/**
 	 * New Game constructor
-	 * @param world
+	 * @param spawnPoint
 	 */
-	public Player(World world) {
+	public Player(Point spawnPoint) {
 		
 		this();
 		
@@ -61,25 +58,8 @@ public class Player implements Mover {
 		faceUp();
 		inventory = new Inventory();
 		
-		// Random spawn point
-		ArrayList<Point> spawnPoints = new ArrayList<Point>();
-		for (int i = 0; i < world.getSize(); i++) {
-			for (int j = 0; j < world.getSize(); j++) {
-				if (world.getMapObjectAt(i, j) == null) {
-					spawnPoints.add(new Point(i, j));
-				}
-			}
-		}
-		
-		if (spawnPoints.size() > 0) {
-			int randomPoint = new Random().nextInt(spawnPoints.size());
-			this.x = spawnPoints.get(randomPoint).x;
-			this.y = spawnPoints.get(randomPoint).y;
-		} else {
-			this.x = world.getSize() / 2;
-			this.y = world.getSize() / 2;
-		}
-		
+		this.x = spawnPoint.x;
+		this.y = spawnPoint.y;
 	}
 
 	/**

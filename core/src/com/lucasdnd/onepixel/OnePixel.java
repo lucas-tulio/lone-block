@@ -302,9 +302,8 @@ public class OnePixel extends ApplicationAdapter {
 		
 		// Starting new game
 		if (startingNewGame) {
-			world = new World(World.NORMAL);
-			player = new Player(world);
-			world.spawnMonsters();
+			world = new World(World.Size.normal);
+			player = new Player(world.getRandomAvailableSpawnPoints(1).get(0));
 			timeController = new TimeController();
 			paused = false;
 			startingNewGame = false;

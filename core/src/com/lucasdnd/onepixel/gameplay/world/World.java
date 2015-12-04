@@ -10,11 +10,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.Monster;
 import com.lucasdnd.onepixel.gameplay.Player;
+import com.lucasdnd.onepixel.gameplay.Point;
 import com.lucasdnd.onepixel.gameplay.items.Campfire;
 import com.lucasdnd.onepixel.gameplay.items.Item;
 import com.lucasdnd.onepixel.gameplay.items.Sapling;
 import com.lucasdnd.onepixel.gameplay.items.Stone;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
+import com.lucasdnd.onepixel.gameplay.world.pathfinder.AStarPathFinder;
 import com.lucasdnd.onepixel.gameplay.world.pathfinder.PathFindingContext;
 import com.lucasdnd.onepixel.gameplay.world.pathfinder.TileBasedMap;
 import com.lucasdnd.onepixel.ui.SideBar;
@@ -24,10 +26,17 @@ public class World implements Disposer, TileBasedMap {
 	private Random r;
 
 	private int size;
-	public static final int SMALL = 512;
-	public static final int NORMAL = 1024;
-	public static final int LARGE = 4096;
+	public class Size {
+		public static final int small = 512;
+		public static final int normal = 1024;
+		public static final int large = 4096;
+	}
+	
 	private MapObject[][] mapObjects;
+	
+	// Pathfinding
+	private int monsterDetectionRange = 45;
+	private AStarPathFinder pathFinder;
 	
 	// World objects that need to be updated()
 	private ArrayList<Tree> trees;
@@ -107,18 +116,27 @@ public class World implements Disposer, TileBasedMap {
 			}
 		}
 		
+		// Pathfinder
+		pathFinder = new AStarPathFinder(this, monsterDetectionRange, false);
+		
 		// Create monsters
 		monsters = new ArrayList<Monster>();
-		int numMonsters = 3;
+		int numMonsters = 0;
+		if (size == Size.small) {
+			numMonsters = 3;
+		} else if (size == Size.normal) {
+			numMonsters = 5;
+		} else if (size == Size.large) {
+			numMonsters = 8;
+		}
+		ArrayList<Point> spawnPoints = getRandomAvailableSpawnPoints(numMonsters);
 		for (int i = 0; i < numMonsters; i++) {
-			monsters.add(new Monster(this));
+			Monster m = new Monster(this);
+			monsters.add(m);
+			m.spawn(spawnPoints.get(i));
 		}
 	}
 	
-	/**
-	 * Load Game constructor
-	 * @param mapObjects
-	 */
 	public World() {
 		monsters = new ArrayList<Monster>();
 	}
@@ -129,7 +147,7 @@ public class World implements Disposer, TileBasedMap {
 			t.update();
 		}
 		for (Monster m : monsters) {
-			m.update();
+			m.update(pathFinder, monsterDetectionRange);
 		}
 	}
 
@@ -243,12 +261,6 @@ public class World implements Disposer, TileBasedMap {
 	public ArrayList<Tree> getTrees() {
 		return trees;
 	}
-
-	public void spawnMonsters() {
-		for (Monster m : monsters) {
-			m.spawn();
-		}
-	}
 	
 	/**
 	 * Set the Map Objects after loading a game data from a save file
@@ -266,6 +278,42 @@ public class World implements Disposer, TileBasedMap {
 		for (Tree t : trees) {
 			mapObjects[t.x][t.y] = t;
 		}
+	}
+	
+	/**
+	 * Returns a random available spawn point
+	 * @return
+	 */
+	public ArrayList<Point> getRandomAvailableSpawnPoints(int num) {
+		
+		final int skip = 100; // Check every x tiles
+		
+		ArrayList<Point> spawnPoints = new ArrayList<Point>();
+		for (int i = 0; i < size; i += skip) {
+			for (int j = 0; j < size; j += skip) {
+				if (getMapObjectAt(i, j) == null) {
+					spawnPoints.add(new Point(i, j));
+				}
+			}
+		}
+
+		if (spawnPoints.size() == 0) {
+			System.out.println("no spawn points available");
+			Gdx.app.exit();
+		}
+		
+		// Check for wrong spawn points
+		for (Point sp : spawnPoints) {
+			if (sp.x == -1 || sp.y == -1) {
+				System.out.println("wrong spawn point: x = " + sp.x + ", y = " + sp.y);
+			}
+		}
+		
+		ArrayList<Point> result = new ArrayList<Point>();
+		for (int i = 0; i < num; i++) {
+			result.add(spawnPoints.get(new Random().nextInt(spawnPoints.size())));
+		}
+		return result;
 	}
 
 	@Override

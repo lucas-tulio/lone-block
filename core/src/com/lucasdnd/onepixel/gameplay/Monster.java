@@ -5,12 +5,11 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
-import com.lucasdnd.onepixel.TimeController;
+import com.lucasdnd.onepixel.gameplay.world.MapObject;
 import com.lucasdnd.onepixel.gameplay.world.World;
-import com.lucasdnd.onepixel.gameplay.world.pathfinder.AStarPathFinder;
 import com.lucasdnd.onepixel.gameplay.world.pathfinder.Path;
+import com.lucasdnd.onepixel.gameplay.world.pathfinder.PathFinder;
 
 public class Monster {
 
@@ -20,10 +19,9 @@ public class Monster {
 	private static final Color chasingColor = Color.RED;
 	
 	// Pathfinding
-	private boolean chasing;
-	private int detectionRange, attackRange;
 	private Path path;
-	private AStarPathFinder pathFinder;
+	private boolean chasing;
+	private int attackRange;
 	
 	// Timers
 	private long movementTicks, maxMovementTicks;
@@ -32,27 +30,20 @@ public class Monster {
 	private long attackTicks, maxAttackTicks;
 	
 	public Monster(World world) {
-		maxMovementTicks = 180;
+		location = new Point(0, 0);
+		maxMovementTicks = 120;
 		maxDetectionTicks = 60;
-		maxChaseTicks = 60;
+		maxChaseTicks = 15;
 		maxAttackTicks = 30;
-		
-		detectionRange = 45;
 		attackRange = 1;
-		
-		pathFinder = new AStarPathFinder(world, detectionRange, false);
 	}
 	
-	public void spawn() {
-		Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
-		int spawnDistance = 80;
-		Random r = new Random();
-		int x = player.getX() + r.nextInt(spawnDistance) - (spawnDistance / 2);
-		int y = player.getY() + r.nextInt(spawnDistance) - (spawnDistance / 2);
-		this.location = new Point(x, y);
+	public void spawn(Point spawnPoint) {
+		this.location.x = spawnPoint.x;
+		this.location.y = spawnPoint.y;
 	}
 	
-	public void update() {
+	public void update(PathFinder pathFinder, int detectionRange) {
 		
 		if (chasing == false) {
 			
@@ -68,6 +59,10 @@ public class Monster {
 			if (detectionTicks % maxDetectionTicks == 0) {
 				
 				Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
+				if (location.x < 0 || location.y < 0) {
+					chasing = false;
+					return;
+				}
 				path = pathFinder.findPath(player, location.x, location.y, player.getX(), player.getY());
 				chasing = (path != null && path.getLength() <= detectionRange);
 			}
@@ -129,8 +124,19 @@ public class Monster {
 			break;
 		default:
 			newLocation.y--;
-			
 		}
+		
+		// Check if it's a valid world coordinate
+		World world = ((OnePixel)Gdx.app.getApplicationListener()).getWorld();
+		if (newLocation.x < 0 || newLocation.x >= world.getSize() || newLocation.y < 0 || newLocation.y >= world.getSize()) {
+			return;
+		}
+		
+		// Check if that position is blocked
+		if (world.getMapObjectAt(newLocation.x, newLocation.y) != null) {
+			return;
+		}
+		
 		this.location = newLocation;
 	}
 	
