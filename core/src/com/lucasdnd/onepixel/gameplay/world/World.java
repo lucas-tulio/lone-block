@@ -15,9 +15,11 @@ import com.lucasdnd.onepixel.gameplay.items.Item;
 import com.lucasdnd.onepixel.gameplay.items.Sapling;
 import com.lucasdnd.onepixel.gameplay.items.Stone;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
+import com.lucasdnd.onepixel.gameplay.world.pathfinder.PathFindingContext;
+import com.lucasdnd.onepixel.gameplay.world.pathfinder.TileBasedMap;
 import com.lucasdnd.onepixel.ui.SideBar;
 
-public class World implements Disposer {
+public class World implements Disposer, TileBasedMap {
 	
 	private Random r;
 
@@ -109,7 +111,7 @@ public class World implements Disposer {
 		monsters = new ArrayList<Monster>();
 		int numMonsters = 3;
 		for (int i = 0; i < numMonsters; i++) {
-			monsters.add(new Monster());
+			monsters.add(new Monster(this));
 		}
 	}
 	
@@ -182,6 +184,11 @@ public class World implements Disposer {
 					mapObject.render(sr, i * OnePixel.blockSize, j * OnePixel.blockSize);
 				}
 			}
+		}
+		
+		// Mobs
+		for (Monster m : monsters) {
+			m.render(sr);
 		}
 		
 		sr.end();
@@ -259,5 +266,37 @@ public class World implements Disposer {
 		for (Tree t : trees) {
 			mapObjects[t.x][t.y] = t;
 		}
+	}
+
+	@Override
+	public int getWidthInTiles() {
+		return size;
+	}
+
+	@Override
+	public int getHeightInTiles() {
+		return size;
+	}
+
+	@Override
+	public void pathFinderVisited(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * If there's something on that tile, then it's blocked.
+	 */
+	@Override
+	public boolean blocked(PathFindingContext context, int tx, int ty) {
+		return mapObjects[tx][ty] != null;
+	}
+
+	/**
+	 * Since there's no cost difference between the tiles, always return 1.
+	 */
+	@Override
+	public float getCost(PathFindingContext context, int tx, int ty) {
+		return 1f;
 	}
 }

@@ -19,8 +19,9 @@ import com.lucasdnd.onepixel.gameplay.world.MapObject;
 import com.lucasdnd.onepixel.gameplay.world.Tree;
 import com.lucasdnd.onepixel.gameplay.world.Water;
 import com.lucasdnd.onepixel.gameplay.world.World;
+import com.lucasdnd.onepixel.gameplay.world.pathfinder.Mover;
 
-public class Player {
+public class Player implements Mover {
 	
 	// Basic stuff
 	public static final int MAX_STAT_VALUE = 10000;
@@ -42,7 +43,6 @@ public class Player {
 	
 	private Player() {
 		color = Color.BLACK;
-		
 	}
 	
 	/**
