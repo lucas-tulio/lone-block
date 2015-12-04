@@ -31,9 +31,9 @@ public class Monster {
 	
 	public Monster(World world) {
 		location = new Point(0, 0);
-		maxMovementTicks = 120;
+		maxMovementTicks = 100;
 		maxDetectionTicks = 60;
-		maxChaseTicks = 15;
+		maxChaseTicks = 9;
 		maxAttackTicks = 30;
 		attackRange = 1;
 	}
@@ -58,13 +58,16 @@ public class Monster {
 			detectionTicks++;
 			if (detectionTicks % maxDetectionTicks == 0) {
 				
+				// Check if the monster is in a square near the player
 				Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
-				if (location.x < 0 || location.y < 0) {
-					chasing = false;
-					return;
+				boolean isClose = false;
+				
+				
+				// If so, calc the path
+				if (isClose) {
+					path = pathFinder.findPath(player, location.x, location.y, player.getX(), player.getY());
+					chasing = (path != null && path.getLength() <= detectionRange);
 				}
-				path = pathFinder.findPath(player, location.x, location.y, player.getX(), player.getY());
-				chasing = (path != null && path.getLength() <= detectionRange);
 			}
 		
 		
