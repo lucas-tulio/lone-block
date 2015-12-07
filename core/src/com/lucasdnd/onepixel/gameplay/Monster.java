@@ -61,7 +61,10 @@ public class Monster {
 				// Check if the monster is in a square near the player
 				Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
 				boolean isClose = false;
-				
+				if (location.x >= player.getX() - detectionRange && location.x <= player.getX() + detectionRange
+				 && location.y >= player.getY() - detectionRange && location.y <= player.getY() + detectionRange) {
+					isClose = true;
+				}
 				
 				// If so, calc the path
 				if (isClose) {
