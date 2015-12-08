@@ -116,7 +116,9 @@ public class OnePixel extends ApplicationAdapter {
 			@Override
 			public void onClick() {
 				hideAllPanels();
-				savingGame = true;
+				if (player.isDead() == false) {
+					savingGame = true;
+				}
 			}
 			
 		});
