@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepixel.OnePixel;
-import com.lucasdnd.onepixel.gameplay.world.MapObject;
 import com.lucasdnd.onepixel.gameplay.world.World;
 import com.lucasdnd.onepixel.gameplay.world.pathfinder.Path;
 import com.lucasdnd.onepixel.gameplay.world.pathfinder.PathFinder;
@@ -15,13 +14,12 @@ public class Monster {
 
 	// Basic stuff
 	private Point location;
-	private static final Color restingColor = Color.ORANGE;
+	private static final Color restingColor = Color.CHARTREUSE;
 	private static final Color chasingColor = Color.RED;
 	
 	// Pathfinding
 	private Path path;
 	private boolean chasing;
-	private int attackRange;
 	
 	// Timers
 	private long movementTicks, maxMovementTicks;
@@ -29,13 +27,14 @@ public class Monster {
 	private long chaseTicks, maxChaseTicks;
 	private long attackTicks, maxAttackTicks;
 	
-	public Monster(World world) {
+	private int damage = 1500;
+	
+	public Monster(World world, int maxMovementTicks, int maxChaseTicks) {
 		location = new Point(0, 0);
-		maxMovementTicks = 100;
+		this.maxMovementTicks = maxMovementTicks;
+		this.maxChaseTicks = maxChaseTicks;
 		maxDetectionTicks = 60;
-		maxChaseTicks = 9;
-		maxAttackTicks = 30;
-		attackRange = 1;
+		maxAttackTicks = 20;
 	}
 	
 	public void spawn(Point spawnPoint) {
@@ -44,6 +43,8 @@ public class Monster {
 	}
 	
 	public void update(PathFinder pathFinder, int detectionRange) {
+		
+		Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
 		
 		if (chasing == false) {
 			
@@ -59,7 +60,6 @@ public class Monster {
 			if (detectionTicks % maxDetectionTicks == 0) {
 				
 				// Check if the monster is in a square near the player
-				Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
 				boolean isClose = false;
 				if (location.x >= player.getX() - detectionRange && location.x <= player.getX() + detectionRange
 				 && location.y >= player.getY() - detectionRange && location.y <= player.getY() + detectionRange) {
@@ -81,7 +81,6 @@ public class Monster {
 			chaseTicks++;
 			if (chaseTicks % maxChaseTicks == 0) {
 				
-				Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
 				path = pathFinder.findPath(player, location.x, location.y, player.getX(), player.getY());
 
 				if (path != null && path.getLength() > 0) {
@@ -90,14 +89,17 @@ public class Monster {
 					location.y = step.getY();
 				}
 				
-				// Attacks
-				if (path != null && path.getLength() <= attackRange) {
-					attack();
-				}
-				
 				if (path == null) {
 					chasing = false;
 				}
+			}
+		}
+		
+		// Attacks
+		if (location.x == player.getX() && location.y == player.getY()) {
+			attackTicks++;
+			if (attackTicks % maxAttackTicks == 0) {
+				attack();
 			}
 		}
 	}
@@ -147,6 +149,7 @@ public class Monster {
 	}
 	
 	private void attack() {
-		
+		Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
+		player.takeDamage(damage);
 	}
 }

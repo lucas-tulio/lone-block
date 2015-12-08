@@ -308,6 +308,13 @@ public class Player implements Mover {
 		return result;
 	}
 	
+	public void takeDamage(int damage) {
+		health -= damage;
+		if (health <= 0) {
+			dead = true;
+		}
+	}
+	
 	/** Facing methods */
 	
 	public void faceUp() {

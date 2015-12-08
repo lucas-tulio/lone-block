@@ -123,15 +123,24 @@ public class World implements Disposer, TileBasedMap {
 		monsters = new ArrayList<Monster>();
 		int numMonsters = 0;
 		if (size == Size.small) {
-			numMonsters = 1;
+			numMonsters = 8;
 		} else if (size == Size.normal) {
-			numMonsters = 10;
-		} else if (size == Size.large) {
 			numMonsters = 20;
+		} else if (size == Size.large) {
+			numMonsters = 40;
 		}
 		ArrayList<Point> spawnPoints = getRandomAvailableSpawnPoints(numMonsters);
 		for (int i = 0; i < numMonsters; i++) {
-			Monster m = new Monster(this);
+			int maxChaseTicks;
+			int monsterType = new Random().nextInt(2);
+			if (monsterType == 0) {
+				maxChaseTicks = 6;
+			} else if (monsterType == 1) {
+				maxChaseTicks = 7;
+			} else {
+				maxChaseTicks = 9;
+			}
+			Monster m = new Monster(this, maxChaseTicks * 8, maxChaseTicks);
 			monsters.add(m);
 			m.spawn(spawnPoints.get(i));
 		}
