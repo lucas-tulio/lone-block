@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.lucasdnd.onepixel.gameplay.Monster;
 import com.lucasdnd.onepixel.gameplay.Player;
+import com.lucasdnd.onepixel.gameplay.Point;
 import com.lucasdnd.onepixel.gameplay.items.Campfire;
 import com.lucasdnd.onepixel.gameplay.items.Fruit;
 import com.lucasdnd.onepixel.gameplay.items.Inventory;
@@ -23,6 +25,7 @@ import com.lucasdnd.onepixel.gameplay.world.Tree;
 import com.lucasdnd.onepixel.gameplay.world.Water;
 import com.lucasdnd.onepixel.gameplay.world.WoodBlock;
 import com.lucasdnd.onepixel.gameplay.world.World;
+import com.lucasdnd.onepixel.gameplay.world.World.Size;
 
 public class SaveLoad {
 	
@@ -129,6 +132,19 @@ public class SaveLoad {
 				}
 			}
 			sb.append(lineBreak);
+		}
+		
+		// Monsters
+		ArrayList<Monster> monsters = game.getWorld().getMonsters();
+		isFirst = true;
+		for (Monster m : monsters) {
+				
+			if (isFirst == false) {
+				sb.append(separator);
+			}
+			isFirst = false;
+			
+			sb.append(m.getLocation().x + innerSeparator + m.getLocation().y + innerSeparator + m.getMaxMovementTicks() + innerSeparator + m.getMaxChaseTicks());
 		}
 		
 		// Write to file
@@ -238,7 +254,32 @@ public class SaveLoad {
 				}
 			}
 			
+			// Set the world objects
 			world.setMapObjects(mapObjects, trees);
+			
+			// After world data: read monsters
+			ArrayList<Monster> monsters = new ArrayList<Monster>();
+			
+			String[] monsterData = br.readLine().split(separator);
+			
+			for (int i = 0; i < monsterData.length; i++) {
+				
+				// Monster: monsterX, monsterY, maxMovementTicks, maxChaseTicks
+				String[] monsterContent = monsterData[i].split(innerSeparator);
+				
+				int monsterX = Integer.parseInt(monsterContent[0]);
+				int monsterY = Integer.parseInt(monsterContent[1]);
+				int maxMovementTicks = Integer.parseInt(monsterContent[2]);
+				int maxChaseTicks = Integer.parseInt(monsterContent[3]);
+				
+				// Instantiate it
+				Monster m = new Monster(maxMovementTicks, maxChaseTicks);
+				m.setLocation(new Point(monsterX, monsterY));
+				monsters.add(m);
+			}
+			
+			// Add them to the world
+			world.setMonsters(monsters);
 			
 			// Set the loaded objects in the game
 			game.setWorld(world);

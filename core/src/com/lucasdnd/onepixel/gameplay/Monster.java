@@ -29,7 +29,7 @@ public class Monster {
 	
 	private int damage = 1500;
 	
-	public Monster(World world, int maxMovementTicks, int maxChaseTicks) {
+	public Monster(int maxMovementTicks, int maxChaseTicks) {
 		location = new Point(0, 0);
 		this.maxMovementTicks = maxMovementTicks;
 		this.maxChaseTicks = maxChaseTicks;
@@ -152,4 +152,30 @@ public class Monster {
 		Player player = ((OnePixel)Gdx.app.getApplicationListener()).getPlayer();
 		player.takeDamage(damage);
 	}
+	
+	public Point getLocation() {
+		return location;
+	}
+
+	public void setLocation(Point location) {
+		this.location = location;
+	}
+
+	public long getMaxMovementTicks() {
+		return maxMovementTicks;
+	}
+
+	public void setMaxMovementTicks(long maxMovementTicks) {
+		this.maxMovementTicks = maxMovementTicks;
+	}
+
+	public long getMaxChaseTicks() {
+		return maxChaseTicks;
+	}
+
+	public void setMaxChaseTicks(long maxChaseTicks) {
+		this.maxChaseTicks = maxChaseTicks;
+	}
+	
+	
 }

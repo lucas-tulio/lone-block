@@ -30,6 +30,9 @@ public class World implements Disposer, TileBasedMap {
 		public static final int small = 512;
 		public static final int normal = 1024;
 		public static final int large = 4096;
+		public static final int numMonstersSmall = 8;
+		public static final int numMonstersNormal = 20;
+		public static final int numMonstersLarge = 40;
 	}
 	
 	private MapObject[][] mapObjects;
@@ -123,11 +126,11 @@ public class World implements Disposer, TileBasedMap {
 		monsters = new ArrayList<Monster>();
 		int numMonsters = 0;
 		if (size == Size.small) {
-			numMonsters = 8;
+			numMonsters = Size.numMonstersSmall;
 		} else if (size == Size.normal) {
-			numMonsters = 20;
+			numMonsters = Size.numMonstersNormal;
 		} else if (size == Size.large) {
-			numMonsters = 40;
+			numMonsters = Size.numMonstersLarge;
 		}
 		ArrayList<Point> spawnPoints = getRandomAvailableSpawnPoints(numMonsters);
 		for (int i = 0; i < numMonsters; i++) {
@@ -140,7 +143,7 @@ public class World implements Disposer, TileBasedMap {
 			} else {
 				maxChaseTicks = 9;
 			}
-			Monster m = new Monster(this, maxChaseTicks * 8, maxChaseTicks);
+			Monster m = new Monster(maxChaseTicks * 8, maxChaseTicks);
 			monsters.add(m);
 			m.spawn(spawnPoints.get(i));
 		}
@@ -290,6 +293,14 @@ public class World implements Disposer, TileBasedMap {
 	}
 	
 	/**
+	 * Set the monsters after loading a game from a save file
+	 * @param monsters
+	 */
+	public void setMonsters(ArrayList<Monster> monsters) {
+		this.monsters = monsters;
+	}
+	
+	/**
 	 * Returns a random available spawn point
 	 * @return
 	 */
@@ -355,5 +366,9 @@ public class World implements Disposer, TileBasedMap {
 	@Override
 	public float getCost(PathFindingContext context, int tx, int ty) {
 		return 1f;
+	}
+	
+	public ArrayList<Monster> getMonsters() {
+		return monsters;
 	}
 }

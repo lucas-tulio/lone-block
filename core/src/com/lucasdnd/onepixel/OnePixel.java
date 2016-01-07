@@ -322,11 +322,15 @@ public class OnePixel extends ApplicationAdapter {
 		}
 		// Will Load
 		if (loadingGame) {
-			SaveLoad.load();
-			paused = false;
-			waiting = false;
-			loadingGame = false;
-			OnePixel.updateZoomLevelDisplay();
+			if (SaveLoad.load()) {
+				paused = false;
+				waiting = false;
+				loadingGame = false;
+				OnePixel.updateZoomLevelDisplay();
+			} else {
+				startingNewGame = true;
+				update();
+			}
 		}
 		
 		// Dialog box update
