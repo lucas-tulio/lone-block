@@ -9,24 +9,36 @@ import com.lucasdnd.onepixel.gameplay.Monster;
 import com.lucasdnd.onepixel.gameplay.Player;
 import com.lucasdnd.onepixel.gameplay.Point;
 import com.lucasdnd.onepixel.gameplay.items.Bandage;
+import com.lucasdnd.onepixel.gameplay.items.BlueStone;
 import com.lucasdnd.onepixel.gameplay.items.Campfire;
 import com.lucasdnd.onepixel.gameplay.items.Cotton;
 import com.lucasdnd.onepixel.gameplay.items.Fruit;
+import com.lucasdnd.onepixel.gameplay.items.GreenStone;
 import com.lucasdnd.onepixel.gameplay.items.Inventory;
 import com.lucasdnd.onepixel.gameplay.items.InventoryBox;
 import com.lucasdnd.onepixel.gameplay.items.Item;
+import com.lucasdnd.onepixel.gameplay.items.MagentaStone;
+import com.lucasdnd.onepixel.gameplay.items.RedStone;
 import com.lucasdnd.onepixel.gameplay.items.Sapling;
 import com.lucasdnd.onepixel.gameplay.items.Stone;
+import com.lucasdnd.onepixel.gameplay.items.TealStone;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
+import com.lucasdnd.onepixel.gameplay.items.YellowStone;
+import com.lucasdnd.onepixel.gameplay.world.BlueRock;
 import com.lucasdnd.onepixel.gameplay.world.CampfireBlock;
 import com.lucasdnd.onepixel.gameplay.world.DeepWater;
+import com.lucasdnd.onepixel.gameplay.world.GreenRock;
+import com.lucasdnd.onepixel.gameplay.world.MagentaRock;
 import com.lucasdnd.onepixel.gameplay.world.MapObject;
+import com.lucasdnd.onepixel.gameplay.world.RedRock;
 import com.lucasdnd.onepixel.gameplay.world.Rock;
 import com.lucasdnd.onepixel.gameplay.world.SaplingBlock;
+import com.lucasdnd.onepixel.gameplay.world.TealRock;
 import com.lucasdnd.onepixel.gameplay.world.Tree;
 import com.lucasdnd.onepixel.gameplay.world.Water;
 import com.lucasdnd.onepixel.gameplay.world.WoodBlock;
 import com.lucasdnd.onepixel.gameplay.world.World;
+import com.lucasdnd.onepixel.gameplay.world.YellowRock;
 
 public class SaveLoad {
 	
@@ -317,6 +329,18 @@ public class SaveLoad {
 			return new Cotton();
 		} else if (Bandage.saveId == saveId) {
 			return new Bandage();
+		} else if (RedStone.saveId == saveId) {
+			return new RedStone();
+		} else if (GreenStone.saveId == saveId) {
+			return new GreenStone();
+		} else if (BlueStone.saveId == saveId) {
+			return new BlueStone();
+		} else if (YellowStone.saveId == saveId) {
+			return new YellowStone();
+		} else if (TealStone.saveId == saveId) {
+			return new TealStone();
+		} else if (MagentaStone.saveId == saveId) {
+			return new MagentaStone();
 		}
 		
 		return result;
@@ -339,6 +363,18 @@ public class SaveLoad {
 			return new Water(disposer, x, y);
 		} else if (WoodBlock.saveId == saveId) {
 			return new WoodBlock(disposer, x, y);
+		} else if (RedRock.saveId == saveId) {
+			return new RedRock(disposer, x, y);
+		} else if (GreenRock.saveId == saveId) {
+			return new GreenRock(disposer, x, y);
+		} else if (BlueRock.saveId == saveId) {
+			return new BlueRock(disposer, x, y);
+		} else if (YellowRock.saveId == saveId) {
+			return new YellowRock(disposer, x, y);
+		} else if (TealRock.saveId == saveId) {
+			return new TealRock(disposer, x, y);
+		} else if (MagentaRock.saveId == saveId) {
+			return new MagentaRock(disposer, x, y);
 		}
 		
 		return result;

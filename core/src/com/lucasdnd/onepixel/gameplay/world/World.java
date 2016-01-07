@@ -11,11 +11,17 @@ import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.gameplay.Monster;
 import com.lucasdnd.onepixel.gameplay.Player;
 import com.lucasdnd.onepixel.gameplay.Point;
+import com.lucasdnd.onepixel.gameplay.items.BlueStone;
 import com.lucasdnd.onepixel.gameplay.items.Campfire;
+import com.lucasdnd.onepixel.gameplay.items.GreenStone;
 import com.lucasdnd.onepixel.gameplay.items.Item;
+import com.lucasdnd.onepixel.gameplay.items.MagentaStone;
+import com.lucasdnd.onepixel.gameplay.items.RedStone;
 import com.lucasdnd.onepixel.gameplay.items.Sapling;
 import com.lucasdnd.onepixel.gameplay.items.Stone;
+import com.lucasdnd.onepixel.gameplay.items.TealStone;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
+import com.lucasdnd.onepixel.gameplay.items.YellowStone;
 import com.lucasdnd.onepixel.gameplay.world.pathfinder.AStarPathFinder;
 import com.lucasdnd.onepixel.gameplay.world.pathfinder.PathFindingContext;
 import com.lucasdnd.onepixel.gameplay.world.pathfinder.TileBasedMap;
@@ -257,6 +263,7 @@ public class World implements Disposer, TileBasedMap {
 	 * @return
 	 */
 	public MapObject exchange(Item item, int x, int y) {
+		
 		if (item instanceof Wood) {
 			return new WoodBlock(this, x, y);
 		} else if (item instanceof Stone) {
@@ -265,6 +272,18 @@ public class World implements Disposer, TileBasedMap {
 			return new CampfireBlock(this, x, y);
 		} else if (item instanceof Sapling) {
 			return new Tree(this, x, y, false);
+		} else if (item instanceof RedStone) {
+			return new RedRock(this, x, y);
+		} else if (item instanceof GreenStone) {
+			return new GreenRock(this, x, y);
+		} else if (item instanceof BlueStone) {
+			return new BlueRock(this, x, y);
+		} else if (item instanceof YellowStone) {
+			return new YellowRock(this, x, y);
+		} else if (item instanceof TealStone) {
+			return new TealRock(this, x, y);
+		} else if (item instanceof MagentaStone) {
+			return new MagentaRock(this, x, y);
 		}
 
 		return null;

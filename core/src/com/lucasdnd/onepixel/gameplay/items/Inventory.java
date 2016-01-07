@@ -241,19 +241,67 @@ public class Inventory {
 		}
 		
 		// Check what the player is trying to create, then show that item there
+		// Craftables go here
 		int nextAvailableCraftingBox = 0;
 		Craftable campfire = new Campfire();
 		if (isCraftableMatch(campfire)) {
 			craftingResultBoxes.get(nextAvailableCraftingBox).setItem((Item)campfire);
 			nextAvailableCraftingBox++;
 		}
+		if (noMoreCraftingBoxes(nextAvailableCraftingBox)) {return;}
 		
-		// Add other craftables here
 		Bandage bandage = new Bandage();
 		if (isCraftableMatch(bandage)) {
 			craftingResultBoxes.get(nextAvailableCraftingBox).setItem((Item)bandage);
 			nextAvailableCraftingBox++;
 		}
+		if (noMoreCraftingBoxes(nextAvailableCraftingBox)) {return;}
+		
+		RedStone redStone = new RedStone();
+		if (isCraftableMatch(redStone)) {
+			craftingResultBoxes.get(nextAvailableCraftingBox).setItem((Item)redStone);
+			nextAvailableCraftingBox++;
+		}
+		if (noMoreCraftingBoxes(nextAvailableCraftingBox)) {return;}
+		
+		GreenStone greenStone = new GreenStone();
+		if (isCraftableMatch(greenStone)) {
+			craftingResultBoxes.get(nextAvailableCraftingBox).setItem((Item)greenStone);
+			nextAvailableCraftingBox++;
+		}
+		if (noMoreCraftingBoxes(nextAvailableCraftingBox)) {return;}
+		
+		BlueStone blueStone = new BlueStone();
+		if (isCraftableMatch(blueStone)) {
+			craftingResultBoxes.get(nextAvailableCraftingBox).setItem((Item)blueStone);
+			nextAvailableCraftingBox++;
+		}
+		if (noMoreCraftingBoxes(nextAvailableCraftingBox)) {return;}
+		
+		YellowStone yellowStone = new YellowStone();
+		if (isCraftableMatch(yellowStone)) {
+			craftingResultBoxes.get(nextAvailableCraftingBox).setItem((Item)yellowStone);
+			nextAvailableCraftingBox++;
+		}
+		if (noMoreCraftingBoxes(nextAvailableCraftingBox)) {return;}
+		
+		TealStone tealStone = new TealStone();
+		if (isCraftableMatch(tealStone)) {
+			craftingResultBoxes.get(nextAvailableCraftingBox).setItem((Item)tealStone);
+			nextAvailableCraftingBox++;
+		}
+		if (noMoreCraftingBoxes(nextAvailableCraftingBox)) {return;}
+		
+		MagentaStone magentaStone = new MagentaStone();
+		if (isCraftableMatch(magentaStone)) {
+			craftingResultBoxes.get(nextAvailableCraftingBox).setItem((Item)magentaStone);
+			nextAvailableCraftingBox++;
+		}
+		if (noMoreCraftingBoxes(nextAvailableCraftingBox)) {return;}
+	}
+	
+	private boolean noMoreCraftingBoxes(int nextAvailableCraftingBox) {
+		return nextAvailableCraftingBox >= 3;
 	}
 	
 	/**
