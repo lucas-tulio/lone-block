@@ -8,7 +8,9 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.lucasdnd.onepixel.gameplay.Monster;
 import com.lucasdnd.onepixel.gameplay.Player;
 import com.lucasdnd.onepixel.gameplay.Point;
+import com.lucasdnd.onepixel.gameplay.items.Bandage;
 import com.lucasdnd.onepixel.gameplay.items.Campfire;
+import com.lucasdnd.onepixel.gameplay.items.Cotton;
 import com.lucasdnd.onepixel.gameplay.items.Fruit;
 import com.lucasdnd.onepixel.gameplay.items.Inventory;
 import com.lucasdnd.onepixel.gameplay.items.InventoryBox;
@@ -25,7 +27,6 @@ import com.lucasdnd.onepixel.gameplay.world.Tree;
 import com.lucasdnd.onepixel.gameplay.world.Water;
 import com.lucasdnd.onepixel.gameplay.world.WoodBlock;
 import com.lucasdnd.onepixel.gameplay.world.World;
-import com.lucasdnd.onepixel.gameplay.world.World.Size;
 
 public class SaveLoad {
 	
@@ -108,12 +109,13 @@ public class SaveLoad {
 					sb.append("0");
 				} else if (mapObjects[i][j] instanceof Tree) {
 					// Tree data:
-					// saveId, isGrown, hasFruits, saplings, saplingsToGrow, fruits, hitsToChopDown,
+					// saveId, isGrown, isCotton, hasFruits, saplings, saplingsToGrow, fruits, hitsToChopDown,
 					// growthTicks, fruitTicks, saplingTicks, maxGrowthTicks, maxFruitTicks, maxSaplingTicks
 					Tree t = (Tree)mapObjects[i][j];
 					sb.append("" +
 							t.getSaveId() + innerSeparator +
 							t.isGrown() + innerSeparator +
+							t.isCotton() + innerSeparator +
 							t.hasFruits() + innerSeparator +
 							t.getSaplings() + innerSeparator +
 							t.getSaplingsToGrow() + innerSeparator +
@@ -213,7 +215,7 @@ public class SaveLoad {
 			int mapSize = Integer.parseInt(br.readLine());
 			
 			// World
-			World world = new World();
+			World world = new World(mapSize, true);
 			MapObject[][] mapObjects = new MapObject[mapSize][mapSize];
 			ArrayList<Tree> trees = new ArrayList<Tree>();
 			
@@ -236,17 +238,18 @@ public class SaveLoad {
 						// growthTicks, fruitTicks, saplingTicks
 						Tree tree = (Tree)mapObject;
 						tree.setGrown(Boolean.parseBoolean(objectData[1]));
-						tree.setHasFruits(Boolean.parseBoolean(objectData[2]));
-						tree.setSaplings(Integer.parseInt(objectData[3]));
-						tree.setSaplingsToGrow(Integer.parseInt(objectData[4]));
-						tree.setFruits(Integer.parseInt(objectData[5]));
-						tree.setHitsToChopDown(Integer.parseInt(objectData[6]));
-						tree.setGrowthTicks(Long.parseLong(objectData[7]));
-						tree.setFruitTicks(Long.parseLong(objectData[8]));
-						tree.setSaplingTicks(Long.parseLong(objectData[9]));
-						tree.setMaxGrowthTicks(Long.parseLong(objectData[10]));
-						tree.setMaxFruitTicks(Long.parseLong(objectData[11]));
-						tree.setMaxSaplingTicks(Long.parseLong(objectData[12]));
+						tree.setCotton(Boolean.parseBoolean(objectData[2]));
+						tree.setHasFruits(Boolean.parseBoolean(objectData[3]));
+						tree.setSaplings(Integer.parseInt(objectData[4]));
+						tree.setSaplingsToGrow(Integer.parseInt(objectData[5]));
+						tree.setFruits(Integer.parseInt(objectData[6]));
+						tree.setHitsToChopDown(Integer.parseInt(objectData[7]));
+						tree.setGrowthTicks(Long.parseLong(objectData[8]));
+						tree.setFruitTicks(Long.parseLong(objectData[9]));
+						tree.setSaplingTicks(Long.parseLong(objectData[10]));
+						tree.setMaxGrowthTicks(Long.parseLong(objectData[11]));
+						tree.setMaxFruitTicks(Long.parseLong(objectData[12]));
+						tree.setMaxSaplingTicks(Long.parseLong(objectData[13]));
 						trees.add(tree);
 					}
 					
@@ -310,6 +313,10 @@ public class SaveLoad {
 			return new Stone();
 		} else if (Wood.saveId == saveId) {
 			return new Wood();
+		} else if (Cotton.saveId == saveId) {
+			return new Cotton();
+		} else if (Bandage.saveId == saveId) {
+			return new Bandage();
 		}
 		
 		return result;

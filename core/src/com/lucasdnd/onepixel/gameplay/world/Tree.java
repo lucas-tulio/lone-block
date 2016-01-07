@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepixel.OnePixel;
 import com.lucasdnd.onepixel.Resources;
 import com.lucasdnd.onepixel.TimeController;
+import com.lucasdnd.onepixel.gameplay.items.Cotton;
 import com.lucasdnd.onepixel.gameplay.items.Fruit;
 import com.lucasdnd.onepixel.gameplay.items.Sapling;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
@@ -22,6 +23,7 @@ public class Tree extends MapObject {
 	
 	private boolean isGrown;	// If it's a sapling or a tree
 	private boolean hasFruits = false;
+	private boolean isCotton = false; // Cotton or Fruit
 	
 	private int fruits, saplings;
 	private int saplingsToGrow;
@@ -41,6 +43,11 @@ public class Tree extends MapObject {
 		
 		Random r = new Random();
 		this.isGrown = isGrown;
+		
+		// Cotton plant
+		if (r.nextInt(10) == 0) {
+			isCotton = true;
+		}
 		
 		if (isGrown == false) {
 			// A sapling
@@ -138,7 +145,11 @@ public class Tree extends MapObject {
 						OnePixel.blockSize / 4f,
 						OnePixel.blockSize / 4f);
 				
-				sr.setColor(Color.RED);
+				if (isCotton) {
+					sr.setColor(Color.WHITE);
+				} else {
+					sr.setColor(Color.RED);
+				}
 				sr.rect(x + (OnePixel.blockSize / 8f * 5f),
 						y + OnePixel.blockSize / 8f,
 						OnePixel.blockSize / 4f,
@@ -157,8 +168,11 @@ public class Tree extends MapObject {
 			} else if (saplings <= 0 && fruits > 0) {
 				
 				// Fruits only
-				
-				sr.setColor(Color.RED);
+				if (isCotton) {
+					sr.setColor(Color.WHITE);
+				} else {
+					sr.setColor(Color.RED);
+				}
 				sr.rect(x + OnePixel.blockSize - OnePixel.blockSize / 2f - OnePixel.blockSize / 8f,
 						y + OnePixel.blockSize - OnePixel.blockSize / 2f - OnePixel.blockSize / 8f,
 						OnePixel.blockSize / 4f,
@@ -206,7 +220,12 @@ public class Tree extends MapObject {
 		if (fruits > 0) {
 			fruits--;
 			Resources.get().randomLeavesSound().play(0.4f);
-			return new Fruit();
+			if (isCotton) {
+				return new Cotton();
+			} else {
+				return new Fruit();
+			}
+			
 		}
 		
 		if (hitsToChopDown > 0) {
@@ -233,6 +252,10 @@ public class Tree extends MapObject {
 
 	public boolean isGrown() {
 		return isGrown;
+	}
+	
+	public boolean isCotton() {
+		return isCotton;
 	}
 
 	public boolean hasFruits() {
@@ -322,5 +345,9 @@ public class Tree extends MapObject {
 
 	public void setMaxSaplingTicks(long maxSaplingTicks) {
 		this.maxSaplingTicks = maxSaplingTicks;
+	}
+	
+	public void setCotton(boolean cotton) {
+		this.isCotton = cotton;
 	}
 }

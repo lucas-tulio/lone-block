@@ -29,10 +29,10 @@ public class World implements Disposer, TileBasedMap {
 	public class Size {
 		public static final int small = 512;
 		public static final int normal = 1024;
-		public static final int large = 4096;
-		public static final int numMonstersSmall = 8;
+		public static final int large = 2048;
+		public static final int numMonstersSmall = 5;
 		public static final int numMonstersNormal = 20;
-		public static final int numMonstersLarge = 40;
+		public static final int numMonstersLarge = 80;
 	}
 	
 	private MapObject[][] mapObjects;
@@ -149,8 +149,13 @@ public class World implements Disposer, TileBasedMap {
 		}
 	}
 	
-	public World() {
+	/**
+	 * Load game constructor
+	 */
+	public World(int size, boolean isLoadGame) {
+		this.size = size;
 		monsters = new ArrayList<Monster>();
+		pathFinder = new AStarPathFinder(this, monsterDetectionRange, false);
 	}
 	
 	public void update() {

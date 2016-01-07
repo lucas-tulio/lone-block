@@ -72,8 +72,7 @@ public class Inventory {
 	}
 
 	public void update() {
-		
-		// TODO: THIS SUCKS, we should create an int in InventoryBox to indicate which type of box it is 
+
 		// All Inventory Boxes together
 		ArrayList<InventoryBox> allBoxes = new ArrayList<InventoryBox>();
 		allBoxes.addAll(inventoryBoxes);
@@ -242,14 +241,19 @@ public class Inventory {
 		}
 		
 		// Check what the player is trying to create, then show that item there
-		// Testing this way to do it
+		int nextAvailableCraftingBox = 0;
 		Craftable campfire = new Campfire();
 		if (isCraftableMatch(campfire)) {
-			craftingResultBoxes.get(0).setItem((Item)campfire);
+			craftingResultBoxes.get(nextAvailableCraftingBox).setItem((Item)campfire);
+			nextAvailableCraftingBox++;
 		}
 		
 		// Add other craftables here
-		
+		Bandage bandage = new Bandage();
+		if (isCraftableMatch(bandage)) {
+			craftingResultBoxes.get(nextAvailableCraftingBox).setItem((Item)bandage);
+			nextAvailableCraftingBox++;
+		}
 	}
 	
 	/**

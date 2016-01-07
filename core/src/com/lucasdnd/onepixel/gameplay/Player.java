@@ -237,6 +237,11 @@ public class Player implements Mover {
 		
 		// A block or an usable item?
 		MapObject itemBlock = world.exchange(item, targetX, targetY);
+		if (item instanceof Usable == false && itemBlock == null) {
+			// Item is not usable, leave
+			return;
+		}
+		
 		if (itemBlock == null && item instanceof Usable) {
 
 			// Item
