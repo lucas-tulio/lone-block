@@ -308,7 +308,7 @@ public class LoneBlock extends ApplicationAdapter {
 		// Starting new game
 		if (startingNewGame) {
 			world = new World(World.Size.normal);
-			player = new Player(world.getRandomAvailableSpawnPoints(1).get(0));
+			player = new Player(world.getPlayerAvailableSpawnPoint());
 			timeController = new TimeController();
 			paused = false;
 			startingNewGame = false;

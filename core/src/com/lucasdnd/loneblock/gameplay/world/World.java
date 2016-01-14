@@ -29,8 +29,10 @@ import com.lucasdnd.loneblock.ui.SideBar;
 
 public class World implements Disposer, TileBasedMap {
 	
+	// General stuff
 	private Random r;
-
+	private Point playerAvailableSpawnPoint;
+	private MapObject[][] mapObjects;
 	private int size;
 	public class Size {
 		public static final int small = 512;
@@ -40,8 +42,6 @@ public class World implements Disposer, TileBasedMap {
 		public static final int numMonstersNormal = 20;
 		public static final int numMonstersLarge = 80;
 	}
-	
-	private MapObject[][] mapObjects;
 	
 	// Pathfinding
 	private int monsterDetectionRange = 45;
@@ -54,9 +54,7 @@ public class World implements Disposer, TileBasedMap {
 	// World settings
 	private int numTrees;
 
-	/**
-	 * Terrain settings
-	 */
+	// Terrain settings
 	private final int land = 120;
 	private final int mountainOffset = 20;
 	private final int waterOffset = 20;
@@ -138,7 +136,7 @@ public class World implements Disposer, TileBasedMap {
 		} else if (size == Size.large) {
 			numMonsters = Size.numMonstersLarge;
 		}
-		ArrayList<Point> spawnPoints = getRandomAvailableSpawnPoints(numMonsters);
+		ArrayList<Point> randomSpawnPoints = getRandomAvailableSpawnPoints(numMonsters + 1);
 		for (int i = 0; i < numMonsters; i++) {
 			int maxChaseTicks;
 			int monsterType = new Random().nextInt(2);
@@ -151,8 +149,9 @@ public class World implements Disposer, TileBasedMap {
 			}
 			Monster m = new Monster(maxChaseTicks * 8, maxChaseTicks);
 			monsters.add(m);
-			m.spawn(spawnPoints.get(i));
+			m.spawn(randomSpawnPoints.get(i));
 		}
+		playerAvailableSpawnPoint = randomSpawnPoints.get(numMonsters);
 	}
 	
 	/**
@@ -372,7 +371,6 @@ public class World implements Disposer, TileBasedMap {
 
 	@Override
 	public void pathFinderVisited(int x, int y) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -394,5 +392,9 @@ public class World implements Disposer, TileBasedMap {
 	
 	public ArrayList<Monster> getMonsters() {
 		return monsters;
+	}
+	
+	public Point getPlayerAvailableSpawnPoint() {
+		return this.playerAvailableSpawnPoint;
 	}
 }
