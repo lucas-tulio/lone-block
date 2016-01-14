@@ -1,4 +1,5 @@
-# one-pixel
+# lone-block
+
 Minimalist building/survival game made using Libgdx.
 
-![screenshot](https://raw.github.com/lucasdnd/one-pixel/master/one-pixel-print.png)
+![screenshot](https://raw.github.com/lucasdnd/lone-block/master/one-pixel-print.png)
