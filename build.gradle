@@ -13,7 +13,7 @@ allprojects {
 
     version = '1.0'
     ext {
-        appName = "one-pix"
+        appName = "lone-block"
         gdxVersion = '1.6.5'
         roboVMVersion = '1.6.0'
         box2DLightsVersion = '1.4'
