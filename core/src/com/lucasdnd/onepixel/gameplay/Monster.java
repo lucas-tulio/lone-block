@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.Resources;
 import com.lucasdnd.onepixel.gameplay.world.World;
 import com.lucasdnd.onepixel.gameplay.world.pathfinder.Path;
 import com.lucasdnd.onepixel.gameplay.world.pathfinder.PathFinder;
@@ -14,8 +15,8 @@ public class Monster {
 
 	// Basic stuff
 	private Point location;
-	private static final Color restingColor = Color.CHARTREUSE;
-	private static final Color chasingColor = Color.RED;
+	private static final Color restingColor = Resources.Color.monsterResting;
+	private static final Color chasingColor = Resources.Color.monsterChasing;
 	
 	// Pathfinding
 	private Path path;
@@ -27,6 +28,7 @@ public class Monster {
 	private long chaseTicks, maxChaseTicks;
 	private long attackTicks, maxAttackTicks;
 	
+	private int attackRange = 1;
 	private int damage = 1500;
 	
 	public Monster(int maxMovementTicks, int maxChaseTicks) {
@@ -82,8 +84,11 @@ public class Monster {
 			if (chaseTicks % maxChaseTicks == 0) {
 				
 				path = pathFinder.findPath(player, location.x, location.y, player.getX(), player.getY());
-
-				if (path != null && path.getLength() > 0) {
+				
+				if (path != null) {
+					if (path.getLength() == 0) {
+						return;
+					}
 					Path.Step step = path.getStep(1); // Next step only
 					location.x = step.getX();
 					location.y = step.getY();
@@ -96,7 +101,8 @@ public class Monster {
 		}
 		
 		// Attacks
-		if (location.x == player.getX() && location.y == player.getY()) {
+		if (location.x >= player.getX() - attackRange && location.x <= player.getX() + attackRange
+		 && location.y >= player.getY() - attackRange && location.y <= player.getY() + attackRange) {
 			attackTicks++;
 			if (attackTicks % maxAttackTicks == 0) {
 				attack();

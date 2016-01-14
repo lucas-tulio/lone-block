@@ -1,8 +1,8 @@
 package com.lucasdnd.onepixel.gameplay.items;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.lucasdnd.onepixel.Resources;
 
 public class Cotton extends Item {
 	
@@ -12,7 +12,7 @@ public class Cotton extends Item {
 	
 	public Cotton() {
 		this.setName("Cotton");
-		this.setColor(Color.WHITE);
+		this.setColor(Resources.Color.cotton);
 	}
 
 	@Override

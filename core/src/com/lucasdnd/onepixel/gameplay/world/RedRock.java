@@ -10,7 +10,7 @@ public class RedRock extends MapObject {
 	
 	public static final int saveId = 8;
 	
-	private static final Color color = Color.RED;
+	private static final Color color = Resources.Color.redRock;
 
 	public RedRock(Disposer disposer, int x, int y) {
 		super(disposer, x, y);

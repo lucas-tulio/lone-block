@@ -1,5 +1,7 @@
 package com.lucasdnd.onepixel;
 
+import java.io.BufferedReader;
+import java.lang.reflect.Field;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
  *
  */
 public class Resources {
+
 	private static Resources instance;
 	public static Resources get() {
 		if (instance == null) {
@@ -43,8 +46,76 @@ public class Resources {
 		drinkingSound2 = Gdx.audio.newSound(Gdx.files.internal("sfx/drinking-2.wav"));
 		drinkingSound3 = Gdx.audio.newSound(Gdx.files.internal("sfx/drinking-3.wav"));
 		
-		saveFile = Gdx.files.local("saves/save.op");
+		paletteFile = Gdx.files.local("palette.conf");
+		readColors();
 		
+		saveFile = Gdx.files.local("saves/save.op");
+	}
+	
+	/**
+	 * Reads the colors from the palette.conf file
+	 */
+	private void readColors() {
+		
+		BufferedReader br = null;
+		try {
+			br = paletteFile.reader(1024);
+			
+			String line = "";
+			while ((line = br.readLine()) != null) {
+				
+				line = line.trim();
+				if (line.length() == 0 || line.substring(0, 2).compareToIgnoreCase("//") == 0) {
+					continue; // Comment or empty, ignore
+				} else {
+					
+					// Read content
+					String[] fields = line.split(":");
+					if (fields.length != 2) {
+						throw new Exception("Bad palette file format at " + line);
+					}
+					fields[0] = fields[0].trim();
+					fields[1] = fields[1].trim().replace("#", "");
+					
+					// Match with Color attribute name
+					Class<?> colorClass = Color.class;
+					Field field = colorClass.getDeclaredField(fields[0]);
+					field.setAccessible(true);
+					
+					// Create the libgdx Color object
+					long colorValue = Long.parseLong(fields[1] + "ff", 16);
+					com.badlogic.gdx.graphics.Color colorObject = new com.badlogic.gdx.graphics.Color((int)colorValue);
+					
+					// Set!
+					field.set(null, colorObject);
+				}
+			}
+
+		} catch (NoSuchFieldException e) {
+			System.out.println("Error reading palette file. Unknown field:\n");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			Gdx.app.exit();
+		} catch (Exception e) {
+			System.out.println("Error reading palette file\n");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			Gdx.app.exit();
+		} finally {
+			try {
+				br.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public static class Color {
+		public static com.badlogic.gdx.graphics.Color monsterResting, monsterChasing, player, bandage, blueRock,
+		campfire1, campfire2, campfire3, campfire4, cotton, fruit, greenRock, magentaRock, redRock, rock, tealRock,
+		wood, yellowRock, tree, ground, buttonDisabled, button, buttonHover, uiFill, uiStroke, uiBarFill, tooltipFill,
+		worldBackground, sapling, water, deepWater;
 	}
 	
 	public Sound randomLeavesSound() {
@@ -104,6 +175,9 @@ public class Resources {
 	private Sound drinkingSound1;
 	private Sound drinkingSound2;
 	private Sound drinkingSound3;
+	
+	// Palette
+	private FileHandle paletteFile;
 	
 	// Save File
 	public FileHandle saveFile;

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.FontUtils;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.Resources;
 import com.lucasdnd.onepixel.gameplay.Player;
 
 public class SideBar {
@@ -51,7 +52,7 @@ public class SideBar {
 		
 		// Black background
 		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.BLACK);
+		sr.setColor(Resources.Color.uiFill);
 		sr.rect(x, y, SIDEBAR_WIDTH, height);
 		sr.end();
 		
@@ -103,7 +104,7 @@ public class SideBar {
 		final float lineHeight = height;
 		final float lineWidth = width + lineWeight;
 		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.WHITE);
+		sr.setColor(Resources.Color.uiStroke);
 		
 		// Left
 		sr.rect(x, y, lineWeight, lineWeight - lineHeight);
@@ -131,7 +132,7 @@ public class SideBar {
 		}
 		sr.begin(ShapeType.Filled);
 		if (c == null) {
-			sr.setColor(Color.LIGHT_GRAY);
+			sr.setColor(Resources.Color.uiBarFill);
 		} else {
 			sr.setColor(c);
 		}

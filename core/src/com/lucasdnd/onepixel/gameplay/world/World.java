@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.Resources;
 import com.lucasdnd.onepixel.gameplay.Monster;
 import com.lucasdnd.onepixel.gameplay.Player;
 import com.lucasdnd.onepixel.gameplay.Point;
@@ -177,7 +177,7 @@ public class World implements Disposer, TileBasedMap {
 	public void render(ShapeRenderer sr) {
 		
 		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.FOREST);
+		sr.setColor(Resources.Color.ground);
 		sr.rect(0f, 0f, size * OnePixel.blockSize, size * OnePixel.blockSize);
 
 		// Calculate the visible world objects

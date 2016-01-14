@@ -2,9 +2,9 @@ package com.lucasdnd.onepixel.gameplay.items;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.lucasdnd.onepixel.Resources;
 import com.lucasdnd.onepixel.ui.SideBar;
 
 public class BlueStone extends Item implements Craftable {
@@ -14,7 +14,7 @@ public class BlueStone extends Item implements Craftable {
 	public BlueStone() {
 		super();
 		this.setName("Blue Stone");
-		this.setColor(Color.BLUE);
+		this.setColor(Resources.Color.blueRock);
 	}
 	
 	@Override

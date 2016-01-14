@@ -10,7 +10,7 @@ public class TealRock extends MapObject {
 	
 	public static final int saveId = 12;
 	
-	private static final Color color = Color.TEAL;
+	private static final Color color = Resources.Color.tealRock;
 
 	public TealRock(Disposer disposer, int x, int y) {
 		super(disposer, x, y);

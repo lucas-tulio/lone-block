@@ -1,7 +1,6 @@
 package com.lucasdnd.onepixel;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.onepixel.ui.SideBar;
@@ -39,7 +38,7 @@ public class TimeController {
 	
 	public void render(ShapeRenderer uiShapeRenderer) {
 		uiShapeRenderer.begin(ShapeType.Filled);
-		uiShapeRenderer.setColor(Color.BLACK);
+		uiShapeRenderer.setColor(Resources.Color.uiFill);
 		uiShapeRenderer.rect(x, Gdx.graphics.getHeight() - boxHeight, textWidth, boxHeight);
 		uiShapeRenderer.end();
 		font.drawWhiteFont(text, x + textPaddingX, Gdx.graphics.getHeight() - textPaddingY, true);

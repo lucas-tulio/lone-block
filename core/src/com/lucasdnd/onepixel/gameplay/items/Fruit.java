@@ -1,8 +1,8 @@
 package com.lucasdnd.onepixel.gameplay.items;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.lucasdnd.onepixel.Resources;
 
 public class Fruit extends Item implements Usable {
 	
@@ -12,7 +12,7 @@ public class Fruit extends Item implements Usable {
 	
 	public Fruit() {
 		this.setName("Fruit");
-		this.setColor(Color.RED);
+		this.setColor(Resources.Color.fruit);
 	}
 	
 	@Override

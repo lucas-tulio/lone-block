@@ -39,7 +39,7 @@ public class Player implements Mover {
 	private Inventory inventory;
 	
 	private Player() {
-		color = Color.BLACK;
+		color = Resources.Color.player;
 	}
 	
 	/**

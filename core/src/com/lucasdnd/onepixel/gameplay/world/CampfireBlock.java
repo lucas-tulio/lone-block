@@ -3,13 +3,14 @@ package com.lucasdnd.onepixel.gameplay.world;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.Resources;
 import com.lucasdnd.onepixel.gameplay.items.Campfire;
 
 public class CampfireBlock extends MapObject {
 	
 	public static final int saveId = 6;
 	
-	static Color[] colors = {Color.FIREBRICK, Color.RED, Color.ORANGE, Color.YELLOW};
+	static Color[] colors = {Resources.Color.campfire1, Resources.Color.campfire2, Resources.Color.campfire3, Resources.Color.campfire4};
 	int currentColor, timer, maxTimer;
 
 	public CampfireBlock(Disposer disposer, int x, int y) {

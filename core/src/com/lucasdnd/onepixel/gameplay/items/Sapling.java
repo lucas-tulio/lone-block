@@ -1,8 +1,8 @@
 package com.lucasdnd.onepixel.gameplay.items;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.lucasdnd.onepixel.Resources;
 
 public class Sapling extends Item {
 	
@@ -12,7 +12,7 @@ public class Sapling extends Item {
 	
 	public Sapling() {
 		this.setName("Sapling");
-		this.setColor(new Color(0f, 0.3f, 0f, 1f));
+		this.setColor(Resources.Color.sapling);
 	}
 
 	@Override

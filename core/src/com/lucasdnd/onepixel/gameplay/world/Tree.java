@@ -16,8 +16,8 @@ public class Tree extends MapObject {
 	
 	public static final int saveId = 7;
 
-	protected final static Color color = new Color(0f, 0.3f, 0f, 1f);
-	protected final static Color saplingColor = new Color(0.3f, 0.8f, 0.3f, 1f);
+	protected final static Color color = Resources.Color.tree;
+	protected final static Color saplingColor = Resources.Color.sapling;
 	
 	private int hitsToChopDown;	// How many times the user will press E to chop this Tree down
 	
@@ -146,9 +146,9 @@ public class Tree extends MapObject {
 						OnePixel.blockSize / 4f);
 				
 				if (isCotton) {
-					sr.setColor(Color.WHITE);
+					sr.setColor(Resources.Color.cotton);
 				} else {
-					sr.setColor(Color.RED);
+					sr.setColor(Resources.Color.fruit);
 				}
 				sr.rect(x + (OnePixel.blockSize / 8f * 5f),
 						y + OnePixel.blockSize / 8f,
@@ -169,9 +169,9 @@ public class Tree extends MapObject {
 				
 				// Fruits only
 				if (isCotton) {
-					sr.setColor(Color.WHITE);
+					sr.setColor(Resources.Color.cotton);
 				} else {
-					sr.setColor(Color.RED);
+					sr.setColor(Resources.Color.fruit);
 				}
 				sr.rect(x + OnePixel.blockSize - OnePixel.blockSize / 2f - OnePixel.blockSize / 8f,
 						y + OnePixel.blockSize - OnePixel.blockSize / 2f - OnePixel.blockSize / 8f,

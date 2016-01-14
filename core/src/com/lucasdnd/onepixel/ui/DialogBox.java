@@ -1,11 +1,11 @@
 package com.lucasdnd.onepixel.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.FontUtils;
+import com.lucasdnd.onepixel.Resources;
 
 public class DialogBox {
 	
@@ -53,7 +53,7 @@ public class DialogBox {
 			
 			// Panel
 			sr.begin(ShapeType.Filled);
-			sr.setColor(Color.BLACK);
+			sr.setColor(Resources.Color.uiFill);
 			sr.rect(x + lineWeight, y, width - lineWeight, -height);
 			panel.drawFrame(sr, x, y, width, height, lineWeight);
 			sr.end();

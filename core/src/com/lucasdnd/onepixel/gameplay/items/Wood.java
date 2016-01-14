@@ -1,8 +1,8 @@
 package com.lucasdnd.onepixel.gameplay.items;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.lucasdnd.onepixel.Resources;
 import com.lucasdnd.onepixel.ui.SideBar;
 
 public class Wood extends Item {
@@ -12,7 +12,7 @@ public class Wood extends Item {
 	public Wood() {
 		super();
 		this.setName("Wood");
-		this.setColor(Color.BROWN);
+		this.setColor(Resources.Color.wood);
 	}
 	
 	@Override

@@ -2,9 +2,9 @@ package com.lucasdnd.onepixel.gameplay.items;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.lucasdnd.onepixel.Resources;
 import com.lucasdnd.onepixel.ui.SideBar;
 
 public class Bandage extends Item implements Usable, Craftable {
@@ -13,7 +13,7 @@ public class Bandage extends Item implements Usable, Craftable {
 	
 	public Bandage() {
 		this.setName("Bandage");
-		this.setColor(Color.WHITE);
+		this.setColor(Resources.Color.bandage);
 	}
 
 	@Override

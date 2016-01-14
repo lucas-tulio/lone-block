@@ -10,7 +10,7 @@ public class Water extends MapObject {
 	
 	public static final int saveId = 4;
 	
-	private final static Color color = new Color(0.15f, 0.29f, 0.92f, 1f);
+	private final static Color color = Resources.Color.water;
 	
 	public Water(Disposer disposer, int x, int y) {
 		super(disposer, x, y);

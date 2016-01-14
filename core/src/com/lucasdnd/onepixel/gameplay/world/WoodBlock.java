@@ -3,13 +3,14 @@ package com.lucasdnd.onepixel.gameplay.world;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.Resources;
 import com.lucasdnd.onepixel.gameplay.items.Wood;
 
 public class WoodBlock extends MapObject {
 	
 	public static final int saveId = 2;
 	
-	private final static Color color = Color.BROWN;
+	private final static Color color = Resources.Color.wood;
 
 	public WoodBlock(Disposer disposer, int x, int y) {
 		super(disposer, x, y);

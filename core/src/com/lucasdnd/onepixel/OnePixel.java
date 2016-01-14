@@ -62,6 +62,9 @@ public class OnePixel extends ApplicationAdapter {
 	@Override
 	public void create () {
 		
+		// Initialize the Resource loader
+		Resources.get();
+		
 		// Render, camera
 		shapeRenderer = new ShapeRenderer();
  		uiShapeRenderer = new ShapeRenderer();
@@ -372,7 +375,7 @@ public class OnePixel extends ApplicationAdapter {
 	public void render () {
 		this.update();
 		
-		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
+		Gdx.gl.glClearColor(Resources.Color.worldBackground.r, Resources.Color.worldBackground.g, Resources.Color.worldBackground.b, Resources.Color.worldBackground.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		// Starting new Game

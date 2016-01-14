@@ -10,7 +10,7 @@ public class MagentaRock extends MapObject {
 
 	public static final int saveId = 13;
 	
-	private static final Color color = Color.MAGENTA;
+	private static final Color color = Resources.Color.magentaRock;
 
 	public MagentaRock(Disposer disposer, int x, int y) {
 		super(disposer, x, y);

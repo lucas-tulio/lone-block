@@ -27,9 +27,9 @@ public class Button {
 	private ShapeRenderer sr;
 	private ButtonClickListener clickListener;
 	
-	private final Color disabledColor = Color.GRAY;
-	private final Color normalColor = Color.WHITE;
-	private final Color hoverColor = Color.WHITE;
+	private final Color disabledColor = Resources.Color.buttonDisabled;
+	private final Color normalColor = Resources.Color.button;
+	private final Color hoverColor = Resources.Color.buttonHover;
 	
 	public Button(String text) {
 		this.text = text;

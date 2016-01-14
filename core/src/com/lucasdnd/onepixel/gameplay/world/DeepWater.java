@@ -10,7 +10,7 @@ public class DeepWater extends MapObject {
 	
 	public static final int saveId = 5;
 	
-	final static Color color = new Color(0.11f, 0.19f, 0.74f, 1f);
+	final static Color color = Resources.Color.deepWater;
 
 	public DeepWater(Disposer disposer, int x, int y) {
 		super(disposer, x, y);

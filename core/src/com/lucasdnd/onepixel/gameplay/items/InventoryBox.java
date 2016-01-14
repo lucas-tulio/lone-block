@@ -1,12 +1,12 @@
 package com.lucasdnd.onepixel.gameplay.items;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.onepixel.FontUtils;
 import com.lucasdnd.onepixel.OnePixel;
+import com.lucasdnd.onepixel.Resources;
 
 /**
  * The visual representation of the inventory "box" on the sidebar
@@ -61,7 +61,7 @@ public class InventoryBox {
 		final float lineHeight = SIZE;
 		final float lineWidth = SIZE + lineWeight;
 		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.WHITE);
+		sr.setColor(Resources.Color.uiStroke);
 		if (mouseOver) {
 			if (item != null) {
 				((OnePixel)Gdx.app.getApplicationListener()).getTooltip().setTooltip(item.getName(), x + tooltipOffsetX, y - tooltipOffsetY);

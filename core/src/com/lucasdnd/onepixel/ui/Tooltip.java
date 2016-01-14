@@ -1,6 +1,5 @@
 package com.lucasdnd.onepixel.ui;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Align;
@@ -50,7 +49,7 @@ public class Tooltip {
 		final float lineHeight = height;
 		final float lineWidth = width + lineWeight;
 		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.WHITE);
+		sr.setColor(Resources.Color.uiStroke);
 		
 		// Left
 		sr.rect(x, y, lineWeight, lineWeight - lineHeight);
@@ -69,7 +68,7 @@ public class Tooltip {
 	
 	private void drawTooltipBackground(float x, float y, float width, float height) {
 		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.LIGHT_GRAY);
+		sr.setColor(Resources.Color.tooltipFill);
 		sr.rect(x + lineWeight, y - height + lineWeight, width - lineWeight, height - lineWeight);
 		sr.end();
 	}

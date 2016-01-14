@@ -10,7 +10,7 @@ public class YellowRock extends MapObject {
 	
 	public static final int saveId = 11;
 	
-	private static final Color color = Color.YELLOW;
+	private static final Color color = Resources.Color.yellowRock;
 
 	public YellowRock(Disposer disposer, int x, int y) {
 		super(disposer, x, y);
