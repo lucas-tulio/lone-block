@@ -280,7 +280,8 @@ public class LoneBlock extends ApplicationAdapter {
 		}
 		
 		// Pause
-		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) || Gdx.input.isKeyJustPressed(Keys.P)) {
+		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) || Gdx.input.isKeyJustPressed(Keys.P)
+				|| input.isStartJustPressed()) {
 			paused = !paused;
 		}
 		
@@ -288,6 +289,8 @@ public class LoneBlock extends ApplicationAdapter {
 		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
 			debug = !debug;
 		}
+		
+		input.setStartJustPressed(false);
 	}
 	
 	private void update() {
